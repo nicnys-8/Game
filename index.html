@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"></meta>
+    <title>Game</title>
+</head>
+
+<body>
+
+    <canvas id="view"></canvas>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script src="js/sprite.js"></script>
+    <script src="js/block.js"></script>
+    <script src="js/guy.js"></script>
+    <script src="js/gravity.js"></script>
+    <script src="js/moving.js"></script>
+    <script src="js/platform.js"></script>
+
+    <script>
+    var canvas = document.getElementById("view");
+    var ctx = canvas.getContext("2d");
+
+    window.requestAnimationFrame(tick);
+
+    var solidObjects = [];
+    var sprites = [];
+
+    var sprite, block;
+
+    block = new Block(ctx);
+    block.x = 50;
+    block.y = 86;
+    sprites.push(block);
+    solidObjects.push(block);
+
+    guy = new Guy(ctx);
+    guy.x = 50;
+    guy.y = 50;
+    sprites.push(guy);
+
+    function tick() {
+        window.requestAnimationFrame(tick);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < sprites.length; i++) {
+            sprites[i].tick();
+        }
+        for (var i = 0; i < sprites.length; i++) {
+            sprites[i].render();
+        }
+
+    };
+
+    </script>
+</body>
