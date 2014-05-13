@@ -1,6 +1,6 @@
 /**
- */
-var Sprite = function(ctx, imgPath) {
+*/
+var GameObject = function(ctx, imgPath) {
 
     //================================
     // Private functions and variables
@@ -8,32 +8,65 @@ var Sprite = function(ctx, imgPath) {
     this.imageSpeed = 1;
     this.x = 0;
     this.y = 0;
+
     this.width = 16; //@TODO: Change
-    this.height = 17; //@TODO: Change
+    this.height = 16; //@TODO: Change
     this.rotation = 0;
-    this.scale = {x: 1, y: 1};
+    this.scale = {x: 1,y: 1};
     this.alpha = 1;
-    this.boundingBox = {left: -4, right: 4, top: -8, bottom: 8};
-    this.behaviors = []; // a list of functions to perform each tick
+    this.boundingBox = {
+        left: -8, right: 8,
+        top: -8, bottom: 8
+    };
+    // Lists of functions to perform at the start and end of each tick:
+    this.startTicks = [];
+    this.endTicks = []; 
+    
+    console.log("@TODO: Reuse the same canvas for all sprites of the same type");
+    var ownCanvas = ownCanvas || document.createElement("canvas");
+    ownCanvas.width = this.width;
+    ownCanvas.height = this.height;
     
     var img = new Image();
-    Sprite.ownCanvas = document.createElement("canvas");
-    
-    Sprite.ownCanvas.width = this.width;
-    Sprite.ownCanvas.height = this.height;
-    
     img.src = imgPath;
     img.onload = function() {
         ownCanvas.getContext("2d").drawImage(img, 0, 0);
     };
     
     /**
+    Check if this object overlaps another
+    */
+    this.overlapsObject = function(obj) {
+        if (this.x + this.boundingBox.left > obj.x   + obj.boundingBox.right) console.log("To the right of");
+        if (this.x + this.boundingBox.right < obj.x  + obj.boundingBox.left) console.log("To the left of");
+        if (this.y + this.boundingBox.top > obj.y    + obj.boundingBox.bottom) console.log("Below");
+        if (this.y + this.boundingBox.bottom < obj.y + obj.boundingBox.top) console.log("Above");
+        
+        return (
+            !(
+                this.x + this.boundingBox.left > obj.x + obj.boundingBox.right ||
+                this.x + this.boundingBox.right < obj.x + obj.boundingBox.left ||
+                this.y + this.boundingBox.top > obj.y + obj.boundingBox.bottom ||
+                this.y + this.boundingBox.bottom < obj.y + obj.boundingBox.top
+                )
+            );
+    };
+
+    /**
      Actions to perform at each tick
      */
-    this.tick = function() {
-        console.log(x);
-        for (var i = 0; i < this.behaviors.length; i++) {
-            this.behaviors[i].call(this);
+     this.tickStart = function() {
+        for (var i = 0; i < this.startTicks.length; i++) {
+            this.startTicks[i].call(this);
+        }
+    };
+
+    /**
+     Actions to perform at each tick
+     */
+     this.tickEnd = function() {
+        for (var i = 0; i < this.endTicks.length; i++) {
+            this.endTicks[i].call(this);
         }
     };
     
@@ -42,7 +75,7 @@ var Sprite = function(ctx, imgPath) {
      Render the sprite
      @param ctx The Context2d object in which to render the sprite
      */
-    this.render = function() {
+     this.render = function() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.scale(this.scale.x, this.scale.y);
@@ -55,7 +88,7 @@ var Sprite = function(ctx, imgPath) {
         var x = -this.width / 2, y = -this.height / 2;
         
         ctx.drawImage(
-            Sprite.ownCanvas,
+            ownCanvas,
             sX, sY,
             sWidth, sHeight,
             x, y,
@@ -70,12 +103,13 @@ var Sprite = function(ctx, imgPath) {
     /**
      Adds a behavior to the sprite object
      */
-    this.addBehavior = function(behavior) {
+     this.addBehavior = function(behavior) {
         // Add all behavior properties
         for (var p in behavior.properties) {
             this[p] = behavior.properties[p];
         }
-        // Modify the target's tick
-        this.behaviors.push(behavior.tick);
+        // Modify the target's tick functions
+        this.startTicks.push(behavior.tickStart);
+        this.endTicks.push(behavior.tickEnd);
     };
 };

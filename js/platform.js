@@ -1,29 +1,28 @@
 /**
  */
-function Platform() {
-    
+var Platform = function() {
+    var behavior = {};
     //==================
     // Private functions
     //==================
     function jump() {
-        this.vSpeed = -3;
+        this.vSpeed = -5;
     };
     
     //====================
     // Behavior properties
     //====================
-    this.properties = {
-        gravity: 0.1,
-        vSpeed: 0,
-        maxVspeed: 7,
+    behavior.properties = {
         jump: jump
     };
     
-    //=======================
-    // Behavior tick function
-    //=======================
-    this.tick = function() {
-        
+    //========================
+    // Behavior tick functions
+    //========================
+    behavior.tickStart = function() {};
+    behavior.tickEnd = function() {
         if (this.y >= 70) this.y = 70;
     };
-};
+
+    return behavior;
+}();

@@ -14,9 +14,9 @@
     <script src="js/sprite.js"></script>
     <script src="js/block.js"></script>
     <script src="js/guy.js"></script>
-    <script src="js/gravity.js"></script>
     <script src="js/moving.js"></script>
     <script src="js/platform.js"></script>
+    <script src="js/controller.js"></script>
 
     <script>
     var canvas = document.getElementById("view");
@@ -29,28 +29,59 @@
 
     var sprite, block;
 
-    block = new Block(ctx);
+/*
+    block = createBlock(ctx);
     block.x = 50;
     block.y = 86;
     sprites.push(block);
     solidObjects.push(block);
 
-    guy = new Guy(ctx);
+    block2 = createBlock(ctx);
+    block2.x = 100;
+    block2.y = 86;
+    sprites.push(block2);
+    solidObjects.push(block2);
+    */
+    guy = createGuy(ctx);
     guy.x = 50;
     guy.y = 50;
     sprites.push(guy);
+
+    var controller = createController();
 
     function tick() {
         window.requestAnimationFrame(tick);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (var i = 0; i < sprites.length; i++) {
-            sprites[i].tick();
+            sprites[i].tickStart();
         }
+
+        controller.tickStart();
+        
+        if (controller.down("left")) {
+            guy.hAcceleration = -0.5;
+        } else if (controller.down("right")) {
+            guy.hAcceleration = 0.5;
+        } else {
+            guy.hAcceleration = -guy.hSpeed / 5;
+        }
+
+        if (controller.pressed("up")) {
+            guy.jump();
+        }
+
+        //console.log(controller.down("up"));
+
+        for (var i = 0; i < sprites.length; i++) {
+            sprites[i].tickEnd();
+        }
+
+        controller.tickEnd();
+
         for (var i = 0; i < sprites.length; i++) {
             sprites[i].render();
         }
-
     };
 
     </script>

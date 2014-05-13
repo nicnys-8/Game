@@ -1,28 +1,32 @@
 /**
  */
-var Guy = function(ctx) {
-    Sprite.call(this, ctx, "img/guy.png");
+function createGuy(ctx) {
+    var guy = new GameObject(ctx, "img/guy.png");
     
     //================================
     // Private functions and variables
     //================================
-    
+
     //====================
     // Behavior properties
     //====================
-    this.addBehavior(new Gravity());
-    this.addBehavior(new Platform());
+    guy.addBehavior(Moving);
+    guy.addBehavior(Platform);
+    guy.vAcceleration = 0.4;
     
-    //=======================
-    // Behavior tick function
-    //=======================
-    this.tick = function() {
-        for (var i = 0; i < this.behaviors.length; i++) {
-            this.behaviors[i].call(this);
+    //========================
+    // Behavior tick functions
+    //========================
+    guy.tickStart = function() {
+        for (var i = 0; i < this.startTicks.length; i++) {
+            this.startTicks[i].call(this);
         }
-        this.render();
     };
-    
-};
+    guy.tickEnd = function() {
+        for (var i = 0; i < this.endTicks.length; i++) {
+            this.endTicks[i].call(this);
+        }
+    };
 
-Block.prototype = Object.create(Sprite.prototype);
+    return guy;   
+}

@@ -1,0 +1,85 @@
+/**
+*/
+function createController() {
+
+    //================================
+    // Private functions and variables
+    //================================
+    var keyMappings = {
+        37: "left",
+        38: "up",
+        39: "right",
+        40: "down"
+    };
+    var keyEvents = {};
+    var keyStates = {};
+
+    for (var code in keyMappings) {
+        var key = keyMappings[code];
+        keyStates[key] = "up";
+    }
+
+    function onKeyDown(event) {
+        var code = event.keyCode;
+        var key = keyMappings[code];
+        var state = keyStates[key];
+        if (state === "up") {
+            keyEvents[key] = "pressed"; // only allow press if lalaal
+        }
+    }
+
+    function onKeyUp(event) {
+        var code = event.keyCode;
+        var key = keyMappings[code];
+        keyEvents[key] = "released";
+    }
+
+    window.addEventListener("keydown", onKeyDown, false);
+    window.addEventListener("keyup", onKeyUp, false);
+
+    //=================
+    // Public Interface
+    //=================
+    var controller = {};
+
+    controller.up = function(key) {
+        return (!keyStates.hasOwnProperty(key) ||
+            keyStates[key] === "up" ||
+            keyStates[key] === "released");
+    };
+
+    controller.down = function(key) {
+        return (keyStates[key] === "down" ||
+            keyStates[key] === "pressed");
+    };
+
+    controller.pressed = function(key) {
+        return (keyStates[key] === "pressed");
+    };
+
+    controller.released = function(key) {
+        return (keyStates[key] === "released");
+    };
+
+    controller.tickStart = function() {
+        for (var key in keyEvents) {
+            keyStates[key] = keyEvents[key];
+        }
+    };
+
+    controller.tickEnd = function() {
+        for (var key in keyStates) {
+            if (keyStates[key] === "released") {
+                keyStates[key] = "up";
+            }
+
+            if (keyStates[key] === "pressed") {
+                keyStates[key] = "down";
+            }
+
+            keyEvents = {}; //@TODO: Maybe we'll find a better way?
+        }
+    };
+
+    return controller;
+}
