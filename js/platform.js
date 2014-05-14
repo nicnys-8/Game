@@ -19,8 +19,8 @@ var Platform = function() {
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function() {};
-    behavior.tickEnd = function() {
+    behavior.tickStart = function(gameState) {};
+    behavior.tickEnd = function(gameState) {
         if (this.y >= 70) this.y = 70;
     };
 

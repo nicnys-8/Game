@@ -1,4 +1,6 @@
 /**
+A controller object that can be used to control
+events in the game through key presses
 */
 function createController() {
 

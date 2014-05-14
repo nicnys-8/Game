@@ -1,10 +1,15 @@
 /**
+Describes the behavior of a moving object
  */
 var Moving = function() {
     var behavior = {};
     //================================
     // Private functions and variables
     //================================
+    function move(deltaX, deltY) {
+        this.x += this.hSpeed;
+        this.y += this.vSpeed;
+    }
 
     //====================
     // Behavior properties
@@ -17,33 +22,48 @@ var Moving = function() {
         vSpeed: 0,
         
         maxHSpeed: 2,
-        maxVSpeed: 7
+        maxVSpeed: 7,
+
+        move: move
     };
     
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function() {};
-    behavior.tickEnd = function() {
+    behavior.tickStart = function(gameState) {};
+    behavior.tickEnd = function(gameState) {
 
         this.hSpeed += this.hAcceleration;
         this.vSpeed += this.vAcceleration;
-        
-        this.x += this.hSpeed;
-        this.y += this.vSpeed;
 
-        // Limit the maximum speed
+        // Limit vSpeed to maxVSpeed
+        if ((this.vSpeed) > this.maxVSpeed) {
+            this.vSpeed = this.maxVSpeed;
+        } else if ((this.vSpeed) < -this.maxVSpeed) {
+            this.vSpeed = -this.maxVSpeed;
+        }
+
+        // Limit hSpeed to maxHSpeed
         if ((this.hSpeed) > this.maxHSpeed) {
             this.hSpeed = this.maxHSpeed;
         } else if ((this.hSpeed) < -this.maxHSpeed) {
             this.hSpeed = -this.maxHSpeed;
         }
 
-        if ((this.vSpeed) > this.maxVSpeed) {
-            this.vSpeed = this.maxVSpeed;
-        } else if ((this.vSpeed) < -this.maxVSpeed) {
-            this.vSpeed = -this.maxVSpeed;
-        }
+        this.move(this.hSpeed, this.vSpeed);
+
+        /*
+        // If the object ended up inside a solid object, move back
+        var obj;
+        for (var i = 0; i < solidObjects.length; i++) {
+            obj = solidObjects[i];
+            if (this.overlapsObject(obj)) {
+                console.log("Collision!");
+                this.move(-hSpeed, -vSpeed);
+                break;
+            }
+        };*/
+
     };
 
     return behavior;

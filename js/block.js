@@ -5,13 +5,17 @@ function createBlock(ctx) {
     
     /**
      Actions to perform at each tick
-     */
-    block.tickEnd = function() {
-        for (var i = 0; i < this.behaviors.length; i++) {
-            this.behaviors[i].call(this);
+     
+    guy.tickStart = function() {
+        for (var i = 0; i < this.startTicks.length; i++) {
+            this.startTicks[i].call(this);
         }
-        this.render();
     };
-
+    guy.tickEnd = function() {
+        for (var i = 0; i < this.endTicks.length; i++) {
+            this.endTicks[i].call(this);
+        }
+    };
+*/
     return block;  
 }

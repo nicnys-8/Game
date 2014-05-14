@@ -11,7 +11,7 @@
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-    <script src="js/sprite.js"></script>
+    <script src="js/game_object.js"></script>
     <script src="js/block.js"></script>
     <script src="js/guy.js"></script>
     <script src="js/moving.js"></script>
@@ -24,24 +24,21 @@
 
     window.requestAnimationFrame(tick);
 
-    var solidObjects = [];
+    var gameState = {objects: []};
     var sprites = [];
 
     var sprite, block;
 
-/*
     block = createBlock(ctx);
     block.x = 50;
     block.y = 86;
     sprites.push(block);
-    solidObjects.push(block);
 
     block2 = createBlock(ctx);
     block2.x = 100;
-    block2.y = 86;
+    block2.y = 60;
     sprites.push(block2);
-    solidObjects.push(block2);
-    */
+
     guy = createGuy(ctx);
     guy.x = 50;
     guy.y = 50;
@@ -58,7 +55,7 @@
         }
 
         controller.tickStart();
-        
+
         if (controller.down("left")) {
             guy.hAcceleration = -0.5;
         } else if (controller.down("right")) {
@@ -71,10 +68,16 @@
             guy.jump();
         }
 
+        if (controller.released("up")) {
+            if (guy.vSpeed < 0) {
+                guy.vSpeed /= 2;
+            }
+        }
+
         //console.log(controller.down("up"));
 
         for (var i = 0; i < sprites.length; i++) {
-            sprites[i].tickEnd();
+            sprites[i].tickEnd(); //@TODO: remove the 'solidObject' argument
         }
 
         controller.tickEnd();
