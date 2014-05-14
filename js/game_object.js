@@ -1,23 +1,13 @@
 /**
 An object within the game
 */
-var GameObject = function(ctx, imgPath) {
+var GameObject = function(ctx) {
 
     //===========
     // Properties
     //===========
-    var ownCanvas, img;
-
-    this.imageSpeed = 1;
     this.x = 0;
     this.y = 0;
-
-    this.width = 16; //@TODO: Change
-    this.height = 16; //@TODO: Change
-
-    this.rotation = 0;
-    this.scale = {x: 1,y: 1};
-    this.alpha = 1;
 
     this.boundingBox = {
         left: -8, right: 8,
@@ -25,21 +15,8 @@ var GameObject = function(ctx, imgPath) {
     };
 
     this.behaviors = [];
-    // Lists of functions to perform at
-    // the start and end of each tick:
     this.startTicks = [];
     this.endTicks = []; 
-    
-    console.log("@TODO: Reuse the same canvas for all sprites of the same type");
-    ownCanvas = ownCanvas || document.createElement("canvas");
-    ownCanvas.width = this.width;
-    ownCanvas.height = this.height;
-    
-    img = new Image();
-    img.src = imgPath;
-    img.onload = function() {
-        ownCanvas.getContext("2d").drawImage(img, 0, 0);
-    };
     
     //=================
     // Public functions
@@ -71,33 +48,6 @@ var GameObject = function(ctx, imgPath) {
         for (var i = 0; i < this.endTicks.length; i++) {
             this.endTicks[i].call(this, gameState);
         }
-    };
-    
-    /**
-     Render the sprite
-     @param ctx The Context2d object in which to render the sprite
-     */
-     this.render = function() {
-        var sX = 0, sY = 0;
-        var sWidth = this.width, sHeight = this.height;
-        var x = -this.width / 2, y = -this.height / 2;
-
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.scale(this.scale.x, this.scale.y);
-        ctx.rotate(this.rotation);
-        ctx.globalAlpha = this.alpha;        
-        
-        ctx.drawImage(
-            ownCanvas,
-            sX, sY,
-            sWidth, sHeight,
-            x, y,
-            this.width, this.height
-            );
-        ctx.restore();
-        ctx.save();
-        ctx.restore();
     };
     
     /**

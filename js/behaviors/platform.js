@@ -12,6 +12,8 @@ var Platform = function() {
     //====================
     // Behavior properties
     //====================
+    behavior.name = "platform";
+
     behavior.properties = {
         jump: jump
     };

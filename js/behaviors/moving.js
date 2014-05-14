@@ -14,6 +14,8 @@ var Moving = function() {
     //====================
     // Behavior properties
     //====================
+    behavior.name = "moving";
+
     behavior.properties = {
         hAcceleration: 0,
         vAcceleration: 0,

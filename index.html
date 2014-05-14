@@ -14,9 +14,12 @@
     <script src="js/game_object.js"></script>
     <script src="js/block.js"></script>
     <script src="js/guy.js"></script>
-    <script src="js/moving.js"></script>
-    <script src="js/platform.js"></script>
     <script src="js/controller.js"></script>
+
+    <!-- Behaviors -->
+    <script src="js/behaviors/moving.js"></script>
+    <script src="js/behaviors/platform.js"></script>
+    <script src="js/behaviors/renderable.js"></script>
 
     <script>
     var canvas = document.getElementById("view");
@@ -28,7 +31,7 @@
     var sprites = [];
 
     var sprite, block;
-
+/*
     block = createBlock(ctx);
     block.x = 50;
     block.y = 86;
@@ -38,7 +41,7 @@
     block2.x = 100;
     block2.y = 60;
     sprites.push(block2);
-
+*/
     guy = createGuy(ctx);
     guy.x = 50;
     guy.y = 50;
@@ -81,10 +84,6 @@
         }
 
         controller.tickEnd();
-
-        for (var i = 0; i < sprites.length; i++) {
-            sprites[i].render();
-        }
     };
 
     </script>
