@@ -1,13 +1,11 @@
 /**
+A solid block
  */
 function createBlock(ctx) {
-    var block = new GameObject(ctx, "img/block.png");
+    var block = new GameObject(ctx);
     
-    //==============
-    // Add behaviors
-    //==============
-    block.addBehavior(Sprite);
-    block.setImage("img/block.png");
+    block.addBehavior(Renderable);
+    block.sprite = createSprite("img/block.png");
 
     return block;  
 }

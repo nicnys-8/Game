@@ -1,7 +1,7 @@
 /**
  */
 function createGuy(ctx) {
-    var guy = new GameObject(ctx, "img/guy.png");
+    var guy = new GameObject(ctx);
     
     //================================
     // Private functions and variables
@@ -15,7 +15,7 @@ function createGuy(ctx) {
     guy.addBehavior(Platform);
     guy.vAcceleration = 0.4;
 
-    guy.setImage("img/guy.png");
+    guy.sprite = createSprite("img/guy.png");
     
     //========================
     // Behavior tick functions

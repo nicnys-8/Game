@@ -1,4 +1,5 @@
 /**
+Behavior describing a platform character
  */
 var Platform = function() {
     var behavior = {};

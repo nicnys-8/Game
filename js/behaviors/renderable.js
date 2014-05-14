@@ -1,6 +1,6 @@
 
 /**
-Describes the behavior of a moving object
+Describes the behavior of a renderable object
 @param imgPath The path to the image file to use for the sprite
 */
 var Renderable = function() {
@@ -9,38 +9,13 @@ var Renderable = function() {
     //================================
     // Private functions and variables
     //================================
-    var ownCanvas, img, width = 16, height = 16;
-
-    console.log("@TODO: Reuse the same canvas for all sprites of the same type");
-    ownCanvas = ownCanvas || document.createElement("canvas");
-    console.log("@TODO: Make width and height variable.");
-    ownCanvas.width = width;
-    ownCanvas.height = height;
-    img = new Image();
 
     /**
      Render the sprite
      @param ctx The Context2d object in which to render the sprite
      */
      function render() {
-        var sX = 0, sY = 0,
-        sWidth = width, sHeight = height,
-        x = -width / 2, y = -height / 2;
-
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.scale(this.scale.x, this.scale.y);
-        ctx.rotate(this.rotation);
-        ctx.globalAlpha = this.alpha;        
-
-        ctx.drawImage(
-            ownCanvas,
-            sX, sY,
-            sWidth, sHeight,
-            x, y,
-            width, height
-            );
-        ctx.restore();
+        this.sprite.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
     };
 
     /**
@@ -59,9 +34,8 @@ var Renderable = function() {
     behavior.name = "sprite";
 
     behavior.properties = {
-        setImage: setImage,
         render: render,
-
+        sprite: null,
         imageSpeed: 1,
         rotation: 0,
         scale: {x: 1, y: 1},

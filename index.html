@@ -12,9 +12,10 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <script src="js/game_object.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/sprite.js"></script>
     <script src="js/block.js"></script>
     <script src="js/guy.js"></script>
-    <script src="js/controller.js"></script>
 
     <!-- Behaviors -->
     <script src="js/behaviors/moving.js"></script>
@@ -22,6 +23,7 @@
     <script src="js/behaviors/renderable.js"></script>
 
     <script>
+
     var canvas = document.getElementById("view");
     var ctx = canvas.getContext("2d");
 
@@ -30,8 +32,8 @@
     var gameState = {objects: []};
     var sprites = [];
 
-    var sprite, block;
-/*
+    var sprite, block, block2;
+
     block = createBlock(ctx);
     block.x = 50;
     block.y = 86;
@@ -41,7 +43,7 @@
     block2.x = 100;
     block2.y = 60;
     sprites.push(block2);
-*/
+
     guy = createGuy(ctx);
     guy.x = 50;
     guy.y = 50;
