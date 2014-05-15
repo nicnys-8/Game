@@ -18,10 +18,9 @@ function createGuy(ctx) {
 
     guy.sprite = createSprite("img/guy.png");
     
-    //========================
-    // Behavior tick functions
-    //========================
-
+    //===============
+    // Tick functions
+    //===============
     guy.tickEnd = function() {
         for (var i = 0; i < this.endTicks.length; i++) {
             this.endTicks[i].call(this, gameState);

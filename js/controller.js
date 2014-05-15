@@ -3,6 +3,7 @@ A controller object that can be used to control
 events in the game through key presses
 */
 function createController() {
+     var controller = new GameObject(ctx);
 
     //================================
     // Private functions and variables
@@ -42,8 +43,6 @@ function createController() {
     //=================
     // Public Interface
     //=================
-    var controller = {};
-
     controller.up = function(key) {
         return (!keyStates.hasOwnProperty(key) ||
             keyStates[key] === "up" ||

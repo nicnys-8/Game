@@ -32,7 +32,8 @@
 
     var gameState = createGameState();
 
-    var sprite, block;
+    // Add game objects
+    var sprite, block, controller;
 
     for (var i = 0; i < 100; i++) {
         block = createBlock(ctx);
@@ -46,6 +47,8 @@
     guy.y = 32;
     gameState.addObject(guy);
 
+    controller = createController();
+    gameState.addObject(controller);
 
     document.body.onmousedown = function(event) {
         block = createBlock(ctx);
@@ -53,7 +56,6 @@
         block.y = 16 * Math.round((event.clientY - 8) / 16);
         gameState.addObject(block);
     };
-    var controller = createController();
 
     function tick() {
         window.requestAnimationFrame(tick);
@@ -63,7 +65,6 @@
             gameState.objects[i].tickStart(gameState);
         }
 
-        controller.tickStart();
 
         if (controller.down("left")) {
             guy.hAcceleration = -0.5;
@@ -83,13 +84,10 @@
             }
         }
 
-        //console.log(controller.down("up"));
-
         for (var i = 0; i < gameState.objects.length; i++) {
             gameState.objects[i].tickEnd(gameState); //@TODO: remove the 'solidObject' argument
         }
 
-        controller.tickEnd();
     };
 
     </script>
