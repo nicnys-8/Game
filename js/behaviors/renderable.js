@@ -1,7 +1,6 @@
 
 /**
-Describes the behavior of a renderable object
-@param imgPath The path to the image file to use for the sprite
+...
 */
 var Renderable = function() {
     var behavior = {};
@@ -11,11 +10,13 @@ var Renderable = function() {
     //================================
 
     /**
-     Render the sprite
-     @param ctx The Context2d object in which to render the sprite
+     Render the object
+     @param ctx The Context2d object in which to render the object
      */
+     behavior.haxx = 0;
+
      function render() {
-        this.sprite.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
+        this.currentAnimation.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
     };
 
     /**
@@ -35,8 +36,8 @@ var Renderable = function() {
 
     behavior.properties = {
         render: render,
-        sprite: null,
-        imageSpeed: 1,
+        currentAnimation: null,
+        frame: 0,
         rotation: 0,
         scale: {x: 1, y: 1},
         alpha: 1
@@ -47,7 +48,15 @@ var Renderable = function() {
     //========================
     behavior.tickStart = function(gameState) {};
     behavior.tickEnd = function(gameState) {
+        if (this.currentAnimation.imageSpeed > 0) {
+            this.currentAnimation.tick();
+        }
         this.render();
+        /*
+        this.frame = (this.frame + this.imageSpeed) % (this.animation.numFrames - 1);
+        this.render(Math.round(this.frame));
+        */
+
     };
 
     return behavior;

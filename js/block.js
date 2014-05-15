@@ -6,7 +6,7 @@ function createBlock(ctx) {
     
     block.addBehavior(Renderable);
     block.addBehavior(Solid);
-    block.sprite = createSprite("img/block.png");
+    block.currentAnimation = createAnimation("img/block.png", 1);
 
     return block;  
 }

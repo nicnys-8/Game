@@ -15,9 +15,9 @@ function createGuy(ctx) {
     guy.addBehavior(Platform);
     guy.addBehavior(FaceDirection);
     guy.vAcceleration = 0.4;
+    guy.currentAnimation = createAnimation("img/guy_walk.png", 2);
+    guy.currentAnimation.imageSpeed = 0.1;
 
-    guy.sprite = createSprite("img/guy.png");
-    
     //===============
     // Tick functions
     //===============
