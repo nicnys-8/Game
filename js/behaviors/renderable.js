@@ -31,7 +31,7 @@ var Renderable = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "sprite";
+    behavior.name = "Renderable";
 
     behavior.properties = {
         render: render,

@@ -10,8 +10,8 @@ var GameObject = function(ctx) {
     this.y = 0;
 
     this.boundingBox = {
-        left: -8, right: 8,
-        top: -8, bottom: 8
+        left: 0, right: 16,
+        top: 0, bottom: 16
     };
 
     this.behaviors = [];
@@ -26,10 +26,11 @@ var GameObject = function(ctx) {
     Check if this object overlaps another
     */
     this.overlapsObject = function(obj) {
-        return (!(this.x + this.boundingBox.left > obj.x + obj.boundingBox.right ||
-            this.x + this.boundingBox.right < obj.x + obj.boundingBox.left ||
-            this.y + this.boundingBox.top > obj.y + obj.boundingBox.bottom ||
-            this.y + this.boundingBox.bottom < obj.y + obj.boundingBox.top));
+        var colliding = (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+            this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left ||
+            this.y + this.boundingBox.top >= obj.y + obj.boundingBox.bottom ||
+            this.y + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
+        return colliding;
     };
 
     /**

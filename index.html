@@ -9,8 +9,7 @@
 
     <canvas id="view"></canvas>
 
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+    <script src="js/game_state.js"></script>
     <script src="js/game_object.js"></script>
     <script src="js/controller.js"></script>
     <script src="js/sprite.js"></script>
@@ -19,8 +18,10 @@
 
     <!-- Behaviors -->
     <script src="js/behaviors/moving.js"></script>
+    <script src="js/behaviors/solid.js"></script>
     <script src="js/behaviors/platform.js"></script>
     <script src="js/behaviors/renderable.js"></script>
+    <script src="js/behaviors/face_direction.js"></script>
 
     <script>
 
@@ -29,34 +30,37 @@
 
     window.requestAnimationFrame(tick);
 
-    var gameState = {objects: []};
-    var sprites = [];
+    var gameState = createGameState();
 
-    var sprite, block, block2;
+    var sprite, block;
 
-    block = createBlock(ctx);
-    block.x = 50;
-    block.y = 86;
-    sprites.push(block);
-
-    block2 = createBlock(ctx);
-    block2.x = 100;
-    block2.y = 60;
-    sprites.push(block2);
+    for (var i = 0; i < 100; i++) {
+        block = createBlock(ctx);
+        block.x = i * 16;
+        block.y = 128;
+        gameState.addObject(block);
+    }
 
     guy = createGuy(ctx);
-    guy.x = 50;
-    guy.y = 50;
-    sprites.push(guy);
+    guy.x = 32;
+    guy.y = 32;
+    gameState.addObject(guy);
 
+
+    document.body.onmousedown = function(event) {
+        block = createBlock(ctx);
+        block.x = 16 * Math.round((event.clientX - 8) / 16);
+        block.y = 16 * Math.round((event.clientY - 8) / 16);
+        gameState.addObject(block);
+    };
     var controller = createController();
 
     function tick() {
         window.requestAnimationFrame(tick);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (var i = 0; i < sprites.length; i++) {
-            sprites[i].tickStart();
+        for (var i = 0; i < gameState.objects.length; i++) {
+            gameState.objects[i].tickStart(gameState);
         }
 
         controller.tickStart();
@@ -81,8 +85,8 @@
 
         //console.log(controller.down("up"));
 
-        for (var i = 0; i < sprites.length; i++) {
-            sprites[i].tickEnd(); //@TODO: remove the 'solidObject' argument
+        for (var i = 0; i < gameState.objects.length; i++) {
+            gameState.objects[i].tickEnd(gameState); //@TODO: remove the 'solidObject' argument
         }
 
         controller.tickEnd();

@@ -13,7 +13,7 @@ var Platform = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "platform";
+    behavior.name = "Platform";
 
     behavior.properties = {
         jump: jump
@@ -24,7 +24,6 @@ var Platform = function() {
     //========================
     behavior.tickStart = function(gameState) {};
     behavior.tickEnd = function(gameState) {
-        if (this.y >= 70) this.y = 70;
     };
 
     return behavior;
