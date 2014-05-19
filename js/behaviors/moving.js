@@ -34,7 +34,7 @@ var Moving = function() {
 
     behavior.properties = {
         hAcceleration: 0,
-        vAcceleration: 0,
+        vAcceleration: 0.4,
         
         hSpeed: 0,
         vSpeed: 0,

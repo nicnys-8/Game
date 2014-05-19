@@ -3,7 +3,7 @@ A controller object that can be used to control
 events in the game through key presses
 */
 function createController() {
-     var controller = new GameObject(ctx);
+     var controller = new GameObject();
 
     //================================
     // Private functions and variables

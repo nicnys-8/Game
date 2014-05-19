@@ -1,11 +1,12 @@
 /**
  */
-function createGuy(ctx) {
+function createGuy() {
     var guy = new GameObject(ctx);
     
     //================================
     // Private functions and variables
     //================================
+    var hotspot = {x: 8, y: 8};
 
     //==============
     // Add behaviors
@@ -14,9 +15,15 @@ function createGuy(ctx) {
     guy.addBehavior(Moving);
     guy.addBehavior(Platform);
     guy.addBehavior(FaceDirection);
-    guy.vAcceleration = 0.4;
-    guy.currentAnimation = createAnimation("img/guy_walk.png", 2);
+    console.log("Creating a guy:");
+    console.log(hotspot);
+    guy.currentAnimation = createAnimation("img/guy_walk.png", 2, hotspot);
     guy.currentAnimation.imageSpeed = 0.1;
+
+    guy.boundingBox = {
+        left: -8, right: 8,
+        top: -8, bottom: 8
+    };
 
     //===============
     // Tick functions

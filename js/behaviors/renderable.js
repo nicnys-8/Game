@@ -1,6 +1,6 @@
 
 /**
-...
+Describes an object that can be rendered on the screen
 */
 var Renderable = function() {
     var behavior = {};
@@ -11,23 +11,10 @@ var Renderable = function() {
 
     /**
      Render the object
-     @param ctx The Context2d object in which to render the object
      */
-     behavior.haxx = 0;
-
-     function render() {
+     function render(ctx) {
         this.currentAnimation.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
     };
-
-    /**
-    Set image
-    */
-    function setImage(imgPath) {
-        img.src = imgPath;
-        img.onload = function() {
-            ownCanvas.getContext("2d").drawImage(img, 0, 0);
-        };
-    }
 
     //====================
     // Behavior properties
@@ -51,12 +38,6 @@ var Renderable = function() {
         if (this.currentAnimation.imageSpeed > 0) {
             this.currentAnimation.tick();
         }
-        this.render();
-        /*
-        this.frame = (this.frame + this.imageSpeed) % (this.animation.numFrames - 1);
-        this.render(Math.round(this.frame));
-        */
-
     };
 
     return behavior;

@@ -1,7 +1,7 @@
 /**
 A animation that can be rendered on screen
 */
-function createAnimation(imgPath, numFrames) {
+function createAnimation(imgPath, numFrames, hotspot) {
     var animation = {};
 
     //==================
@@ -11,6 +11,7 @@ function createAnimation(imgPath, numFrames) {
 
     animation.frame = 0;
     animation.numFrames = numFrames;
+    animation.hotspot = hotspot;
     animation.imageSpeed = 0;
 
     //=================
@@ -23,7 +24,7 @@ function createAnimation(imgPath, numFrames) {
     animation.render = function(ctx, x, y, scale, rotation, alpha) {
         var clippingX = Math.round(animation.frame) * width, clippingY = 0,
         clippingWidth = width, clippingHeight = height,
-        canvasX = -width / 2, canvasY = -height / 2;
+        canvasX = -this.hotspot.x, canvasY = -this.hotspot.y;
 
         ctx.save();
         ctx.translate(x, y);

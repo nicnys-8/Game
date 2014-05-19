@@ -15,6 +15,7 @@
     <script src="js/animation.js"></script>
     <script src="js/block.js"></script>
     <script src="js/guy.js"></script>
+    <script src="js/square.js"></script>
 
     <!-- Behaviors -->
     <script src="js/behaviors/moving.js"></script>
@@ -35,17 +36,22 @@
     // Add game objects
     var sprite, block, controller;
 
-    for (var i = 0; i < 10; i++) {
-        block = createBlock(ctx);
+    for (var i = 0; i < 12; i++) {
+        block = createBlock();
         block.x = i * 16;
-        block.y = 128;
+        block.y = 64;
         gameState.addObject(block);
     }
 
-    guy = createGuy(ctx);
+    guy = createGuy();
     guy.x = 32;
     guy.y = 32;
     gameState.addObject(guy);
+
+    square = createSquare();
+    square.x = 64;
+    square.y = 32;
+    gameState.addObject(square);
 
     controller = createController();
     gameState.addObject(controller);
@@ -59,33 +65,38 @@
 
     function tick() {
         window.requestAnimationFrame(tick);
+        var renderList = gameState.filter("Renderable");
+        var controlled = guy;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (var i = 0; i < gameState.objects.length; i++) {
             gameState.objects[i].tickStart(gameState);
         }
 
-
         if (controller.down("left")) {
-            guy.hAcceleration = -0.5;
+            controlled.hAcceleration = -0.5;
         } else if (controller.down("right")) {
-            guy.hAcceleration = 0.5;
+            controlled.hAcceleration = 0.5;
         } else {
-            guy.hAcceleration = -guy.hSpeed / 5;
+            controlled.hAcceleration = -controlled.hSpeed / 5;
         }
 
         if (controller.pressed("up")) {
-            guy.jump();
+            controlled.jump();
         }
 
         if (controller.released("up")) {
-            if (guy.vSpeed < 0) {
-                guy.vSpeed /= 2;
+            if (controlled.vSpeed < 0) {
+                controlled.vSpeed /= 2;
             }
         }
 
         for (var i = 0; i < gameState.objects.length; i++) {
-            gameState.objects[i].tickEnd(gameState); //@TODO: remove the 'solidObject' argument
+            gameState.objects[i].tickEnd(gameState);
+        }
+
+        for (var i = 0; i < renderList.length; i++) {
+            renderList[i].render(ctx);
         }
 
     };

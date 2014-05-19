@@ -1,7 +1,7 @@
 /**
 An object within the game
 */
-var GameObject = function(ctx) {
+var GameObject = function() {
 
     //===========
     // Properties

@@ -19,11 +19,13 @@ var FaceDirection = function() {
     //========================
     behavior.tickStart = function(gameState) {};
     behavior.tickEnd = function(gameState) {
+        /*
         if (this.hSpeed > 0) {
             this.scale.x = 1;
         } else if (this.hSpeed < 0) {
             this.scale.x = -1;
         }
+        */
     };
     return behavior;
 }();
