@@ -19,20 +19,7 @@ var Solid = function() {
     //====================
     behavior.name = "Solid";
 
-    behavior.properties = {
-        /*
-        hAcceleration: 0,
-        vAcceleration: 0,
-        
-        hSpeed: 0,
-        vSpeed: 0,
-        
-        maxHSpeed: 2,
-        maxVSpeed: 7,
-
-        move: move
-        */
-    };
+    behavior.properties = {};
     
     //========================
     // Behavior tick functions

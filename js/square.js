@@ -14,7 +14,6 @@ function createSquare() {
     square.addBehavior(Renderable);
     square.addBehavior(Moving);
     square.addBehavior(Platform);
-    square.addBehavior(FaceDirection);
     square.currentAnimation = createAnimation("img/square.png", 1, hotspot);
     square.currentAnimation.imageSpeed = 0;
     square.boundingBox = {

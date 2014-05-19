@@ -61,7 +61,7 @@ var GameObject = function() {
         for (var p in behavior.properties) {
             this[p] = behavior.properties[p];
         }
-        // Modify the target's tick functions
+        // Modify the target's tick function
         this.startTicks.push(behavior.tickStart);
         this.endTicks.push(behavior.tickEnd);
     };

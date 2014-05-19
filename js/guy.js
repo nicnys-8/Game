@@ -15,8 +15,6 @@ function createGuy() {
     guy.addBehavior(Moving);
     guy.addBehavior(Platform);
     guy.addBehavior(FaceDirection);
-    console.log("Creating a guy:");
-    console.log(hotspot);
     guy.currentAnimation = createAnimation("img/guy_walk.png", 2, hotspot);
     guy.currentAnimation.imageSpeed = 0.1;
 
