@@ -12,8 +12,8 @@ function createBlock(ctx) {
     //==============
     // Add behaviors
     //==============
-    block.addBehavior(Renderable);
-    block.addBehavior(Solid);
+    block.addBehavior(new Renderable());
+    block.addBehavior(new Solid());
     block.currentAnimation = createAnimation("img/block.png", 1, hotspot);
     block.boundingBox = {
         left: -8, right: 8,

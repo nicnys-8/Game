@@ -1,8 +1,8 @@
 /**
 This behavior makes an object face the direction in which it is moving
  */
-var FaceDirection = function() {
-    var behavior = {};
+function FaceDirection() {
+
     //================================
     // Private functions and variables
     //================================
@@ -10,17 +10,19 @@ var FaceDirection = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "FaceDirection";
+    this.name = "FaceDirection";
 
-    behavior.properties = {};
+    this.properties = {};
     
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function(gameState) {};
-    behavior.tickEnd = function(gameState) {
+    this.tickStart = function(gameState) {};
+    this.tickEnd = function(gameState) {
         if (this.hSpeed > 0) {
+            this.scale.x = 1;
+        } else if (this.hSpeed < 0) {
+            this.scale.x = -1;
         }
     };
-    return behavior;
-}();
+}

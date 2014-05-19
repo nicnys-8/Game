@@ -11,9 +11,10 @@ function createSquare() {
     //==============
     // Add behaviors
     //==============
-    square.addBehavior(Renderable);
-    square.addBehavior(Moving);
-    square.addBehavior(Platform);
+    square.addBehavior(new Renderable());
+    square.addBehavior(new Moving());
+    square.addBehavior(new Platform());
+    square.addBehavior(new Solid());
     square.currentAnimation = createAnimation("img/square.png", 1, hotspot);
     square.currentAnimation.imageSpeed = 0;
     square.boundingBox = {

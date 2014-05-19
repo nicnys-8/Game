@@ -1,8 +1,7 @@
 /**
 Behavior describing a platform character
  */
-var Platform = function() {
-    var behavior = {};
+function Platform() {
     //==================
     // Private functions
     //==================
@@ -13,18 +12,17 @@ var Platform = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "Platform";
+    this.name = "Platform";
 
-    behavior.properties = {
+    this.properties = {
         jump: jump
     };
     
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function(gameState) {};
-    behavior.tickEnd = function(gameState) {
+    this.tickStart = function(gameState) {};
+    this.tickEnd = function(gameState) {
     };
 
-    return behavior;
-}();
+}

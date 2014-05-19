@@ -34,7 +34,7 @@
     var gameState = createGameState();
 
     // Add game objects
-    var sprite, block, controller;
+    var sprite, block, controller, controlled;
 
     for (var i = 0; i < 12; i++) {
         block = createBlock();
@@ -47,6 +47,7 @@
     guy.x = 32;
     guy.y = 32;
     gameState.addObject(guy);
+    controlled = guy;
 
     square = createSquare();
     square.x = 64;
@@ -57,16 +58,21 @@
     gameState.addObject(controller);
 
     document.body.onmousedown = function(event) {
-        block = createBlock(ctx);
-        block.x = 16 * Math.round((event.clientX - 8) / 16);
-        block.y = 16 * Math.round((event.clientY - 8) / 16);
-        gameState.addObject(block);
+        if (square.overlapsPoint(event.clientX, event.clientY)) {
+            controlled = square;
+        } else if (guy.overlapsPoint(event.clientX, event.clientY)) {
+            controlled = guy;
+        } else {
+            block = createBlock(ctx);
+            block.x = 16 * Math.round((event.clientX - 8) / 16);
+            block.y = 16 * Math.round((event.clientY - 8) / 16);
+            gameState.addObject(block);
+        }
     };
 
     function tick() {
         window.requestAnimationFrame(tick);
         var renderList = gameState.filter("Renderable");
-        var controlled = guy;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (var i = 0; i < gameState.objects.length; i++) {

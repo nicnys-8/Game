@@ -2,9 +2,7 @@
 /**
 Describes an object that can be rendered on the screen
 */
-var Renderable = function() {
-    var behavior = {};
-
+function Renderable() {
     //================================
     // Private functions and variables
     //================================
@@ -19,9 +17,9 @@ var Renderable = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "Renderable";
+    this.name = "Renderable";
 
-    behavior.properties = {
+    this.properties = {
         render: render,
         currentAnimation: null,
         frame: 0,
@@ -33,12 +31,10 @@ var Renderable = function() {
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function(gameState) {};
-    behavior.tickEnd = function(gameState) {
+    this.tickStart = function(gameState) {};
+    this.tickEnd = function(gameState) {
         if (this.currentAnimation.imageSpeed > 0) {
             this.currentAnimation.tick();
         }
     };
-
-    return behavior;
-}();
+}

@@ -26,11 +26,17 @@ var GameObject = function() {
     Check if this object overlaps another
     */
     this.overlapsObject = function(obj) {
-        var colliding = (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+        return colliding = (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
             this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left ||
             this.y + this.boundingBox.top >= obj.y + obj.boundingBox.bottom ||
             this.y + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
-        return colliding;
+    };
+
+    this.overlapsPoint = function(x, y) {
+        return overlaps = (!(this.x + this.boundingBox.left >= x ||
+            this.x + this.boundingBox.right <= x ||
+            this.y + this.boundingBox.top >= y ||
+            this.y + this.boundingBox.bottom <= y));
     };
 
     /**

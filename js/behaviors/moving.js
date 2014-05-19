@@ -1,8 +1,7 @@
 /**
 Describes the behavior of a moving object
 */
-var Moving = function() {
-    var behavior = {};
+function Moving() {
     //================================
     // Private functions and variables
     //================================
@@ -30,9 +29,9 @@ var Moving = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "Moving";
+    this.name = "Moving";
 
-    behavior.properties = {
+    this.properties = {
         hAcceleration: 0,
         vAcceleration: 0.4,
         
@@ -50,8 +49,8 @@ var Moving = function() {
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function(gameState) {};
-    behavior.tickEnd = function(gameState) {
+    this.tickStart = function(gameState) {};
+    this.tickEnd = function(gameState) {
         var obj, solidObjects, i;
 
         this.hSpeed += this.hAcceleration;
@@ -80,6 +79,11 @@ var Moving = function() {
         this.x += this.hSpeed;
         for (i = 0; i < solidObjects.length; i++) {
             obj = solidObjects[i];
+            // Ignore collisions with itself
+            if (this === obj) {
+                continue;
+            }
+
             if (this.overlapsObject(obj)) {
                 this.x -= this.hSpeed;
                 this.hSpeed = 0;
@@ -91,6 +95,11 @@ var Moving = function() {
         this.y += this.vSpeed;
         for (i = 0; i < solidObjects.length; i++) {
             obj = solidObjects[i];
+            // Ignore collisions with itself
+            if (this === obj) {
+                continue;
+            }
+
             if (this.overlapsObject(obj)) {
                 this.y -= this.vSpeed;
                 this.vSpeed = 0;
@@ -98,25 +107,5 @@ var Moving = function() {
                 break;
             }
         }
-/*
-    console.log(DON'T LEAVE ANY GLOBAL VARIABLES BY MISTAKE!!);
-        // Move horizontally
-        dir = this.hSpeed / Math.abs(this.hSpeed);
-        var collision = false;
-        for (i = 0; i < Math.abs(this.hSpeed); i++) {
-            if (collision) return;
-            this.x += dir;
-            for (j = 0; j < solidObjects.length; j++) {
-                obj = solidObjects[j];
-                if (this.overlapsObject(obj)) {
-                    console.log("C");
-                    collision = true;
-                    this.x -= dir;
-                    break;
-                }
-            }
-        }*/
     };
-
-    return behavior;
-}();
+}

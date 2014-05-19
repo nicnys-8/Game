@@ -1,8 +1,7 @@
 /**
 Describes the behavior of a solid object
  */
-var Solid = function() {
-    var behavior = {};
+function Solid() {
     //================================
     // Private functions and variables
     //================================
@@ -17,15 +16,14 @@ var Solid = function() {
     //====================
     // Behavior properties
     //====================
-    behavior.name = "Solid";
+    this.name = "Solid";
 
-    behavior.properties = {};
+    this.properties = {};
     
     //========================
     // Behavior tick functions
     //========================
-    behavior.tickStart = function(gameState) {};
-    behavior.tickEnd = function(gameState) {};
+    this.tickStart = function(gameState) {};
+    this.tickEnd = function(gameState) {};
 
-    return behavior;
-}();
+}

@@ -11,10 +11,11 @@ function createGuy() {
     //==============
     // Add behaviors
     //==============
-    guy.addBehavior(Renderable);
-    guy.addBehavior(Moving);
-    guy.addBehavior(Platform);
-    guy.addBehavior(FaceDirection);
+    guy.addBehavior(new Renderable());
+    guy.addBehavior(new Moving());
+    guy.addBehavior(new Platform());
+    guy.addBehavior(new FaceDirection());
+    guy.addBehavior(new Solid());
     guy.currentAnimation = createAnimation("img/guy_walk.png", 2, hotspot);
     guy.currentAnimation.imageSpeed = 0.1;
 
