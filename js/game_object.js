@@ -22,21 +22,36 @@ var GameObject = function() {
     // Public functions
     //=================
 
+    this.hasBehavior = function(behavior) {
+        for (var i = 0; i < this.behaviors.length; i++) {
+            if (behavior === this.behaviors[i]) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     /**
     Check if this object overlaps another
     */
     this.overlapsObject = function(obj) {
-        return colliding = (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+        return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
             this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left ||
             this.y + this.boundingBox.top >= obj.y + obj.boundingBox.bottom ||
             this.y + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
     };
 
     this.overlapsPoint = function(x, y) {
-        return overlaps = (!(this.x + this.boundingBox.left >= x ||
+        return (!(this.x + this.boundingBox.left >= x ||
             this.x + this.boundingBox.right <= x ||
             this.y + this.boundingBox.top >= y ||
             this.y + this.boundingBox.bottom <= y));
+    };
+
+    this.onTopOfObject = function(obj) {
+        return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+            this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left) &&
+            this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
     };
 
     /**

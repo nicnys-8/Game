@@ -17,6 +17,7 @@
     <script src="js/guy.js"></script>
     <script src="js/square.js"></script>
 
+
     <!-- Behaviors -->
     <script src="js/behaviors/moving.js"></script>
     <script src="js/behaviors/solid.js"></script>
@@ -43,16 +44,16 @@
         gameState.addObject(block);
     }
 
+    square = createSquare();
+    square.x = 64;
+    square.y = 32;
+    gameState.addObject(square);
+
     guy = createGuy();
     guy.x = 32;
     guy.y = 32;
     gameState.addObject(guy);
     controlled = guy;
-
-    square = createSquare();
-    square.x = 64;
-    square.y = 32;
-    gameState.addObject(square);
 
     controller = createController();
     gameState.addObject(controller);

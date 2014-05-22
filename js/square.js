@@ -12,6 +12,7 @@ function createSquare() {
     // Add behaviors
     //==============
     square.addBehavior(new Renderable());
+    square.addBehavior(new FaceDirection());
     square.addBehavior(new Moving());
     square.addBehavior(new Platform());
     square.addBehavior(new Solid());
