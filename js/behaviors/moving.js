@@ -5,6 +5,42 @@ function Moving() {
     //================================
     // Private functions and variables
     //================================
+    function computeWeight(objects) {
+        var weight = 0;
+        for (var i = 0; i < objects.length; i++) {
+            weight += obj.weight;
+        }
+        return weight;
+    }
+
+    function carriedObjects(gameState) {
+        var carried = [];
+        var movingObjects = gameState.filter("Moving");
+        for (var i = 0; i < movingObjects.length; i++) {
+            obj = movingObjects[i];
+            if (obj.onTopOf(this)) {
+                carried.push(obj);
+            }
+        }
+        return carried;
+    }
+
+    /**
+    Attempt to move the object
+    @param deltaX The horizontal distance to travel
+    @param deltaX The vertical distance to travel
+    @param solidObjects A list of objects to check for collisions
+    */
+    function move(deltaX, deltaY, gameState) {
+        var threshold = 0.02; //@TODO: Move this
+        if (Math.abs(this.vSpeed) > threshold) {
+            this.tryVerticalMove(deltaY, gameState);
+        }
+
+        if (Math.abs(this.hSpeed) > threshold) {
+            this.tryHorizontalMove(deltaX, gameState);
+        }
+    }
 
     /**
     Attempt to move the object horizontally
@@ -13,7 +49,11 @@ function Moving() {
     */
     function tryHorizontalMove(deltaX, gameState) {
         var obj;
+        var carried = [];
         var solidObjects = gameState.filter("Solid");
+        var carried = this.carriedObjects(gameState);
+        var totalWeight = this.weight + computeWeight(carried);
+        // Move the object
         this.x += deltaX;
         // Check for collisions
         for (var i = 0; i < solidObjects.length; i++) {
@@ -24,13 +64,26 @@ function Moving() {
             }
             // If the object ended up inside another...
             if (this.overlapsObject(obj)) {
-                this.x -= deltaX;
-                // ... try to move the other object
+                // ... move back...
+                this.x = this.lastX;
+                // ... and try pushing the other object
                 if (obj.hasBehavior("Moving")) {
-                    obj.tryHorizontalMove(0.3 * deltaX, gameState);
+                    obj.tryHorizontalMove(deltaX
+                        , gameState);
+                } else {
+                    this.hSpeed = 0;                    
                 }
                 this.moveToHorizontalCollision(obj, deltaX);
+                break;
             }
+        }
+        // Move all carried objects
+        if (carried.length === 2) console.log(this);
+        for (var j = 0; j < carried.length; j++) {
+            // Sort by x first maybe!
+            carried[j].tryHorizontalMove(this.x - this.lastX, gameState);
+            //carried[j].hSpeed += (this.x - this.lastX);
+            //console.log(this);
         }
         this.x = Math.round(this.x);
     }
@@ -41,6 +94,7 @@ function Moving() {
     @param solidObjects A list of objects to check for collisions
     */
     function tryVerticalMove(deltaY, gameState) {
+        //console.log(deltaY);
         var obj;
         var solidObjects = gameState.filter("Solid");
         this.y += deltaY;
@@ -53,20 +107,25 @@ function Moving() {
             }
             // If the object ended up inside another...
             if (this.overlapsObject(obj)) {
-                this.y -= deltaY;
+                // ... move back
+                this.y = this.lastY;
                 // If heading down, stop moving
                 if (deltaY > 0) {
                     this.vSpeed = 0;
                 }
                 // Try pushing the colliding object
                 else if (obj.hasBehavior("Moving")) {
-                    obj.tryVerticalMove(0.3 * deltaY, gameState);
+                    obj.tryVerticalMove(deltaY, gameState);
                 }
                 // If the object couldn't be pushed, stop moving
                 else {
                     this.vSpeed = 0;
                 }
-                this.moveToVerticalCollision(obj, deltaY);
+
+                if ((deltaY > 0 && this.y + this.boundingBox.bottom < obj.y + obj.boundingBox.top) ||
+                    (deltaY < 0 && this.y + this.boundingBox.top < obj.y > obj.y + obj.boundingBox.bottom)) {
+                    this.moveToVerticalCollision(obj, deltaY);
+                }   
             }
         }
         this.y = Math.round(this.y);
@@ -94,6 +153,8 @@ function Moving() {
     this.name = "Moving";
 
     this.properties = {
+        lastX: 0,
+        lastY: 0,
         hAcceleration: 0,
         vAcceleration: 0.4,
         
@@ -103,10 +164,12 @@ function Moving() {
         maxHSpeed: 2,
         maxVSpeed: 7,
 
+        move: move,
         tryHorizontalMove: tryHorizontalMove,
         tryVerticalMove: tryVerticalMove,
         moveToHorizontalCollision: moveToHorizontalCollision,
-        moveToVerticalCollision: moveToVerticalCollision
+        moveToVerticalCollision: moveToVerticalCollision,
+        carriedObjects: carriedObjects
     };
 
     //========================
@@ -115,6 +178,9 @@ function Moving() {
     this.tickStart = function(gameState) {};
     this.tickEnd = function(gameState) {
         var obj, solidObjects, i;
+
+        this.lastX = this.x;
+        this.lastY = this.y;
 
         this.hSpeed += this.hAcceleration;
         this.vSpeed += this.vAcceleration;
@@ -133,10 +199,6 @@ function Moving() {
             this.hSpeed = -this.maxHSpeed;
         }
 
-        // If the object still has vSpeed or hSpeed, try to move it
-        if (this.hSpeed !== 0 || this.vSpeed !== 0) {
-            this.tryHorizontalMove(this.hSpeed, gameState);
-            this.tryVerticalMove(this.vSpeed, gameState);
-        }
+        this.move(this.hSpeed, this.vSpeed, gameState);
     };
 }

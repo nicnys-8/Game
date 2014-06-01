@@ -9,6 +9,8 @@ var GameObject = function() {
     this.x = 0;
     this.y = 0;
 
+    this.weight = 1;
+
     this.boundingBox = {
         left: 0, right: 16,
         top: 0, bottom: 16
@@ -48,9 +50,9 @@ var GameObject = function() {
             this.y + this.boundingBox.bottom <= y));
     };
 
-    this.onTopOfObject = function(obj) {
-        return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
-            this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left) &&
+    this.onTopOf = function(obj) {
+        return (!(this.x >= obj.x + obj.boundingBox.right ||
+            this.x <= obj.x + obj.boundingBox.left) &&
             this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
     };
 

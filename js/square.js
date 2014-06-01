@@ -16,7 +16,7 @@ function createSquare() {
     square.addBehavior(new Moving());
     square.addBehavior(new Platform());
     square.addBehavior(new Solid());
-    square.currentAnimation = createAnimation("img/square.png", 1, hotspot);
+    square.currentAnimation = createAnimation("img/pink.svg", 1, hotspot);
     square.currentAnimation.imageSpeed = 0;
     square.boundingBox = {
         left: -16, right: 16,

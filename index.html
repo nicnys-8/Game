@@ -26,7 +26,6 @@
     <script src="js/behaviors/face_direction.js"></script>
 
     <script>
-
     var canvas = document.getElementById("view");
     var ctx = canvas.getContext("2d");
 
@@ -49,6 +48,11 @@
     square.y = 32;
     gameState.addObject(square);
 
+    square2 = createSquare();
+    square2.x = 112;
+    square2.y = 32;
+    gameState.addObject(square2);
+
     guy = createGuy();
     guy.x = 32;
     guy.y = 32;
@@ -59,10 +63,15 @@
     gameState.addObject(controller);
 
     document.body.onmousedown = function(event) {
-        if (square.overlapsPoint(event.clientX, event.clientY)) {
+        controlled.hAcceleration = 0;
+        controlled.hSpeed = 0;
+        
+        if (square.overlapsPoint(event.offsetX, event.offsetY)) {
             controlled = square;
-        } else if (guy.overlapsPoint(event.clientX, event.clientY)) {
+        } else if (guy.overlapsPoint(event.offsetX, event.offsetY)) {
             controlled = guy;
+        } else if (square2.overlapsPoint(event.offsetX, event.offsetY)) {
+            controlled = square2;
         } else {
             block = createBlock(ctx);
             block.x = 16 * Math.round((event.clientX - 8) / 16);
@@ -105,7 +114,6 @@
         for (var i = 0; i < renderList.length; i++) {
             renderList[i].render(ctx);
         }
-
     };
 
     </script>
