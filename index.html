@@ -31,7 +31,7 @@
 
     window.requestAnimationFrame(tick);
 
-    var gameState = createGameState();
+    var state = createGameState();
 
     // Add game objects
     var sprite, block, controller, controlled;
@@ -40,27 +40,27 @@
         block = createBlock();
         block.x = i * 16;
         block.y = 64;
-        gameState.addObject(block);
+        state.addObject(block);
     }
 
     square = createSquare();
     square.x = 64;
     square.y = 32;
-    gameState.addObject(square);
+    state.addObject(square);
 
     square2 = createSquare();
     square2.x = 112;
     square2.y = 32;
-    gameState.addObject(square2);
+    state.addObject(square2);
 
     guy = createGuy();
     guy.x = 32;
     guy.y = 32;
-    gameState.addObject(guy);
+    state.addObject(guy);
     controlled = guy;
 
     controller = createController();
-    gameState.addObject(controller);
+    state.addObject(controller);
 
     document.body.onmousedown = function(event) {
         controlled.hAcceleration = 0;
@@ -76,17 +76,17 @@
             block = createBlock(ctx);
             block.x = 16 * Math.round((event.clientX - 8) / 16);
             block.y = 16 * Math.round((event.clientY - 8) / 16);
-            gameState.addObject(block);
+            state.addObject(block);
         }
     };
 
     function tick() {
         window.requestAnimationFrame(tick);
-        var renderList = gameState.filter("Renderable");
+        var renderList = state.filter("Renderable");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (var i = 0; i < gameState.objects.length; i++) {
-            gameState.objects[i].tickStart(gameState);
+        for (var i = 0; i < state.objects.length; i++) {
+            state.objects[i].tickStart(state);
         }
 
         if (controller.down("left")) {
@@ -107,8 +107,8 @@
             }
         }
 
-        for (var i = 0; i < gameState.objects.length; i++) {
-            gameState.objects[i].tickEnd(gameState);
+        for (var i = 0; i < state.objects.length; i++) {
+            state.objects[i].tickEnd(state);
         }
 
         for (var i = 0; i < renderList.length; i++) {

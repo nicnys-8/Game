@@ -38,5 +38,21 @@ function createGameState() {
         return objects;
     };
 
-    return gameState;
+    gameState.objectsInZone = function(left, right, top, bottom) {
+        var result = [];
+        var obj;
+        for (var i = 0; i < gameState.objects.length; i++) {
+            obj = gameState.objects[i];
+            if (!(
+                obj.x + obj.boundingBox.left >= right ||
+                obj.x + obj.boundingBox.right <= left ||
+                obj.y + obj.boundingBox.top >= bottom ||
+                obj.y + obj.boundingBox.bottom <= top)) {
+                result.push(obj);
+        }
+    }
+    return result;
+};
+
+return gameState;
 }

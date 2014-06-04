@@ -26,7 +26,7 @@ function createSquare() {
     //===============
     // Tick functions
     //===============
-    square.tickEnd = function() {
+    square.tickEnd = function(gameState) {
         for (var i = 0; i < this.endTicks.length; i++) {
             this.endTicks[i].call(this, gameState);
         }
