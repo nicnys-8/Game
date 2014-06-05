@@ -12,6 +12,7 @@ function createGuy() {
     // Add behaviors
     //==============
     guy.addBehavior(new Renderable());
+    guy.addBehavior(new Physical());
     guy.addBehavior(new Moving());
     guy.addBehavior(new Platform());
     guy.addBehavior(new FaceDirection());
@@ -27,9 +28,9 @@ function createGuy() {
     //===============
     // Tick functions
     //===============
-    guy.tickEnd = function(gameState) {
-        for (var i = 0; i < this.endTicks.length; i++) {
-            this.endTicks[i].call(this, gameState);
+    guy.tick = function(gameState) {
+        for (var i = 0; i < this.ticks.length; i++) {
+            this.ticks[i].call(this, gameState);
         }
     };
 

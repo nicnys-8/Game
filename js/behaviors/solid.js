@@ -20,10 +20,8 @@ function Solid() {
 
     this.properties = {};
     
-    //========================
-    // Behavior tick functions
-    //========================
-    this.tickStart = function(gameState) {};
-    this.tickEnd = function(gameState) {};
-
+    //=======================
+    // Behavior tick function
+    //=======================
+    this.tick = function(gameState) {};
 }

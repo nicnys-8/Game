@@ -14,11 +14,10 @@ function FaceDirection() {
 
     this.properties = {};
     
-    //========================
-    // Behavior tick functions
-    //========================
-    this.tickStart = function(gameState) {};
-    this.tickEnd = function(gameState) {
+    //=======================
+    // Behavior tick function
+    //=======================
+    this.tick = function(gameState) {
         if (this.hSpeed > 0) {
             this.scale.x = 1;
         } else if (this.hSpeed < 0) {

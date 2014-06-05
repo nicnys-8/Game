@@ -13,6 +13,7 @@ function createSquare() {
     //==============
     square.addBehavior(new Renderable());
     square.addBehavior(new FaceDirection());
+    square.addBehavior(new Physical());
     square.addBehavior(new Moving());
     square.addBehavior(new Platform());
     square.addBehavior(new Solid());
@@ -27,8 +28,8 @@ function createSquare() {
     // Tick functions
     //===============
     square.tickEnd = function(gameState) {
-        for (var i = 0; i < this.endTicks.length; i++) {
-            this.endTicks[i].call(this, gameState);
+        for (var i = 0; i < this.ticks.length; i++) {
+            this.ticks[i].call(this, gameState);
         }
     };
 

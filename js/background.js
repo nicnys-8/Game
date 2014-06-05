@@ -1,8 +1,8 @@
 /**
 A animation that can be rendered on screen
 */
-function createAnimation(imgPath, numFrames, hotspot) {
-    var animation = {};
+function createBackground(imgPath) {
+    var background = {};
 
     //==================
     // Private variables
@@ -10,39 +10,20 @@ function createAnimation(imgPath, numFrames, hotspot) {
     var img, width, height;
 
     //=================
-    // Public variables
-    //=================
-    animation.frame = 0;
-    animation.numFrames = numFrames;
-    animation.hotspot = hotspot;
-    animation.imageSpeed = 0;
-    animation.canvas;
-
-    //=================
     // Public functions
     //=================
-    animation.tick = function() {
-        animation.frame = (animation.frame + animation.imageSpeed) % (animation.numFrames - 1);
-    };
+    animation.tick = function() {};
 
     animation.render = function(ctx, x, y, scale, rotation, alpha) {
-        var clippingX = Math.round(animation.frame) * width, clippingY = 0,
-        clippingWidth = width, clippingHeight = height,
-        canvasX = -this.hotspot.x, canvasY = -this.hotspot.y;
-
+        var clippingX = 0, clippingY = 0;
         ctx.save();
+
         ctx.translate(x, y);
         ctx.scale(scale.x, scale.y);
         ctx.rotate(rotation);
-        ctx.globalAlpha = alpha; 
+        ctx.globalAlpha = alpha;
 
-        ctx.drawImage(
-            animation.canvas,
-            clippingX, clippingY,
-            clippingWidth, clippingHeight,
-            canvasX, canvasY,
-            width, height
-            );
+        ctx.drawImage(animation.canvas, 0, 0);
         ctx.restore();
     };
 
@@ -53,7 +34,7 @@ function createAnimation(imgPath, numFrames, hotspot) {
     img = new Image();
     img.src = imgPath;
     img.onload = function() {
-        width = img.width / animation.numFrames;
+        width = img.width;
         height = img.height;
 
         animation.canvas.width = img.width;

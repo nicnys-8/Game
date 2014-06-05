@@ -25,10 +25,7 @@ function createController() {
     function onKeyDown(event) {
         var code = event.keyCode;
         var key = keyMappings[code];
-        var state = keyStates[key];
-        if (state === "up") {
-            keyEvents[key] = "pressed"; // only allow press if lalaal
-        }
+        keyEvents[key] = "pressed"; // only allow press if lalaal
     }
 
     function onKeyUp(event) {
@@ -62,13 +59,7 @@ function createController() {
         return (keyStates[key] === "released");
     };
 
-    controller.tickStart = function() {
-        for (var key in keyEvents) {
-            keyStates[key] = keyEvents[key];
-        }
-    };
-
-    controller.tickEnd = function() {
+    controller.tick = function() {
         for (var key in keyStates) {
             if (keyStates[key] === "released") {
                 keyStates[key] = "up";
@@ -77,9 +68,12 @@ function createController() {
             if (keyStates[key] === "pressed") {
                 keyStates[key] = "down";
             }
-
-            keyEvents = {}; //@TODO: Maybe we'll find a better way?
         }
+
+        for (var key in keyEvents) {
+                keyStates[key] = keyEvents[key];
+            }
+        keyEvents = {}; //@TODO: Det här kan nog göras på ett bättre sätt
     };
 
     return controller;

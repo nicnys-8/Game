@@ -13,6 +13,7 @@ function createBlock(ctx) {
     // Add behaviors
     //==============
     block.addBehavior(new Renderable());
+    block.addBehavior(new Physical());
     block.addBehavior(new Solid());
     block.currentAnimation = createAnimation("img/block.png", 1, hotspot);
     block.boundingBox = {

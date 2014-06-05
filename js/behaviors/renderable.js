@@ -28,11 +28,10 @@ function Renderable() {
         alpha: 1
     };
     
-    //========================
-    // Behavior tick functions
-    //========================
-    this.tickStart = function(gameState) {};
-    this.tickEnd = function(gameState) {
+    //=======================
+    // Behavior tick function
+    //=======================
+    this.tick = function(gameState) {
         if (this.currentAnimation.imageSpeed > 0) {
             this.currentAnimation.tick();
         }

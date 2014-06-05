@@ -19,6 +19,7 @@
 
 
     <!-- Behaviors -->
+    <script src="js/behaviors/physical.js"></script>
     <script src="js/behaviors/moving.js"></script>
     <script src="js/behaviors/solid.js"></script>
     <script src="js/behaviors/platform.js"></script>
@@ -85,10 +86,6 @@
         var renderList = state.filter("Renderable");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (var i = 0; i < state.objects.length; i++) {
-            state.objects[i].tickStart(state);
-        }
-
         if (controller.down("left")) {
             controlled.hAcceleration = -0.5;
         } else if (controller.down("right")) {
@@ -108,7 +105,7 @@
         }
 
         for (var i = 0; i < state.objects.length; i++) {
-            state.objects[i].tickEnd(state);
+            state.objects[i].tick(state);
         }
 
         for (var i = 0; i < renderList.length; i++) {

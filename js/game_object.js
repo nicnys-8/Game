@@ -17,8 +17,7 @@ var GameObject = function() {
     };
 
     this.behaviors = [];
-    this.startTicks = [];
-    this.endTicks = []; 
+    this.ticks = [];
     
     //=================
     // Public functions
@@ -95,18 +94,9 @@ var GameObject = function() {
     /**
      Actions to perform at each tick
      */
-     this.tickStart = function(gameState) {
-        for (var i = 0; i < this.startTicks.length; i++) {
-            this.startTicks[i].call(this, gameState);
-        }
-    };
-
-    /**
-     Actions to perform at each tick
-     */
-     this.tickEnd = function(gameState) {
-        for (var i = 0; i < this.endTicks.length; i++) {
-            this.endTicks[i].call(this, gameState);
+     this.tick = function(gameState) {
+        for (var i = 0; i < this.ticks.length; i++) {
+            this.ticks[i].call(this, gameState);
         }
     };
     
@@ -121,7 +111,6 @@ var GameObject = function() {
             this[p] = behavior.properties[p];
         }
         // Modify the target's tick function
-        this.startTicks.push(behavior.tickStart);
-        this.endTicks.push(behavior.tickEnd);
+        this.ticks.push(behavior.tick);
     };
 };
