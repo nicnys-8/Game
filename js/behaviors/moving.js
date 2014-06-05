@@ -2,28 +2,31 @@
 Describes the behavior of a moving object
 */
 function Moving() {
+
     //================================
     // Private functions and variables
     //================================
 
-    function computeWeight(objects) {
-        var weight = 0;
-        for (var i = 0; i < objects.length; i++) {
-            weight += obj.weight;
+    function computeWeight(gameState) {
+        var moving = gameState.filter("Moving");
+        var carried = this.carriedObjects(moving);
+        var weight = this.weight;
+        for (var i = 0; i < carried.length; i++) {
+            weight += carried[i].computeWeight(gameState);
         }
         return weight;
     }
 
     /**
     Given an array of objects, this function returns the subset
-    of all objects standing directly on top of this one
+    of all objects carried by the target object
     @param objets The array to look through
     */
     function carriedObjects(objects) {
         var carried = [];
         for (var i = 0; i < objects.length; i++) {
             obj = objects[i];
-            if (obj.hasBehavior("Moving") && obj.onTopOf(this)) {
+            if (obj.hasBehavior("Moving") && obj.carriedBy(this)) {
                 carried.push(obj);
             }
         }
@@ -37,7 +40,14 @@ function Moving() {
     @param gameState Object describing the entire game state
     */
     function move(deltaX, deltaY, gameState) {
-        var threshold = 0.1; //@TODO: Move this
+        /*
+        var totalWeight = this.computeWeight(gameState);
+        var modifier = (this.strength - totalWeight) / this.strength;
+        console.log(modifier);
+        deltaX *= modifier;
+        deltaY *= modifier;
+        */
+        var threshold = 0.1; //@TODO: Flytta ut det här nånstans vettigt
         if (Math.abs(deltaY) > threshold) {
             this.tryVerticalMove(deltaY, gameState);
         }
@@ -60,12 +70,11 @@ function Moving() {
             this.y + this.boundingBox.bottom
             );
         var carried = this.carriedObjects(objects);
-        var prevX = this.x;
         var direction = deltaX ? deltaX < 0 ? -1 : 1 : 0 // Calculate the direction of deltaY
+        var prevX = this.x;
         var obj;
         var steps;
         var pushDistance;
-        var temp;
 
         // Move the object
         this.x += deltaX;
@@ -74,21 +83,17 @@ function Moving() {
         // Check for collisions
         for (var i = 0; i < objects.length; i++) {
             obj = objects[i];
-
             // Ignore collisions with itself
             if (this === obj) {
                 continue;
             }
-
             if (this.overlapsObject(obj)) {
                 // Try pushing the obstacle
                 if (obj.hasBehavior("Moving")) {
-                    temp = this.x;
                     pushDistance = this.horizontalOverlap(obj);
-                    this.x = prevX;
                     obj.tryHorizontalMove(pushDistance, gameState);
-                    this.x = temp;
                 } else {
+                    // It the obstacle can't be pushed, stop moving forward
                     this.hSpeed = 0;
                 }
                 // Move back until there is no overlap
@@ -119,12 +124,11 @@ function Moving() {
             Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
             );
         var carried = this.carriedObjects(objects);
-        var prevY = this.y;
         var direction = deltaY ? deltaY < 0 ? -1 : 1 : 0 // Calculate the direction of deltaY
+        var prevY = this.y;
         var obj;
         var steps;
         var pushDistance;
-        var temp;
 
         // Move the object
         this.y += deltaY;
@@ -141,14 +145,10 @@ function Moving() {
             if (this.overlapsObject(obj)) {
                 // Try pushing the obstacle
                 if (obj.hasBehavior("Moving") && deltaY < 0) {
-
-                    temp = this.y;
-                    pushDistance = this.verticalOverlap(obj); //@TODO: varför minus dir?
-                    this.y = prevY;
+                    pushDistance = this.verticalOverlap(obj);
                     obj.tryVerticalMove(pushDistance, gameState);
-                    this.y = temp;
-
                 } else {
+                    // It the obstacle can't be pushed, stop moving forward
                     this.vSpeed = 0;
                 }
                 // Move back until there is no overlap
@@ -157,7 +157,6 @@ function Moving() {
                 }
             }
         }
-
         // Drag carried objects down
         // (jåå, det är så det ska va... det blir dålig styrsel annars!)
         pushDistance = this.y - prevY;
@@ -170,9 +169,11 @@ function Moving() {
         }
     }
 
+
     //====================
     // Behavior properties
     //====================
+
     this.name = "Moving";
 
     this.properties = {
@@ -183,27 +184,30 @@ function Moving() {
         vSpeed: 0,
         maxHSpeed: 2,
         maxVSpeed: 7,
+        strength: 4, //@TODO: Byt ut mot nåt logiskt...
 
         // Functions
         move: move,
         tryHorizontalMove: tryHorizontalMove,
         tryVerticalMove: tryVerticalMove,
-        carriedObjects: carriedObjects
+        carriedObjects: carriedObjects,
+        computeWeight: computeWeight
     };
+
 
     //=======================
     // Behavior tick function
     //=======================
+
     this.tick = function(gameState) {
         var obj, solidObjects;
 
         this.hSpeed += this.hAcceleration;
         this.vSpeed += this.vAcceleration;
 
-        // Limit vSpeed to maxVSpeed
+        // Limit vSpeed to maxVSpeed in either direction
         this.vSpeed = Math.max(Math.min(this.vSpeed, this.maxVSpeed), -this.maxVSpeed);
-
-        // Limit hSpeed to maxHSpeed
+        // Limit hSpeed to maxHSpeed in either direction
         this.hSpeed = Math.max(Math.min(this.hSpeed, this.maxHSpeed), -this.maxHSpeed);
 
         this.move(this.hSpeed, this.vSpeed, gameState);

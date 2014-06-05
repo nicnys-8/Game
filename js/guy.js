@@ -25,9 +25,9 @@ function createGuy() {
         top: -8, bottom: 8
     };
 
-    //===============
-    // Tick functions
-    //===============
+    //==============
+    // Tick function
+    //==============
     guy.tick = function(gameState) {
         for (var i = 0; i < this.ticks.length; i++) {
             this.ticks[i].call(this, gameState);

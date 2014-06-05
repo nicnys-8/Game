@@ -6,9 +6,11 @@ var GameObject = function() {
     //===========
     // Properties
     //===========
+
     this.behaviors = [];
     this.ticks = [];
     
+
     //=================
     // Public functions
     //=================
@@ -37,10 +39,12 @@ var GameObject = function() {
      this.addBehavior = function(behavior) {
         // Add the name of the behavior
         this.behaviors.push(behavior.name);
+
         // Add all behavior properties
         for (var p in behavior.properties) {
             this[p] = behavior.properties[p];
         }
+        
         // Modify the target's tick function
         this.ticks.push(behavior.tick);
     };

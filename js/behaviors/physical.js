@@ -14,14 +14,14 @@ function Physical() {
             this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left ||
             this.y + this.boundingBox.top >= obj.y + obj.boundingBox.bottom ||
             this.y + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
-    };
+    }
 
     function overlapsPoint(x, y) {
         return (!(this.x + this.boundingBox.left >= x ||
             this.x + this.boundingBox.right <= x ||
             this.y + this.boundingBox.top >= y ||
             this.y + this.boundingBox.bottom <= y));
-    };
+    }
 
     function horizontalOverlap(obj) {
         if (this.x < obj.x) {
@@ -39,11 +39,15 @@ function Physical() {
         }
     }
 
-    function onTopOf(obj) {
+    /**
+    Returns true if the object is standing firmly on the other one
+    (which means it won't fall off if the other one moves)
+    */
+    function carriedBy(obj) {
         return (!(this.x >= obj.x + obj.boundingBox.right ||
             this.x <= obj.x + obj.boundingBox.left) &&
         this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
-    };
+    }
 
     //====================
     // Behavior properties
@@ -62,7 +66,7 @@ function Physical() {
         overlapsPoint: overlapsPoint,
         horizontalOverlap: horizontalOverlap,
         verticalOverlap: verticalOverlap,
-        onTopOf: onTopOf,
+        carriedBy: carriedBy
     };
 
     //=======================
