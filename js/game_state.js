@@ -39,10 +39,11 @@ function createGameState() {
     };
 
     gameState.objectsInZone = function(left, right, top, bottom) {
+        var pObjects = this.filter("Physical");
         var result = [];
         var obj;
-        for (var i = 0; i < gameState.objects.length; i++) {
-            obj = gameState.objects[i];
+        for (var i = 0; i < pObjects.length; i++) {
+            obj = pObjects[i];
             if (!(
                 obj.x + obj.boundingBox.left >= right ||
                 obj.x + obj.boundingBox.right <= left ||

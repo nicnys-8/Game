@@ -16,6 +16,13 @@ function Physical() {
             this.y + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
     };
 
+    function overlapsPoint(x, y) {
+        return (!(this.x + this.boundingBox.left >= x ||
+            this.x + this.boundingBox.right <= x ||
+            this.y + this.boundingBox.top >= y ||
+            this.y + this.boundingBox.bottom <= y));
+    };
+
     function horizontalOverlap(obj) {
         if (this.x < obj.x) {
             return (this.x + this.boundingBox.right) - (obj.x + obj.boundingBox.left);
@@ -52,6 +59,7 @@ function Physical() {
 
         // Functions
         overlapsObject: overlapsObject,
+        overlapsPoint: overlapsPoint,
         horizontalOverlap: horizontalOverlap,
         verticalOverlap: verticalOverlap,
         onTopOf: onTopOf,
