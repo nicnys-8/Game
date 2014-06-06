@@ -1,27 +1,39 @@
 /**
 Describes the behavior of a solid object
  */
-function Solid() {
-    //================================
-    // Private functions and variables
-    //================================
+var Solid = function() {
 
-    /*
-    function move(deltaX, deltY) {
-        this.x += this.hSpeed;
-        this.y += this.vSpeed;
-    }
-    */
+	//================================
+	// Private functions and variables
+	//================================
 
-    //====================
-    // Behavior properties
-    //====================
-    this.name = "Solid";
+	/*
+	function move(deltaX, deltY) {
+		this.x += this.hSpeed;
+		this.y += this.vSpeed;
+	}
+	*/
+	
 
-    this.properties = {};
-    
-    //=======================
-    // Behavior tick function
-    //=======================
-    this.tick = function(gameState) {};
-}
+	//=================
+	// Public interface
+	//=================
+
+	var behavior = {};
+	
+	behavior.name = "Solid";
+
+	behavior.getProperties = function() {
+		return {};
+	};
+	
+	
+	//=======================
+	// Behavior tick function
+	//=======================
+	behavior.tick = function(gameState) {};
+
+	return behavior;
+}();
+
+//@TODO: Ta bort hela de tomma funktionerna helt?

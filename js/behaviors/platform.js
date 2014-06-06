@@ -1,27 +1,32 @@
 /**
 Behavior describing a platform character
  */
-function Platform() {
-    //==================
-    // Private functions
-    //==================
-    function jump() {
-        this.vSpeed = -5;
-    };
-    
-    //====================
-    // Behavior properties
-    //====================
-    this.name = "Platform";
+var Platform = function() {
 
-    this.properties = {
-        jump: jump
-    };
-    
-    //=======================
-    // Behavior tick function
-    //=======================
-    this.tick = function(gameState) {
-    };
+	//================================
+	// Private functions and variables
+	//================================
+	
+	function jump() {
+		this.vSpeed = -5;
+	};
+	
 
-}
+	//=================
+	// Public interface
+	//=================
+
+	var behavior = {};
+
+	behavior.name = "Platform";
+
+	behavior.getProperties = function() {
+		return {
+			jump: jump
+		};
+	};
+	
+	behavior.tick = function(gameState) {};
+	
+	return behavior;
+}();

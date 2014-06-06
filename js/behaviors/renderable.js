@@ -2,38 +2,47 @@
 /**
 Describes an object that can be rendered on the screen
 */
-function Renderable() {
-    //================================
-    // Private functions and variables
-    //================================
+var Renderable = function() {
 
-    /**
-     Render the object
-     */
-     function render(ctx) {
-        this.currentAnimation.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
-    };
+	//================================
+	// Private functions and variables
+	//================================
 
-    //====================
-    // Behavior properties
-    //====================
-    this.name = "Renderable";
+	/**
+	 Render the object
+	 */
+	 function render(ctx) {
+		this.currentAnimation.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
+	};
 
-    this.properties = {
-        render: render,
-        currentAnimation: null,
-        frame: 0,
-        rotation: 0,
-        scale: {x: 1, y: 1},
-        alpha: 1
-    };
-    
-    //=======================
-    // Behavior tick function
-    //=======================
-    this.tick = function(gameState) {
-        if (this.currentAnimation.imageSpeed > 0) {
-            this.currentAnimation.tick();
-        }
-    };
-}
+
+	//=================
+	// Public interface
+	//=================
+
+	var behavior = {};
+
+	behavior.name = "Renderable";
+
+	behavior.getProperties = function() {
+		return {
+			// Variables
+			currentAnimation: null,
+			frame: 0,
+			rotation: 0,
+			scale: {x: 1, y: 1},
+			alpha: 1,
+
+			// Functions
+			render: render
+		}
+	};
+	
+	behavior.tick = function(gameState) {
+		if (this.currentAnimation.imageSpeed > 0) {
+			this.currentAnimation.tick();
+		}
+	};
+
+	return behavior;
+}();

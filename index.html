@@ -1,117 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"></meta>
-    <title>Game</title>
+	<meta charset="utf-8"></meta>
+	<title>Game</title>
 </head>
+
+<style type="text/css">
+
+body {
+	background-color: black;
+}
+
+canvas {
+	position: absolute;
+	background-color: white;
+	left: 50%;
+	margin-left: -320px;
+}
+
+</style>
 
 <body>
 
-    <canvas  width=800 height=800 id="view"></canvas>
+	<canvas  width=640 height=480 id="view"></canvas>
 
-    <script src="js/game_state.js"></script>
-    <script src="js/game_object.js"></script>
-    <script src="js/controller.js"></script>
-    <script src="js/animation.js"></script>
-    <script src="js/block.js"></script>
-    <script src="js/guy.js"></script>
-    <script src="js/square.js"></script>
+	<script src="js/game_state.js"></script>
+	<script src="js/game_object.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/animation.js"></script>
+	<script src="js/block.js"></script>
+	<script src="js/guy.js"></script>
+	<script src="js/square.js"></script>
 
 
-    <!-- Behaviors -->
-    <script src="js/behaviors/physical.js"></script>
-    <script src="js/behaviors/moving.js"></script>
-    <script src="js/behaviors/solid.js"></script>
-    <script src="js/behaviors/platform.js"></script>
-    <script src="js/behaviors/renderable.js"></script>
-    <script src="js/behaviors/face_direction.js"></script>
+	<!-- Behaviors -->
+	<script src="js/behaviors/physical.js"></script>
+	<script src="js/behaviors/moving.js"></script>
+	<script src="js/behaviors/solid.js"></script>
+	<script src="js/behaviors/platform.js"></script>
+	<script src="js/behaviors/renderable.js"></script>
+	<script src="js/behaviors/face_direction.js"></script>
 
-    <script>
-    var canvas = document.getElementById("view");
-    var ctx = canvas.getContext("2d");
+	<script>
+	var canvas = document.getElementById("view");
+	var ctx = canvas.getContext("2d");
 
-    window.requestAnimationFrame(tick);
+	var state = createGameState();
 
-    var state = createGameState();
+	// Add game objects
+	var sprite, block, controller, controlled;
 
-    // Add game objects
-    var sprite, block, controller, controlled;
+	for (var i = 0; i < 12; i++) {
+		block = createBlock();
+		block.x = i * 16;
+		block.y = 64;
+		state.addObject(block);
+	}
 
-    for (var i = 0; i < 12; i++) {
-        block = createBlock();
-        block.x = i * 16;
-        block.y = 64;
-        state.addObject(block);
-    }
+	square = createSquare();
+	square.x = 64;
+	square.y = 32;
+	state.addObject(square);
 
-    square = createSquare();
-    square.x = 64;
-    square.y = 32;
-    state.addObject(square);
+	square2 = createSquare();
+	square2.x = 112;
+	square2.y = 32;
+	state.addObject(square2);
 
-    square2 = createSquare();
-    square2.x = 112;
-    square2.y = 32;
-    state.addObject(square2);
+	guy = createGuy();
+	guy.x = 32;
+	guy.y = 32;
+	state.addObject(guy);
+	controlled = guy;
 
-    guy = createGuy();
-    guy.x = 32;
-    guy.y = 32;
-    state.addObject(guy);
-    controlled = guy;
+	controller = createController();
+	state.addObject(controller);
 
-    controller = createController();
-    state.addObject(controller);
+	/**
+	Handle mouse presses
+	*/
+	document.body.onmousedown = function(event) {
+		controlled.hAcceleration = 0;
+		controlled.hSpeed = 0;
+		
+		if (square.overlapsPoint(event.offsetX, event.offsetY)) {
+			controlled = square;
+		} else if (guy.overlapsPoint(event.offsetX, event.offsetY)) {
+			controlled = guy;
+		} else if (square2.overlapsPoint(event.offsetX, event.offsetY)) {
+			controlled = square2;
+		} else {
+			block = createBlock(ctx);
+			block.x = 16 * Math.round(event.offsetX / 16);
+			block.y = 16 * Math.round(event.offsetY /16);
+			state.addObject(block);
+		}
+	};
 
-    document.body.onmousedown = function(event) {
-        controlled.hAcceleration = 0;
-        controlled.hSpeed = 0;
-        
-        if (square.overlapsPoint(event.offsetX, event.offsetY)) {
-            controlled = square;
-        } else if (guy.overlapsPoint(event.offsetX, event.offsetY)) {
-            controlled = guy;
-        } else if (square2.overlapsPoint(event.offsetX, event.offsetY)) {
-            controlled = square2;
-        } else {
-            block = createBlock(ctx);
-            block.x = 16 * Math.round((event.clientX - 8) / 16);
-            block.y = 16 * Math.round((event.clientY - 8) / 16);
-            state.addObject(block);
-        }
-    };
+	function tick() {
+		window.requestAnimationFrame(tick);
+		var renderList = state.filter("Renderable");
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    function tick() {
-        window.requestAnimationFrame(tick);
-        var renderList = state.filter("Renderable");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// Game controls
+		if (controller.down("left")) {
+			controlled.hAcceleration = -0.5;
+		} else if (controller.down("right")) {
+			controlled.hAcceleration = 0.5;
+		} else {
+			controlled.hAcceleration = -controlled.hSpeed / 5;
+		}
 
-        if (controller.down("left")) {
-            controlled.hAcceleration = -0.5;
-        } else if (controller.down("right")) {
-            controlled.hAcceleration = 0.5;
-        } else {
-            controlled.hAcceleration = -controlled.hSpeed / 5;
-        }
+		if (controller.pressed("up")) {
+			controlled.jump();
+		}
 
-        if (controller.pressed("up")) {
-            controlled.jump();
-        }
+		if (controller.released("up")) {
+			if (controlled.vSpeed < 0) {
+				controlled.vSpeed /= 2;
+			}
+		}
 
-        if (controller.released("up")) {
-            if (controlled.vSpeed < 0) {
-                controlled.vSpeed /= 2;
-            }
-        }
+		// Perform ticks
+		for (var i = 0; i < state.objects.length; i++) {
+			state.objects[i].tick(state);
+		}
 
-        for (var i = 0; i < state.objects.length; i++) {
-            state.objects[i].tick(state);
-        }
+		// Render objects
+		for (var i = 0; i < renderList.length; i++) {
+			renderList[i].render(ctx);
+		}
+	};
 
-        for (var i = 0; i < renderList.length; i++) {
-            renderList[i].render(ctx);
-        }
-    };
+	// Start the game loop
+	window.requestAnimationFrame(tick);
 
-    </script>
+	</script>
 </body>
