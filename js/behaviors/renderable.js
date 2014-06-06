@@ -12,7 +12,14 @@ var Renderable = function() {
 	 Render the object
 	 */
 	 function render(ctx) {
-		this.currentAnimation.render(ctx, this.x, this.y, this.scale, this.rotation, this.alpha);
+		this.currentAnimation.render(
+			ctx,
+			this.x,
+			this.y,
+			this.scale,
+			this.rotation,
+			this.alpha
+			);
 	};
 
 
@@ -23,7 +30,7 @@ var Renderable = function() {
 	var behavior = {};
 
 	behavior.name = "Renderable";
-
+	
 	behavior.getProperties = function() {
 		return {
 			// Variables

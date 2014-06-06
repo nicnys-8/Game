@@ -25,13 +25,15 @@ canvas {
 	<canvas  width=640 height=480 id="view"></canvas>
 
 	<script src="js/game_state.js"></script>
-	<script src="js/game_object.js"></script>
 	<script src="js/controller.js"></script>
 	<script src="js/animation.js"></script>
-	<script src="js/block.js"></script>
-	<script src="js/guy.js"></script>
-	<script src="js/square.js"></script>
+	<script src="js/levels.js"></script>
 
+	<!-- Objects -->
+	<script src="js/objects/game_object.js"></script>
+	<script src="js/objects/block.js"></script>
+	<script src="js/objects/guy.js"></script>
+	<script src="js/objects/square.js"></script>
 
 	<!-- Behaviors -->
 	<script src="js/behaviors/physical.js"></script>
@@ -57,6 +59,8 @@ canvas {
 		state.addObject(block);
 	}
 
+	state.parseLevel(Levels.level1);
+
 	square = createSquare();
 	square.x = 64;
 	square.y = 32;
@@ -76,9 +80,9 @@ canvas {
 	controller = createController();
 	state.addObject(controller);
 
-	/**
-	Handle mouse presses
-	*/
+	//=====================
+	// Handle mouse presses
+	//=====================
 	document.body.onmousedown = function(event) {
 		controlled.hAcceleration = 0;
 		controlled.hSpeed = 0;
@@ -97,6 +101,9 @@ canvas {
 		}
 	};
 
+	//===================
+	// The main game loop
+	//===================
 	function tick() {
 		window.requestAnimationFrame(tick);
 		var renderList = state.filter("Renderable");
@@ -121,12 +128,12 @@ canvas {
 			}
 		}
 
-		// Perform ticks
+		// Perform update functions for all in-game objects
 		for (var i = 0; i < state.objects.length; i++) {
 			state.objects[i].tick(state);
 		}
 
-		// Render objects
+		// Render in-game objects
 		for (var i = 0; i < renderList.length; i++) {
 			renderList[i].render(ctx);
 		}

@@ -1,11 +1,11 @@
 /**
-An object within the game
+An in-game object
 */
 var GameObject = function() {
 
-	//===========
-	// Properties
-	//===========
+	//=================
+	// Public variables
+	//=================
 
 	this.behaviors = [];
 	this.ticks = [];
@@ -15,6 +15,9 @@ var GameObject = function() {
 	// Public functions
 	//=================
 
+	/**
+	Returns true if the object has the given behavior, false otherwise
+	*/
 	this.hasBehavior = function(behavior) {
 		for (var i = 0; i < this.behaviors.length; i++) {
 			if (behavior === this.behaviors[i]) {
@@ -25,7 +28,7 @@ var GameObject = function() {
 	};
 
 	/**
-	 Actions to perform at each tick
+	 Actions to perform at each iteration of the game loop
 	 */
 	 this.tick = function(gameState) {
 		for (var i = 0; i < this.ticks.length; i++) {

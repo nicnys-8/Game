@@ -1,8 +1,13 @@
 /**
-A solid block
+Returns a solid block object
  */
-function createBlock(ctx) {
-	var block = new GameObject(ctx);
+function createBlock(width, height) {
+
+	var block = new GameObject();
+
+	// Set values for width and height
+	if (typeof(width) === "undefined") width = 16;
+	if (typeof(height) === "undefined") height = 16;
 
 	//================================
 	// Private functions and variables
@@ -17,8 +22,8 @@ function createBlock(ctx) {
 	block.addBehavior(Solid);
 	block.currentAnimation = createAnimation("img/block.png", 1, hotspot);
 	block.boundingBox = {
-		left: -8, right: 8,
-		top: -8, bottom: 8
+		left: -width / 2, right: width / 2,
+		top: -height / 2, bottom: height/ 2
 	};
 
 

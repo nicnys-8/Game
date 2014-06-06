@@ -9,11 +9,19 @@ function createBackground(imgPath) {
     //==================
     var img, width, height;
 
+
     //=================
     // Public functions
     //=================
+
+    /**
+    Function to call on every game loop iteration
+    */
     animation.tick = function() {};
 
+    /**
+    Draw the background on screen
+    */
     animation.render = function(ctx, x, y, scale, rotation, alpha) {
         var clippingX = 0, clippingY = 0;
         ctx.save();
@@ -30,6 +38,8 @@ function createBackground(imgPath) {
     //===============
     // Initialization
     //===============
+
+    //@TODO: En canvas per bakground, inte per instans!
     animation.canvas = document.createElement("canvas");
     img = new Image();
     img.src = imgPath;
@@ -40,7 +50,6 @@ function createBackground(imgPath) {
         animation.canvas.width = img.width;
         animation.canvas.height = img.height;
         animation.canvas.getContext("2d").drawImage(img, 0, 0);
-        //animation.canvas.getContext("2d").drawImage(img, 0, 0, width, height, 0, 0, width * 4, width * 4);
     };
 
     return animation;

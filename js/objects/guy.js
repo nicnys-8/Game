@@ -1,4 +1,5 @@
 /**
+Returns a platform character object
  */
 function createGuy() {
 	var guy = new GameObject(ctx);
@@ -28,6 +29,10 @@ function createGuy() {
 	//==============
 	// Tick function
 	//==============
+
+	/**
+	 Actions to perform at each iteration of the game loop
+	 */
 	guy.tick = function(gameState) {
 		for (var i = 0; i < this.ticks.length; i++) {
 			this.ticks[i].call(this, gameState);
