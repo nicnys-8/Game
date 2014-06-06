@@ -44,7 +44,7 @@ function Sprite(canvas, numFrames, hotspot) {
 		var height = canvas.height;
 		var clippingX = Math.round(this.currentFrame) * width;
 		var clippingY = 0;
-		var canvasX = 
+		var canvasX = -this.hotspot.x;
 		var canvasY = -this.hotspot.y;
 
 		ctx.save();
