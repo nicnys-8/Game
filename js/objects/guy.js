@@ -18,8 +18,8 @@ function createGuy() {
 	guy.addBehavior(Platform);
 	guy.addBehavior(FaceDirection);
 	guy.addBehavior(Solid);
-	guy.currentAnimation = createAnimation("img/guy_walk.png", 2, hotspot);
-	guy.currentAnimation.imageSpeed = 0.1;
+	guy.currentSprite = SpriteFactory.createSprite("img/guy_walk.png", 2, hotspot);
+	guy.currentSprite.imageSpeed = 0.1;
 
 	guy.boundingBox = {
 		left: -8, right: 8,

@@ -10,17 +10,20 @@ var Renderable = function() {
 
 	/**
 	 Render the object
+	 @param ctx A 2D rendering context
 	 */
 	 function render(ctx) {
-		this.currentAnimation.render(
-			ctx,
-			this.x,
-			this.y,
-			this.scale,
-			this.rotation,
-			this.alpha
-			);
-	};
+	 	if (this.currentSprite) {
+	 		this.currentSprite.render(
+	 			ctx,
+	 			this.x,
+	 			this.y,
+	 			this.scale,
+	 			this.rotation,
+	 			this.alpha
+	 			);
+	 	}
+	 };
 
 
 	//=================
@@ -34,7 +37,7 @@ var Renderable = function() {
 	behavior.getProperties = function() {
 		return {
 			// Variables
-			currentAnimation: null,
+			currentSprite: null,
 			frame: 0,
 			rotation: 0,
 			scale: {x: 1, y: 1},
@@ -46,8 +49,8 @@ var Renderable = function() {
 	};
 	
 	behavior.tick = function(gameState) {
-		if (this.currentAnimation.imageSpeed > 0) {
-			this.currentAnimation.tick();
+		if (this.currentSprite.imageSpeed > 0) {
+			this.currentSprite.tick();
 		}
 	};
 

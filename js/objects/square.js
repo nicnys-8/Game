@@ -10,11 +10,11 @@ function createSquare() {
 	//================================
 
 	var hotspot = {x: 16, y: 16};
-	var standAnimation = createAnimation("img/pink-stand.svg", 1, hotspot);
-	var walkAnimation = createAnimation("img/pink-walk.svg", 2, hotspot);
+	var standSprite = SpriteFactory.createSprite("img/pink-stand.svg", 1, hotspot);
+	var walkSprite = SpriteFactory.createSprite("img/pink-walk.svg", 2, hotspot);
 
-	standAnimation.imageSpeed = 0;
-	walkAnimation.imageSpeed = 0.1;
+	standSprite.imageSpeed = 0;
+	walkSprite.imageSpeed = 0.1;
 
 
 	//==============
@@ -27,7 +27,7 @@ function createSquare() {
 	square.addBehavior(Moving);
 	square.addBehavior(Platform);
 	square.addBehavior(Solid);
-	square.currentAnimation = walkAnimation;
+	square.currentSprite = walkSprite;
 	square.boundingBox = {
 		left: -16, right: 16,
 		top: -16, bottom: 16
@@ -44,9 +44,9 @@ function createSquare() {
 	square.tick = function(gameState) {
 		var threshold = 0.1; //@TODO: Gör det här på nå annat sätt
 		if (Math.abs(this.hSpeed) > threshold) {
-			this.currentAnimation = walkAnimation;
+			this.currentSprite = walkSprite;
 		} else {
-			this.currentAnimation = standAnimation;
+			this.currentSprite = standSprite;
 		};
 
 		for (var i = 0; i < this.ticks.length; i++) {

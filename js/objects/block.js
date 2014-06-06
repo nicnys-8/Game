@@ -20,7 +20,7 @@ function createBlock(width, height) {
 	block.addBehavior(Renderable);
 	block.addBehavior(Physical);
 	block.addBehavior(Solid);
-	block.currentAnimation = createAnimation("img/block.png", 1, hotspot);
+	block.currentSprite = SpriteFactory.createSprite("img/block.png", 1, hotspot);
 	block.boundingBox = {
 		left: -width / 2, right: width / 2,
 		top: -height / 2, bottom: height/ 2
