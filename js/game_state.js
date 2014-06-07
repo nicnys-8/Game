@@ -49,6 +49,44 @@ function createGameState() {
 		}
 		return objects;
 	};
+	
+	/**
+	Returns a list of all objects with any of the specified behaviors
+	@param objList Optional object list to filter from
+	@param arguments Any number of behavior names,
+	e.g gameState.filter("Renderable", "Moving", "Solid");
+	*/
+	// @TODO: Granska om hejn blev dumt. Nu kan man ellra filtrar genom att göra exempelvis: filter(filter("Moving"), "Solid")
+	gameState.filter = function(objList /* +Arbitrary number of arguments */) {
+		//@TODO: Cache lookups to increase efficiency!
+
+		var objects = [];
+		var obj, behavior, iStart;
+		
+		if (typeof(objList) !== "string") {
+			objList = gameState.objects;
+			iStart = 1;
+		} else {
+			iStart = 0;
+		}
+		
+
+		// For each object
+		for (var i = iStart; i < gameState.objects.length; i++) {
+			obj = gameState.objects[i];
+			
+			// For each of the object's behaviors
+			for (var j = 0; j < arguments.length; j++) {
+				behavior = arguments[j];
+				
+				// Check if the behavior matches one of the function's arguments
+				if (obj.behaviors.indexOf(behavior) !== -1) {
+					objects.push(obj);
+				}
+			}
+		}
+		return objects;
+	};
 
 	/**
 	Returns all objects that intersect the specified area
