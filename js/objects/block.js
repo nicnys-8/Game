@@ -3,16 +3,21 @@ Returns a solid block object
  */
 function createBlock(width, height) {
 
+	console.log("CRERE");
 	var block = new GameObject();
 
 	// Set values for width and height
-	if (typeof(width) === "undefined") width = 16;
-	if (typeof(height) === "undefined") height = 16;
+	if (typeof(width) === "undefined") {
+		width = 16;
+	}
+	if (typeof(height) === "undefined") {
+		height = 16;
+	}
 
 	//================================
 	// Private functions and variables
 	//================================
-	var hotspot = {x: 8, y: 8};
+	var hotspot = {x: width / 2, y: height / 2};
 	
 	//==============
 	// Add behaviors

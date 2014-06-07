@@ -65,13 +65,14 @@ function createGameState() {
 				obj.y + obj.boundingBox.top >= bottom ||
 				obj.y + obj.boundingBox.bottom <= top)) {
 				result.push(obj);
-			}
 		}
-		return result;
-	};
+	}
+	return result;
+};
 
 	/**
 	Creates all objects from a level description
+	@TODO: Parsaren ska fungera annorlunda i framtiden...!
 	*/
 	gameState.parseLevel = function(description) {
 		var objDesc, obj;
@@ -79,14 +80,22 @@ function createGameState() {
 			objDesc = description.objects[i];
 			switch (objDesc.name) {
 				case "block":
-					obj = createBlock(objDesc.width, objDesc.height);
-					obj.x = objDesc.x;
-					obj.y = objDesc.y;
-					gameState.addObject(obj);
+				obj = createBlock(objDesc.width, objDesc.height);
+				break;
+
+				case "guy":
+				obj = createGuy();
+				break;
+
+				case "square":
+				obj = createSquare();
 				break;
 			}
+			obj.x = objDesc.x;
+			obj.y = objDesc.y;
+			gameState.addObject(obj);
 		}
 	};
 
-return gameState;
+	return gameState;
 }
