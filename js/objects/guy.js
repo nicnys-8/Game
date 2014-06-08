@@ -2,7 +2,7 @@
 Returns a platform character object
  */
 function createGuy() {
-	var guy = new GameObject(ctx);
+	var guy = new GameObject();
 	
 	//================================
 	// Private functions and variables

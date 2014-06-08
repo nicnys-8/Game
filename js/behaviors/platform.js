@@ -9,8 +9,7 @@ var Platform = function() {
 	
 	function jump() {
 		this.vSpeed = -5;
-	};
-	
+	}
 
 	//=================
 	// Public interface
@@ -22,6 +21,10 @@ var Platform = function() {
 
 	behavior.getProperties = function() {
 		return {
+			// Variables
+
+
+			// Functions
 			jump: jump
 		};
 	};

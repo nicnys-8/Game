@@ -24,6 +24,7 @@ canvas {
 
 	<canvas  width=640 height=480 id="view"></canvas>
 
+	<script src="js/game_controller.js"></script>
 	<script src="js/game_state.js"></script>
 	<script src="js/controller.js"></script>
 	<script src="js/sprite_factory.js"></script>
@@ -46,17 +47,14 @@ canvas {
 
 	<script>
 	var canvas = document.getElementById("view");
-	var ctx = canvas.getContext("2d");
-
-	var controlled; // Points to currently controlled object
 	var state = createGameState();
+	var gameController = new GameController(state, canvas);
+	var controlled; // Points to currently controlled object
 
 	state.parseLevel(Levels.level1);
-
-
+	
+	//Här plockar jag bara ut en slumpad rörbar gubbe och börjar styra...
 	controlled = state.filter("Moving")[0];
-	/*// Här plockar jag bara ut en slumpad rörbar gubbe och börjar styra...
-	*/
 
 	controller = createController();
 	state.addObject(controller);
@@ -64,6 +62,7 @@ canvas {
 	//=====================
 	// Handle mouse presses
 	//=====================
+
 	document.body.onmousedown = function(event) {
 		var obj;
 		var moving = state.filter("Moving");
@@ -86,46 +85,8 @@ canvas {
 		state.addObject(block);
 	};
 
-	//===================
-	// The main game loop
-	//===================
-	function tick() {
-		window.requestAnimationFrame(tick);
-		var renderList = state.filter("Renderable");
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		// Game controls
-		if (controller.down("left")) {
-			controlled.hAcceleration = -0.5;
-		} else if (controller.down("right")) {
-			controlled.hAcceleration = 0.5;
-		} else {
-			controlled.hAcceleration = -controlled.hSpeed / 5;
-		}
-
-		if (controller.pressed("up")) {
-			controlled.jump();
-		}
-
-		if (controller.released("up")) {
-			if (controlled.vSpeed < 0) {
-				controlled.vSpeed /= 2;
-			}
-		}
-
-		// Perform update functions for all in-game objects
-		for (var i = 0; i < state.objects.length; i++) {
-			state.objects[i].tick(state);
-		}
-
-		// Render in-game objects
-		for (var i = 0; i < renderList.length; i++) {
-			renderList[i].render(ctx);
-		}
-	}
-
 	// Start the game loop
-	window.requestAnimationFrame(tick);
+	gameController.tick();
 
 	</script>
 </body>

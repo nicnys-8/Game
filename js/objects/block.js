@@ -3,7 +3,6 @@ Returns a solid block object
  */
 function createBlock(width, height) {
 
-	console.log("CRERE");
 	var block = new GameObject();
 
 	// Set values for width and height
