@@ -34,6 +34,16 @@ var Moving = function() {
 	}
 
 	/**
+	Returns true if the object is standing firmly on the other one
+	(which means it won't fall off if the other one moves)
+	*/
+	function carriedBy(obj) {
+		return (!(this.x >= obj.x + obj.boundingBox.right ||
+			this.x <= obj.x + obj.boundingBox.left) &&
+		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
+	}
+
+	/**
 	Attempt to move the object
 	@param deltaX The horizontal distance to travel
 	@param deltaX The vertical distance to travel
@@ -194,6 +204,7 @@ var Moving = function() {
 			tryHorizontalMove: tryHorizontalMove,
 			tryVerticalMove: tryVerticalMove,
 			carriedObjects: carriedObjects,
+			carriedBy: carriedBy,
 			computeWeight: computeWeight
 		};
 	};

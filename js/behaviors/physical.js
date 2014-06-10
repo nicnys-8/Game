@@ -11,15 +11,32 @@ var Physical = function() {
 	Check if this object overlaps another
 	*/
 	function overlapsObject(obj) {
-		return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+		return (!(
+			this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
 			this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left ||
 			this.y + this.boundingBox.top >= obj.y + obj.boundingBox.bottom ||
 			this.y + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
 	}
 
+	/**
+	Check if this object would overlap another if it was moved
+	to a specified point
+	@param obj The object to check for collisions with
+	@param offsetX The horizontal distance to check
+	@param offsetY The vertical distance to check
+	*/
+	function overlapsAtOffset(obj, offsetX, offsetY) {
+		return (!(
+			this.x + offsetX + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+			this.x + offsetX + this.boundingBox.right <= obj.x + obj.boundingBox.left ||
+			this.y + offsetY + this.boundingBox.top >= obj.y + obj.boundingBox.bottom ||
+			this.y + offsetY + this.boundingBox.bottom <= obj.y + obj.boundingBox.top));
+	}
+
 		
 	function overlapsPoint(x, y) {
-		return (!(this.x + this.boundingBox.left >= x ||
+		return (!(
+			this.x + this.boundingBox.left >= x ||
 			this.x + this.boundingBox.right <= x ||
 			this.y + this.boundingBox.top >= y ||
 			this.y + this.boundingBox.bottom <= y));
@@ -41,16 +58,6 @@ var Physical = function() {
 		}
 	}
 
-	/**
-	Returns true if the object is standing firmly on the other one
-	(which means it won't fall off if the other one moves)
-	*/
-	function carriedBy(obj) {
-		return (!(this.x >= obj.x + obj.boundingBox.right ||
-			this.x <= obj.x + obj.boundingBox.left) &&
-		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
-	}
-
 
 	//=================
 	// Public interface
@@ -70,10 +77,10 @@ var Physical = function() {
 			
 			// Functions
 			overlapsObject: overlapsObject,
+			overlapsAtOffset: overlapsAtOffset,
 			overlapsPoint: overlapsPoint,
 			horizontalOverlap: horizontalOverlap,
 			verticalOverlap: verticalOverlap,
-			carriedBy: carriedBy
 		};
 	};
 
