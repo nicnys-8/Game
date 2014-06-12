@@ -1,8 +1,10 @@
 /**
-Returns a platform character object
+A platform character object
  */
-function createSquare() {
-	var square = new GameObject();
+
+function Square() {
+
+	GameObject.call(this);
 	
 
 	//================================
@@ -21,38 +23,27 @@ function createSquare() {
 	// Add behaviors
 	//==============
 
-	square.addBehavior(Behavior.Renderable);
-	square.addBehavior(Behavior.FaceDirection);
-	square.addBehavior(Behavior.Physical);
-	square.addBehavior(Behavior.Moving);
-	square.addBehavior(Behavior.Platform);
-	square.addBehavior(Behavior.Solid);
-	square.currentSprite = walkSprite;
-	square.boundingBox = {
+	this.addBehavior(Behavior.Renderable);
+	this.addBehavior(Behavior.Physical);
+	this.addBehavior(Behavior.Solid);
+	this.addBehavior(Behavior.Moving);
+	this.addBehavior(Behavior.Platform);
+	this.addBehavior(Behavior.FaceDirection);
+
+
+	//=================
+	// Public interface
+	//=================
+
+	this.currentSprite = standSprite;
+	this.boundingBox = {
 		left: -16, right: 16,
 		top: -16, bottom: 16
 	};
 
 
-	//===============
-	// Tick functions
-	//===============
-
-	/**
-	 Actions to perform at each iteration of the game loop
-	 */
-	square.tick = function(gameState) {
-		var threshold = 0.1; //@TODO: Gör det här på nå annat sätt
-		if (Math.abs(this.hSpeed) > threshold) {
-			this.currentSprite = walkSprite;
-		} else {
-			this.currentSprite = standSprite;
-		};
-
-		for (var i = 0; i < this.ticks.length; i++) {
-			this.ticks[i].call(this, gameState);
-		}
-	};
-
-	return square;   
 }
+
+Square.prototype = new GameObject();
+
+

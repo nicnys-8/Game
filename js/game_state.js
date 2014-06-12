@@ -24,35 +24,6 @@ function createGameState() {
 
 	/**
 	Returns a list of all objects with any of the specified behaviors
-	@param arguments Any number of behavior names,
-	e.g gameState.filter("Renderable", "Moving", "Solid");
-	
-	gameState.filter = function() {
-		//@TODO: Cache lookups to increase efficiency!
-
-		var objects = [];
-		var obj, behavior;
-
-		// For each object
-		for (var i = 0; i < gameState.objects.length; i++) {
-			obj = gameState.objects[i];
-			
-			// For each of the object's behaviors
-			for (var j = 0; j < arguments.length; j++) {
-				behavior = arguments[j];
-				
-				// Check if the behavior matches one of the function's arguments
-				if (obj.behaviors.indexOf(behavior) !== -1) {
-					objects.push(obj);
-				}
-			}
-		}
-		return objects;
-	};
-	*/
-
-	/**
-	Returns a list of all objects with any of the specified behaviors
 	@param objList Optional object list to filter from
 	@param arguments Any number of behavior names,
 	e.g gameState.filter("Renderable", "Moving", "Solid");
@@ -71,7 +42,6 @@ function createGameState() {
 			iStart = 0;
 		}
 		
-
 		// For each object
 		for (var i = iStart; i < gameState.objects.length; i++) {
 			obj = gameState.objects[i];
@@ -119,19 +89,19 @@ function createGameState() {
 			objDesc = description.objects[i];
 			switch (objDesc.name) {
 				case "block":
-				obj = createBlock(objDesc.width, objDesc.height);
+				obj = new Block(objDesc.width, objDesc.height);
 				break;
 
 				case "guy":
-				obj = createGuy();
+				obj = new Guy();
 				break;
 
 				case "square":
-				obj = createSquare();
+				obj = new Square();
 				break;
 
 				case "button":
-				obj = createButton();
+				obj = new JumpButton();
 				break;
 			}
 			obj.x = objDesc.x;

@@ -48,8 +48,8 @@ function GameController(gameState, canvas) {
 
 
 		// Perform update functions for all in-game objects
-		for (var i = 0; i < state.objects.length; i++) {
-			gameState.objects[i].tick(state);
+		for (var i = 0; i < gameState.objects.length; i++) {
+			gameState.objects[i].tick(gameState);
 		}
 
 		// Clear the canvas and render in-game objects

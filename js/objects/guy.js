@@ -1,49 +1,43 @@
 /**
 Returns a platform character object
  */
-function createGuy() {
-	var guy = new GameObject();
-	
+function Guy() {	
+
+	GameObject.call(this);
+
 
 	//================================
 	// Private functions and variables
 	//================================
 
 	var hotspot = {x: 8, y: 8};
+	var standSprite = SpriteFactory.createSprite("img/guy_walk.png", 2, hotspot);
+
+	standSprite.imageSpeed = 0.1;
 	
 
 	//==============
 	// Add behaviors
 	//==============
 	
-	guy.addBehavior(Behavior.Renderable);
-	guy.addBehavior(Behavior.Physical);
-	guy.addBehavior(Behavior.Moving);
-	guy.addBehavior(Behavior.Platform);
-	guy.addBehavior(Behavior.FaceDirection);
-	guy.addBehavior(Behavior.Solid);
-	
-	guy.currentSprite = SpriteFactory.createSprite("img/guy_walk.png", 2, hotspot);
-	guy.currentSprite.imageSpeed = 0.1;
+	this.addBehavior(Behavior.Renderable);
+	this.addBehavior(Behavior.Physical);
+	this.addBehavior(Behavior.Solid);
+	this.addBehavior(Behavior.Moving);
+	this.addBehavior(Behavior.Platform);
+	this.addBehavior(Behavior.FaceDirection);
 
-	guy.boundingBox = {
+
+	//=================
+	// Public interface
+	//=================
+
+	this.currentSprite = standSprite;
+	this.boundingBox = {
 		left: -8, right: 8,
 		top: -8, bottom: 8
 	};
-
-
-	//==============
-	// Tick function
-	//==============
-
-	/**
-	 Actions to perform at each iteration of the game loop
-	 */
-	guy.tick = function(gameState) {
-		for (var i = 0; i < this.ticks.length; i++) {
-			this.ticks[i].call(this, gameState);
-		}
-	};
-
-	return guy;   
 }
+
+Guy.prototype = new GameObject();
+

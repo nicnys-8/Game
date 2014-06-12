@@ -62,11 +62,13 @@ canvas {
 	controller = createController();
 	state.addObject(controller);
 
+
 	//=====================
 	// Handle mouse presses
 	//=====================
 
 	document.body.onmousedown = function(event) {
+
 		var obj;
 		var moving = state.filter("Moving");
 
@@ -80,15 +82,18 @@ canvas {
 				return;
 			}
 		}
-
 		// If no moving object was clicked, a block is created
-		block = createBlock();
+		block = new Block();
 		block.x = 16 * Math.round(event.offsetX / 16);
 		block.y = 16 * Math.round(event.offsetY /16);
 		state.addObject(block);
 	};
 
+
+	//====================
 	// Start the game loop
+	//====================
+	
 	gameController.tick();
 
 	</script>

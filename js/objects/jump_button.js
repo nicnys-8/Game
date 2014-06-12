@@ -1,15 +1,16 @@
 /**
 Returns a solid block object
- */
-function createButton() {
+*/
+function JumpButton() {
 
-	var button = new GameObject();
-	skam = button;
-
+	GameObject.call(this);
+	
 
 	//================================
 	// Private functions and variables
 	//================================
+
+	var self = this;
 
 	var hotspotA = {x: 8, y: 8};
 	var hotspotB = {x: 8, y: 0};
@@ -26,31 +27,31 @@ function createButton() {
 	// Add behaviors
 	//==============
 
-	button.addBehavior(Behavior.Renderable);
-	button.addBehavior(Behavior.Physical);
-	button.addBehavior(Behavior.Solid);
-	button.addBehavior(Behavior.Button);
+	this.addBehavior(Behavior.Renderable);
+	this.addBehavior(Behavior.Physical);
+	this.addBehavior(Behavior.Solid);
+	this.addBehavior(Behavior.Button);
 
-	button.addCallback(function(a) {
-		button.currentSprite = pushedSprite;
-		button.boundingBox = smallBBox;
-	});
 
-	button.currentSprite = standardSprite;
-	button.boundingBox = {
+	//=================
+	// Public interface
+	//=================
+
+	this.currentSprite = standardSprite;
+	this.boundingBox = {
 		left: -8, right: 8,
 		top: -8, bottom: 8
 	};
 
-
-	//==============
-	// Tick function
-	//==============
+	this.addCallback(function(a) {
+		self.currentSprite = pushedSprite;
+		self.boundingBox = smallBBox;
+	});
 
 	/**
-	 Actions to perform at each iteration of the game loop
-	 */
-	button.tick = function(gameState) {
+	Actions to perform at each iteration of the game loop
+	*/
+	this.tick = function(gameState) {
 		var moving = gameState.filter("Moving");
 		var obj;
 		for (var i = 0; i < moving.length; i++) {
@@ -63,7 +64,7 @@ function createButton() {
 			this.ticks[i].call(this, gameState);
 		}
 	};
-
-
-	return button;  
 }
+
+JumpButton.prototype = new GameObject();
+

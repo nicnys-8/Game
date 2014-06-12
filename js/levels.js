@@ -7,6 +7,7 @@ var Levels = {
 		objects: [
 
 		{name: "guy", x: 32, y: 112},
+		{name: "guy", x: 32, y: 90},
 		{name: "square", x: 64, y: 112},
 		{name: "square", x: 128, y: 112},
 		{name: "button", x: 160, y: 112}
