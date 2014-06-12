@@ -21,7 +21,6 @@ function GameController(gameState, canvas) {
 
 		var renderList = gameState.filter("Renderable");
 
-
 		///////////////////////
 		/*@ TODO: Det här ska bakas in i plattformsbeteendet tror jag,
 		här ska det då definitivt inte ligga!!

@@ -1,7 +1,7 @@
 /**
 Describes the behavior of a moving object
 */
-var Moving = function() {
+Behavior.Moving = Behavior.Moving || function() {
 
 	//================================
 	// Private functions and variables

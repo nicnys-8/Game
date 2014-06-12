@@ -1,7 +1,7 @@
 /**
 Describes the behavior of a solid object
  */
-var Button = function() {
+Behavior.Button = Behavior.Button || function() {
 
 	//================================
 	// Private functions and variables

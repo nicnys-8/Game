@@ -2,7 +2,7 @@
 /**
 Describes an object that can be rendered on the screen
 */
-var Renderable = function() {
+Behavior.Renderable = Behavior.Renderable || function() {
 
 	//================================
 	// Private functions and variables

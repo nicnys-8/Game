@@ -25,9 +25,9 @@ function createBlock(width, height) {
 	// Add behaviors
 	//==============
 	
-	block.addBehavior(Renderable);
-	block.addBehavior(Physical);
-	block.addBehavior(Solid);
+	block.addBehavior(Behavior.Renderable);
+	block.addBehavior(Behavior.Physical);
+	block.addBehavior(Behavior.Solid);
 	block.currentSprite = SpriteFactory.createSprite("img/block.png", 1, hotspot);
 	block.boundingBox = {
 		left: -width / 2, right: width / 2,

@@ -21,12 +21,12 @@ function createSquare() {
 	// Add behaviors
 	//==============
 
-	square.addBehavior(Renderable);
-	square.addBehavior(FaceDirection);
-	square.addBehavior(Physical);
-	square.addBehavior(Moving);
-	square.addBehavior(Platform);
-	square.addBehavior(Solid);
+	square.addBehavior(Behavior.Renderable);
+	square.addBehavior(Behavior.FaceDirection);
+	square.addBehavior(Behavior.Physical);
+	square.addBehavior(Behavior.Moving);
+	square.addBehavior(Behavior.Platform);
+	square.addBehavior(Behavior.Solid);
 	square.currentSprite = walkSprite;
 	square.boundingBox = {
 		left: -16, right: 16,

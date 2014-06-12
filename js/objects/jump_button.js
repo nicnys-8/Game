@@ -26,10 +26,10 @@ function createButton() {
 	// Add behaviors
 	//==============
 
-	button.addBehavior(Renderable);
-	button.addBehavior(Physical);
-	button.addBehavior(Solid);
-	button.addBehavior(Button);
+	button.addBehavior(Behavior.Renderable);
+	button.addBehavior(Behavior.Physical);
+	button.addBehavior(Behavior.Solid);
+	button.addBehavior(Behavior.Button);
 
 	button.addCallback(function(a) {
 		button.currentSprite = pushedSprite;

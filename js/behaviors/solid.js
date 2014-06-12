@@ -1,7 +1,7 @@
 /**
 Describes the behavior of a solid object
  */
-var Solid = function() {
+Behavior.Solid = Behavior.Solid || function() {
 
 	//================================
 	// Private functions and variables

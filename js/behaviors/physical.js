@@ -1,7 +1,7 @@
 /**
 Describes the behavior of a physical object
 */
-var Physical = function() {
+Behavior.Physical = Behavior.Physical || function() {
 	
 	//================================
 	// Private functions and variables

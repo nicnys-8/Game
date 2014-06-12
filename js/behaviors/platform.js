@@ -1,7 +1,7 @@
 /**
 Behavior describing a platform character
  */
-var Platform = function() {
+Behavior.Platform = Behavior.Platform || function() {
 
 	//================================
 	// Private functions and variables

@@ -1,7 +1,7 @@
 /**
 This behavior makes an object face the direction in which it is moving
  */
-var FaceDirection = function() {
+Behavior.FaceDirection = Behavior.FaceDirection || function() {
 
 	//================================
 	// Private functions and variables

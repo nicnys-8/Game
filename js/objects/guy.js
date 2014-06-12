@@ -16,12 +16,13 @@ function createGuy() {
 	// Add behaviors
 	//==============
 	
-	guy.addBehavior(Renderable);
-	guy.addBehavior(Physical);
-	guy.addBehavior(Moving);
-	guy.addBehavior(Platform);
-	guy.addBehavior(FaceDirection);
-	guy.addBehavior(Solid);
+	guy.addBehavior(Behavior.Renderable);
+	guy.addBehavior(Behavior.Physical);
+	guy.addBehavior(Behavior.Moving);
+	guy.addBehavior(Behavior.Platform);
+	guy.addBehavior(Behavior.FaceDirection);
+	guy.addBehavior(Behavior.Solid);
+	
 	guy.currentSprite = SpriteFactory.createSprite("img/guy_walk.png", 2, hotspot);
 	guy.currentSprite.imageSpeed = 0.1;
 
