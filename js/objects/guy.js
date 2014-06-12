@@ -4,14 +4,18 @@ Returns a platform character object
 function createGuy() {
 	var guy = new GameObject();
 	
+
 	//================================
 	// Private functions and variables
 	//================================
+
 	var hotspot = {x: 8, y: 8};
 	
+
 	//==============
 	// Add behaviors
 	//==============
+	
 	guy.addBehavior(Renderable);
 	guy.addBehavior(Physical);
 	guy.addBehavior(Moving);
@@ -25,6 +29,7 @@ function createGuy() {
 		left: -8, right: 8,
 		top: -8, bottom: 8
 	};
+
 
 	//==============
 	// Tick function

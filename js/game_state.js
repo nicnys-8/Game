@@ -26,8 +26,8 @@ function createGameState() {
 	Returns a list of all objects with any of the specified behaviors
 	@param arguments Any number of behavior names,
 	e.g gameState.filter("Renderable", "Moving", "Solid");
-	*/
-	gameState.filter = function(/* Arbitrary number of arguments */) {
+	
+	gameState.filter = function() {
 		//@TODO: Cache lookups to increase efficiency!
 
 		var objects = [];
@@ -49,7 +49,8 @@ function createGameState() {
 		}
 		return objects;
 	};
-	
+	*/
+
 	/**
 	Returns a list of all objects with any of the specified behaviors
 	@param objList Optional object list to filter from
@@ -127,6 +128,10 @@ function createGameState() {
 
 				case "square":
 				obj = createSquare();
+				break;
+
+				case "button":
+				obj = createButton();
 				break;
 			}
 			obj.x = objDesc.x;

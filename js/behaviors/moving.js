@@ -20,6 +20,8 @@ var Moving = function() {
 	/**
 	Given an array of objects, this function returns the subset
 	of all objects carried by the target object
+	(This function is not recursive, so it only returns the
+	objects standing directly on the target)
 	@param objets The array to look through
 	*/
 	function carriedObjects(objects) {
@@ -79,16 +81,17 @@ var Moving = function() {
 			this.y + this.boundingBox.top - 1,//Plus one to account for carried objects!
 			this.y + this.boundingBox.bottom
 			);
+
 		var carried = this.carriedObjects(objects);
 		var direction = deltaX ? deltaX < 0 ? -1 : 1 : 0 // Calculate the direction of deltaY
 		var prevX = this.x;
+		var totalWeight = this.computeWeight(gameState);
 		var obj;
 		var steps;
 		var pushDistance;
 
 		// Move the object
-		this.x += deltaX;
-		this.x = Math.round(this.x);
+		this.x = Math.round(this.x + deltaX);
 
 		// Check for collisions
 		for (var i = 0; i < objects.length; i++) {
@@ -133,16 +136,17 @@ var Moving = function() {
 			Math.min(this.y + this.boundingBox.top - 1, this.y + this.boundingBox.top - 1 + deltaY),//Plus one to account for carried objects!
 			Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
 			);
+
 		var carried = this.carriedObjects(objects);
 		var direction = deltaY ? deltaY < 0 ? -1 : 1 : 0 // Calculate the direction of deltaY
 		var prevY = this.y;
+		var totalWeight = this.computeWeight(gameState);
 		var obj;
 		var steps;
 		var pushDistance;
 
 		// Move the object
-		this.y += deltaY;
-		this.y = Math.round(this.y);
+		this.y = Math.round(this.y + deltaY);
 
 		// Check for collisions
 		for (var i = 0; i < objects.length; i++) {
@@ -197,7 +201,7 @@ var Moving = function() {
 			vSpeed: 0,
 			maxHSpeed: 2,
 			maxVSpeed: 7,
-			strength: 4, //@TODO: Byt ut mot nåt logiskt...
+			strength: 3,
 
 			// Functions
 			move: move,

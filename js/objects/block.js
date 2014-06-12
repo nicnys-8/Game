@@ -13,14 +13,18 @@ function createBlock(width, height) {
 		height = 16;
 	}
 
+
 	//================================
 	// Private functions and variables
 	//================================
+
 	var hotspot = {x: width / 2, y: height / 2};
 	
+
 	//==============
 	// Add behaviors
 	//==============
+	
 	block.addBehavior(Renderable);
 	block.addBehavior(Physical);
 	block.addBehavior(Solid);
