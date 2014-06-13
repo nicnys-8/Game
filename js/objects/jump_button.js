@@ -14,8 +14,8 @@ function JumpButton() {
 
 	var hotspotA = {x: 8, y: 8};
 	var hotspotB = {x: 8, y: 0};
-	var standardSprite = SpriteFactory.createSprite("img/button.svg", 1, hotspotA);
-	var pushedSprite = SpriteFactory.createSprite("img/button_pushed.svg", 1, hotspotB);
+	var standardSprite = SpriteFactory.createSprite("img/sprites/button.svg", 1, hotspotA);
+	var pushedSprite = SpriteFactory.createSprite("img/sprites/button_pushed.svg", 1, hotspotB);
 
 	var smallBBox = {
 		left: -8, right: 8,
@@ -49,7 +49,7 @@ function JumpButton() {
 	});
 
 	/**
-	Actions to perform at each iteration of the game loop
+	Overwriting the tick object
 	*/
 	this.tick = function(gameState) {
 		var moving = gameState.filter("Moving");

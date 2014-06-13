@@ -1,7 +1,7 @@
 /**
 Returns an object describing the state of a gaming session
 */
-function createGameState() {
+function GameState() {
 
 	//================================
 	// Private functions and variables
@@ -15,11 +15,10 @@ function createGameState() {
 	// Public Interface
 	//=================
 
-	var gameState = {};
-	gameState.objects = [];
+	this.objects = [];
 
-	gameState.addObject = function(obj) {
-		gameState.objects.push(obj);
+	this.addObject = function(obj) {
+		this.objects.push(obj);
 	};
 
 	/**
@@ -29,22 +28,22 @@ function createGameState() {
 	e.g gameState.filter("Renderable", "Moving", "Solid");
 	*/
 	// @TODO: Granska om hejn blev dumt. Nu kan man ellra filtrar genom att göra exempelvis: filter(filter("Moving"), "Solid")
-	gameState.filter = function(objList /* +Arbitrary number of arguments */) {
+	this.filter = function(objList /* +Arbitrary number of arguments */) {
 		//@TODO: Cache lookups to increase efficiency!
 
 		var objects = [];
 		var obj, behavior, iStart;
 		
 		if (typeof(objList) !== "string") {
-			objList = gameState.objects;
+			objList = this.objects;
 			iStart = 1;
 		} else {
 			iStart = 0;
 		}
 		
 		// For each object
-		for (var i = iStart; i < gameState.objects.length; i++) {
-			obj = gameState.objects[i];
+		for (var i = iStart; i < this.objects.length; i++) {
+			obj = this.objects[i];
 			
 			// For each of the object's behaviors
 			for (var j = 0; j < arguments.length; j++) {
@@ -62,7 +61,7 @@ function createGameState() {
 	/**
 	Returns all objects that intersect the specified area
 	*/
-	gameState.objectsInZone = function(left, right, top, bottom) {
+	this.objectsInZone = function(left, right, top, bottom) {
 		var pObjects = this.filter("Physical");
 		var result = [];
 		var obj;
@@ -83,7 +82,7 @@ function createGameState() {
 	Creates all objects from a level description
 	@TODO: Parsaren ska fungera annorlunda i framtiden...!
 	*/
-	gameState.parseLevel = function(description) {
+	this.parseLevel = function(description) {
 		var objDesc, obj;
 		for (var i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
@@ -106,9 +105,7 @@ function createGameState() {
 			}
 			obj.x = objDesc.x;
 			obj.y = objDesc.y;
-			gameState.addObject(obj);
+			this.addObject(obj);
 		}
 	};
-
-	return gameState;
 }

@@ -50,7 +50,7 @@ canvas {
 
 	<script>
 	var canvas = document.getElementById("view");
-	var state = createGameState();
+	var state = new GameState();
 	var gameController = new GameController(state, canvas);
 	var controlled; // Points to currently controlled object
 

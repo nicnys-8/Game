@@ -3,9 +3,9 @@ An in-game object
 */
 function GameObject() {
 
-	//=================
-	// Public variables
-	//=================
+	//===================
+	// Instance variables
+	//===================
 
 	this.behaviors = [];
 	this.ticks = [];

@@ -1,6 +1,6 @@
 /**
 Returns a platform character object
- */
+*/
 function Guy() {	
 
 	GameObject.call(this);
@@ -11,7 +11,7 @@ function Guy() {
 	//================================
 
 	var hotspot = {x: 8, y: 8};
-	var standSprite = SpriteFactory.createSprite("img/guy_walk.png", 2, hotspot);
+	var standSprite = SpriteFactory.createSprite("img/sprites/guy_walk.png", 2, hotspot);
 
 	standSprite.imageSpeed = 0.1;
 	

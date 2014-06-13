@@ -1,7 +1,6 @@
 /**
 A platform character object
- */
-
+*/
 function Square() {
 
 	GameObject.call(this);
@@ -12,8 +11,8 @@ function Square() {
 	//================================
 
 	var hotspot = {x: 16, y: 16};
-	var standSprite = SpriteFactory.createSprite("img/pink-stand.svg", 1, hotspot);
-	var walkSprite = SpriteFactory.createSprite("img/pink-walk.svg", 2, hotspot);
+	var standSprite = SpriteFactory.createSprite("img/sprites/pink-stand.svg", 1, hotspot);
+	var walkSprite = SpriteFactory.createSprite("img/sprites/pink-walk.svg", 2, hotspot);
 
 	standSprite.imageSpeed = 0;
 	walkSprite.imageSpeed = 0.1;

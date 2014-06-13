@@ -15,10 +15,11 @@ function Sprite(canvas, numFrames, hotspot) {
 	// Public variables
 	//=================
 
-	this.currentFrame = 0;
 	this.numFrames = numFrames;
 	this.hotspot = hotspot;
+	this.currentFrame = 0;
 	this.imageSpeed = 0;
+
 
 	//=================
 	// Public functions
