@@ -69,9 +69,14 @@ Behavior.Moving = Behavior.Moving || function() {
 	}
 	
 	/**
+<<<<<<< HEAD
 	Attemt to move object in a specified direction.
 	@param delta The distance to travel
 	@param coordinate The coordinate along which to move
+=======
+	Attemt to move object in a specified direction
+	@param delta The distance to travel
+>>>>>>> 1dc69d4d315360edd0c69854bb876d57afec4b8c
 	@param gameState Object describing the game
 	*/
 	function tryMove(delta, coordinate, gameState) {
@@ -102,7 +107,11 @@ Behavior.Moving = Behavior.Moving || function() {
 			Math.max(this.x + this.boundingBox.right, this.x + this.boundingBox.right + deltaX),
 			Math.min(this.y + this.boundingBox.top - 1, this.y + this.boundingBox.top - 1 + deltaY), // Plus (minus) one to account for carried objects!
 			Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
+<<<<<<< HEAD
 		);
+=======
+			);
+>>>>>>> 1dc69d4d315360edd0c69854bb876d57afec4b8c
 		
 		var carried = this.carriedObjects(objects);
 		var direction = delta ? delta < 0 ? -1 : 1 : 0; // Calculate the direction of delta
@@ -172,6 +181,11 @@ Behavior.Moving = Behavior.Moving || function() {
 			// Functions
 			move: move,
 			tryMove: tryMove,
+<<<<<<< HEAD
+=======
+			tryHorizontalMove: tryHorizontalMove,
+			tryVerticalMove: tryVerticalMove,
+>>>>>>> 1dc69d4d315360edd0c69854bb876d57afec4b8c
 			carriedObjects: carriedObjects,
 			carriedBy: carriedBy,
 			computeWeight: computeWeight

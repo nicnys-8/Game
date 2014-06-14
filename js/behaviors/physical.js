@@ -50,6 +50,7 @@ Behavior.Physical = Behavior.Physical || function() {
 		);
 	}
 	
+<<<<<<< HEAD
 	/**
 	Check by how much this objects overlaps another along a specified
 	coordinate.
@@ -57,6 +58,9 @@ Behavior.Physical = Behavior.Physical || function() {
 	@param coordinate The coordinate along which check
 	@return The amount of overlap
 	*/
+=======
+	//@TODO: document
+>>>>>>> 1dc69d4d315360edd0c69854bb876d57afec4b8c
 	function overlapsBy(obj, coordinate) {
 		switch (coordinate) {
 			case "x":
@@ -78,8 +82,12 @@ Behavior.Physical = Behavior.Physical || function() {
 		}
 	}
 	
+<<<<<<< HEAD
 	//@TODO: horizontalOverlap and verticalOverlap are deprecated. Use overlapsby instead. Remove all uses of the deprected functions.
 	
+=======
+	//@deprecated
+>>>>>>> 1dc69d4d315360edd0c69854bb876d57afec4b8c
 	function horizontalOverlap(obj) {
 		if (this.x < obj.x) {
 			return (this.x + this.boundingBox.right) - (obj.x + obj.boundingBox.left);
@@ -88,6 +96,10 @@ Behavior.Physical = Behavior.Physical || function() {
 		}
 	}
 	
+<<<<<<< HEAD
+=======
+	//@deprecated
+>>>>>>> 1dc69d4d315360edd0c69854bb876d57afec4b8c
 	function verticalOverlap(obj) {
 		if (this.y < obj.y) {
 			return (this.y + this.boundingBox.bottom) - (obj.y + obj.boundingBox.top);
