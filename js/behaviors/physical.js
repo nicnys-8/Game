@@ -41,7 +41,30 @@ Behavior.Physical = Behavior.Physical || function() {
 			this.y + this.boundingBox.top >= y ||
 			this.y + this.boundingBox.bottom <= y));
 	}
-
+	
+	//@TODO: document
+	function overlapsBy(obj, coordinate) {
+		switch (coordinate) {
+			case "x":
+				boundingBoxVar1 = "left"
+				boundingBoxVar2 = "right"
+				break;
+			case "y":
+				boundingBoxVar1 = "top"
+				boundingBoxVar2 = "bottom"
+				break;
+			default:
+				throw new Error("Not a valid coordinate.");
+				break;
+		}
+		if (this[coordinate] < obj[coordinate]) {
+			return this[coordinate] + this.boundingBox[boundingBoxVar2] - (obj[coordinate] + obj.boundingBox[boundingBoxVar1])
+		} else {
+			return this[coordinate] + this.boundingBox[boundingBoxVar1] - (obj[coordinate] + obj.boundingBox[boundingBoxVar2])
+		}
+	}
+	
+	//@deprecated
 	function horizontalOverlap(obj) {
 		if (this.x < obj.x) {
 			return (this.x + this.boundingBox.right) - (obj.x + obj.boundingBox.left);
@@ -49,7 +72,8 @@ Behavior.Physical = Behavior.Physical || function() {
 			return (this.x + this.boundingBox.left) - (obj.x + obj.boundingBox.right);
 		}
 	}
-
+	
+	//@deprecated
 	function verticalOverlap(obj) {
 		if (this.y < obj.y) {
 			return (this.y + this.boundingBox.bottom) - (obj.y + obj.boundingBox.top);
@@ -79,6 +103,7 @@ Behavior.Physical = Behavior.Physical || function() {
 			overlapsObject: overlapsObject,
 			overlapsAtOffset: overlapsAtOffset,
 			overlapsPoint: overlapsPoint,
+			overlapsBy: overlapsBy,
 			horizontalOverlap: horizontalOverlap,
 			verticalOverlap: verticalOverlap,
 		};
