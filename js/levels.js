@@ -20,5 +20,5 @@ var Levels = {
 men än så länge följer inte grafiken med då man sätter width på objekt
 */
 for (var i = 0; i < 12; i++) {
-	Levels.level1["objects"].push({name: "block", x: 16*i, y: 128, width: 16, height :16}); // Sergeant kolonplacering slår till igen
+	Levels.level1["objects"].push({name: "block", x: 16*i, y: 128, width: 16, height: 16});
 }
