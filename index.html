@@ -32,11 +32,13 @@ canvas {
 	<script src="js/levels.js"></script>
 
 	<!-- Objects -->
+	<script src="js/objects/object_factory.js"></script>
 	<script src="js/objects/game_object.js"></script>
 	<script src="js/objects/block.js"></script>
 	<script src="js/objects/guy.js"></script>
 	<script src="js/objects/square.js"></script>
 	<script src="js/objects/jump_button.js"></script>
+	<script src="js/objects/elevator.js"></script>
 
 	<!-- Behaviors -->
 	<script src="js/behaviors/behavior.js"></script>
@@ -46,7 +48,6 @@ canvas {
 	<script src="js/behaviors/platform.js"></script>
 	<script src="js/behaviors/renderable.js"></script>
 	<script src="js/behaviors/face_direction.js"></script>
-	<script src="js/behaviors/button.js"></script>
 
 	<script>
 	var canvas = document.getElementById("view");
@@ -83,7 +84,7 @@ canvas {
 			}
 		}
 		// If no moving object was clicked, a block is created
-		block = new Block();
+		block = new ObjectFactory.Block();
 		block.x = 16 * Math.round(event.offsetX / 16);
 		block.y = 16 * Math.round(event.offsetY /16);
 		state.addObject(block);

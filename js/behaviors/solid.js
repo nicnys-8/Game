@@ -1,19 +1,29 @@
 /**
-Describes the behavior of a solid object
+Describes the behavior of a solid object -
+The object solidity can be turned on or off
+with the function setSolid
  */
-Behavior.Solid = Behavior.Solid || function() {
+Behavior.Solid = Behavior.Solid || function() {	
 
 	//================================
 	// Private functions and variables
 	//================================
 
-	/*
-	function move(deltaX, deltY) {
-		this.x += this.hSpeed;
-		this.y += this.vSpeed;
-	}
+	var currentlySolid = true;
+
+	/**
+	Returns whether or not the object is currently solid
 	*/
-	
+	function isSolid() {
+		return currentlySolid;
+	}
+
+	/**
+	Sets the solidity of the object
+	*/
+	function setSolid(bool) {
+		currentlySolid = bool;
+	}
 
 	//=================
 	// Public interface
@@ -24,16 +34,12 @@ Behavior.Solid = Behavior.Solid || function() {
 	behavior.name = "Solid";
 
 	behavior.getProperties = function() {
-		return {};
+		return {
+			isSolid: isSolid,
+			currentlySolid: currentlySolid
+		};
 	};
-	
-	
-	//=======================
-	// Behavior tick function
-	//=======================
-	behavior.tick = function(gameState) {};
 
 	return behavior;
 }();
 
-//@TODO: Ta bort hela de tomma funktionerna helt?

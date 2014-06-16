@@ -86,23 +86,8 @@ function GameState() {
 		var objDesc, obj;
 		for (var i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
-			switch (objDesc.name) {
-				case "block":
-				obj = new Block(objDesc.width, objDesc.height);
-				break;
-
-				case "guy":
-				obj = new Guy();
-				break;
-
-				case "square":
-				obj = new Square();
-				break;
-
-				case "button":
-				obj = new JumpButton();
-				break;
-			}
+			console.log(objDesc.name);
+			obj = new ObjectFactory[objDesc.name]();
 			obj.x = objDesc.x;
 			obj.y = objDesc.y;
 			this.addObject(obj);

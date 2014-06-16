@@ -1,7 +1,7 @@
 /**
 An in-game object
 */
-function GameObject() {
+GameObject = function() {
 
 	//===================
 	// Instance variables
@@ -43,7 +43,9 @@ GameObject.prototype.addBehavior = function(behavior) {
 		this.behaviors.push(behavior.name);
 		
 		// Modify the target's tick function
-		this.ticks.push(behavior.tick);
+		if (behavior.tick) {
+			this.ticks.push(behavior.tick);
+		}
 	};
 
 /**

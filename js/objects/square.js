@@ -1,7 +1,7 @@
 /**
 A platform character object
 */
-function Square() {
+ObjectFactory.Square = function() {
 
 	GameObject.call(this);
 	
@@ -43,6 +43,6 @@ function Square() {
 
 }
 
-Square.prototype = new GameObject();
+ObjectFactory.Square.prototype = new GameObject();
 
 

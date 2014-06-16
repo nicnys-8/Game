@@ -1,7 +1,7 @@
 /**
 A solid block object
  */
-ObjectFactory.Block = function(width, height) {
+ObjectFactory.Elevator = function() {
 
 	GameObject.call(this);
 
@@ -9,16 +9,13 @@ ObjectFactory.Block = function(width, height) {
 	//================================
 	// Private functions and variables
 	//================================
-
-	// Set values for width and height
-	if (typeof(width) === "undefined") {
-		width = 16;
-	}
-	if (typeof(height) === "undefined") {
-		height = 16;
-	}
+	var width = 16;
+	var height = 16;
 
 	var hotspot = {x: width / 2, y: height / 2};
+
+	var lowerLimit = 128;
+	var upperLimit = 16;
 	
 
 	//==============
@@ -28,6 +25,7 @@ ObjectFactory.Block = function(width, height) {
 	this.addBehavior(Behavior.Renderable);
 	this.addBehavior(Behavior.Physical);
 	this.addBehavior(Behavior.Solid);
+	this.addBehavior(Behavior.Moving);
 
 
 	//=================
@@ -39,7 +37,30 @@ ObjectFactory.Block = function(width, height) {
 		left: -width / 2, right: width / 2,
 		top: -height / 2, bottom: height/ 2
 	};
+
+	this.vAcceleration = 0;
+	this.on = false;
+
+	/**
+	Overwriting the tick object
+	*/
+	this.tick = function(gameState) {
+
+		if (this.on) {
+			this.vSpeed = -1;
+			if (this.y >= lowerLimit) {
+				this.vSpeed = -1;
+
+			} else if (this.y <= upperLimit) {
+				this.vSpeed = 1;
+			}	
+		}
+
+		for (var i = 0; i < this.ticks.length; i++) {
+			this.ticks[i].call(this, gameState);
+		}
+	};
 }
 
-ObjectFactory.Block.prototype = new GameObject();
+ObjectFactory.Elevator.prototype = new GameObject();
 

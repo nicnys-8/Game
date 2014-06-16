@@ -23,13 +23,10 @@ Behavior.Platform = Behavior.Platform || function() {
 		return {
 			// Variables
 
-
 			// Functions
 			jump: jump
 		};
 	};
-	
-	behavior.tick = function(gameState) {};
-	
+		
 	return behavior;
 }();

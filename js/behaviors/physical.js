@@ -123,8 +123,5 @@ Behavior.Physical = Behavior.Physical || function() {
 		};
 	};
 
-	behavior.tick = function(gameState) {};
-
 	return behavior;
-
 }();

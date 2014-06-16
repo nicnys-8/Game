@@ -70,12 +70,6 @@ Behavior.Button = Behavior.Button || function() {
 			release: release
 		};
 	};
-	
-	
-	//=======================
-	// Behavior tick function
-	//=======================
-	behavior.tick = function(gameState) {};
 
 	return behavior;
 }();

@@ -1,7 +1,7 @@
 /**
 Returns a platform character object
 */
-function Guy() {	
+ObjectFactory.Guy = function() {	
 
 	GameObject.call(this);
 
@@ -39,5 +39,5 @@ function Guy() {
 	};
 }
 
-Guy.prototype = new GameObject();
+ObjectFactory.Guy.prototype = new GameObject();
 
