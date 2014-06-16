@@ -6,11 +6,11 @@ var Levels = {
 	level1: {
 		objects: [
 
-		{name: "guy", x: 32, y: 112},
-		{name: "guy", x: 32, y: 90},
-		{name: "square", x: 64, y: 112},
-		{name: "square", x: 128, y: 112},
-		{name: "button", x: 160, y: 112}
+		{name: "Guy", x: 32, y: 112},
+		{name: "Guy", x: 32, y: 90},
+		{name: "Square", x: 64, y: 112},
+		{name: "Square", x: 128, y: 112},
+		{name: "JumpButton", x: 160, y: 32}
 		]
 	}
 };
@@ -20,5 +20,5 @@ var Levels = {
 men än så länge följer inte grafiken med då man sätter width på objekt
 */
 for (var i = 0; i < 12; i++) {
-	Levels.level1["objects"].push({name: "block", x: 16*i, y: 128, width: 16, height: 16});
+	Levels.level1.objects.push({name: "Block", x: 16*i, y: 128, width: 16, height: 16});
 }
