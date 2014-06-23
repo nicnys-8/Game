@@ -52,11 +52,19 @@ function GameController(gameState, canvas) {
 			gameState.objects[i].tick(gameState);
 		}
 
-		// Clear the canvas and render in-game objects
+		// Clear the canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		// Render all backgrounds
+		for (var i = 0; i < gameState.backgrounds.length; i++) {
+			gameState.backgrounds[i].render(ctx);
+		}
+
+		// Render in-game objects		
 		for (var i = 0; i < renderList.length; i++) {
 			renderList[i].render(ctx);
 		}
+
 	}
 
 

@@ -81,6 +81,7 @@ Behavior.Physical = Behavior.Physical || function() {
 	//@TODO: horizontalOverlap and verticalOverlap are deprecated. Use overlapsby instead. Remove all uses of the deprected functions.
 	
 	function horizontalOverlap(obj) {
+		console.warn("Deprecated function");
 		if (this.x < obj.x) {
 			return (this.x + this.boundingBox.right) - (obj.x + obj.boundingBox.left);
 		} else {
@@ -89,6 +90,7 @@ Behavior.Physical = Behavior.Physical || function() {
 	}
 	
 	function verticalOverlap(obj) {
+		console.warn("Deprecated function");
 		if (this.y < obj.y) {
 			return (this.y + this.boundingBox.bottom) - (obj.y + obj.boundingBox.top);
 		} else {

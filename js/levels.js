@@ -11,6 +11,10 @@ var Levels = {
 		{name: "Square", x: 64, y: 112},
 		{name: "Square", x: 128, y: 112},
 		{name: "JumpButton", x: 160, y: 32}
+		],
+
+		backgrounds: [
+			{filePath: "img/backgrounds/mountains.svg", x: 0, y: 0, scale: {x: 10, y: 10}, tiled: true}
 		]
 	}
 };

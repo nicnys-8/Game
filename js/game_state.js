@@ -16,9 +16,14 @@ function GameState() {
 	//=================
 
 	this.objects = [];
+	this.backgrounds = [];
 
 	this.addObject = function(obj) {
 		this.objects.push(obj);
+	};
+
+	this.addBackground = function(bkg) {
+		this.backgrounds.push(bkg);
 	};
 
 	/**
@@ -83,14 +88,22 @@ function GameState() {
 	@TODO: Parsaren ska fungera annorlunda i framtiden...!
 	*/
 	this.parseLevel = function(description) {
-		var objDesc, obj;
+		var objDesc, obj, bkgDes, bkg;
 		for (var i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
-			console.log(objDesc.name);
 			obj = new ObjectFactory[objDesc.name]();
 			obj.x = objDesc.x;
 			obj.y = objDesc.y;
 			this.addObject(obj);
+		}
+
+		for (var i = 0; i < description.backgrounds.length; i++) {
+			bkgDesc = description.backgrounds[i];
+			bkg = new Background(bkgDesc.filePath);
+			bkg.x = bkgDesc.x;
+			bkg.y = bkgDesc.y;
+			bkg.scale = bkgDesc.scale;
+			this.addBackground(bkg);
 		}
 	};
 }

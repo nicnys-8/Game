@@ -35,7 +35,7 @@ function Sprite(canvas, numFrames, hotspot) {
 	/**
 	Renders the sprite on screen
 	@param ctx 2D rendering context
-	@param x, y Position on the context to render
+	@param x, y The position on the context where this will be rendered
 	@param scale Scale of the sprite, e.g. {x: 1, y: 2}
 	@param rotation The sprite's rotation in radians 
 	@param	alpha Opacity of the object, a value between 0 and 1
