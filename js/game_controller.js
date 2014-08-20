@@ -1,9 +1,10 @@
 /**
 Returns a game controller object (controller of the MVC pattern)
 @param gameState Object describing the entire gamestate (model of the MVC pattern)
-@canvas A HTML5 canvas (view of the MVC pattern)
+@param canvas A HTML5 canvas (view of the MVC pattern)
+@param camera A camera object used to render the game
 */
-function GameController(gameState, canvas) {
+function GameController(gameState, canvas, camera) {
 
 	//================================
 	// Private functions and variables
@@ -47,6 +48,7 @@ function GameController(gameState, canvas) {
 		}
 		///////////////////////
 
+		this.camera.tick();
 
 		// Perform update functions for all in-game objects
 		for (i = 0; i < gameState.objects.length; i++) {
@@ -55,6 +57,15 @@ function GameController(gameState, canvas) {
 
 		// Clear the canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		ctx.save();
+
+		console.log(this.camera.offsetY);
+
+		ctx.translate(
+			-this.camera.x + (canvas.width / 2) - this.camera.offsetX,
+			-this.camera.y + (canvas.height / 2) - this.camera.offsetY
+			);
 
 		// Render all backgrounds
 		for (i = 0; i < gameState.backgrounds.length; i++) {
@@ -66,6 +77,8 @@ function GameController(gameState, canvas) {
 			renderList[i].render(ctx);
 		}
 
+		ctx.restore();
+
 	}
 
 
@@ -73,5 +86,6 @@ function GameController(gameState, canvas) {
 	// Public Interface
 	//=================
 
+	this.camera = camera;
 	this.tick = tick;
 }

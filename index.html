@@ -44,6 +44,7 @@ canvas {
 	<!-- Objects -->
 	<script src="js/objects/object_factory.js"></script>
 	<script src="js/objects/game_object.js"></script>
+	<script src="js/camera.js"></script>
 	<script src="js/objects/block.js"></script>
 	<script src="js/objects/jump_button.js"></script>
 	<script src="js/objects/elevator.js"></script>
@@ -57,13 +58,15 @@ canvas {
 	<script>
 	var canvas = document.getElementById("view");
 	var state = new GameState();
-	var gameController = new GameController(state, canvas);
+	var camera = new Camera();
+	var gameController = new GameController(state, canvas, camera);
 	var controlled; // Points to currently controlled object
 
 	state.parseLevel(Levels.level1);
 	
 	//Här plockar jag bara ut en slumpad rörbar gubbe och börjar styra...
 	controlled = state.filter("Moving")[0];
+	camera.target = controlled;
 
 	controller = createController();
 	state.addObject(controller);
