@@ -17,14 +17,14 @@ ObjectFactory.JumpButton = function() {
 	*/
 	var callbacks = [];
 
-	var hotspotA = {x: 8, y: 8};
-	var hotspotB = {x: 8, y: 8};
+	var hotspotA = {x: 16, y: 16};
+	var hotspotB = {x: 16, y: 16};
 	var standardSprite = SpriteFactory.createSprite("img/sprites/button.svg", 1, hotspotA);
 	var pushedSprite = SpriteFactory.createSprite("img/sprites/button_pushed.svg", 1, hotspotB);
 
 	var smallBBox = {
-		left: -8, right: 8,
-		top: -8, bottom: 0
+		left: -16, right: 16,
+		top: -16, bottom: 0
 	};
 
 
@@ -113,8 +113,8 @@ ObjectFactory.JumpButton = function() {
 	this.currentSprite = standardSprite;
 
 	this.boundingBox = {
-		left: -8, right: 8,
-		top: -8, bottom: 8
+		left: -16, right: 16,
+		top: -16, bottom: 16
 	};
 
 	this.addCallback(function(a) {

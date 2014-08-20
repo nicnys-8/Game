@@ -21,7 +21,7 @@ Behavior.Renderable = Behavior.Renderable || function() {
 	 			this.scale,
 	 			this.rotation,
 	 			this.alpha
-	 			);
+	 		);
 	 	}
 	 };
 

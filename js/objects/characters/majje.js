@@ -10,7 +10,7 @@ ObjectFactory.Majje = function() {
 	// Private functions and variables
 	//================================
 
-	var hotspot = {x: 8, y: 8};
+	var hotspot = {x: 16, y: 16};
 
 
 	//=================
@@ -18,8 +18,8 @@ ObjectFactory.Majje = function() {
 	//=================
 
 	this.boundingBox = {
-		left: -8, right: 8,
-		top: -8, bottom: 8
+		left: -16, right: 16,
+		top: -16, bottom: 16
 	};
 
 	this.sprites.stand = SpriteFactory.createSprite("img/sprites/majje/stand.svg", 1, hotspot);

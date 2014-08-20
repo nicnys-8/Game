@@ -10,7 +10,7 @@ ObjectFactory.Niri = function() {
 	// Private functions and variables
 	//================================
 
-	var stdHotspot = {x: 16, y: 8};
+	var stdHotspot = {x: 32, y: 16};
 
 
 	//=================
@@ -18,8 +18,8 @@ ObjectFactory.Niri = function() {
 	//=================
 	
 	this.boundingBox = {
-		left: -16, right: 16,
-		top: -8, bottom: 8
+		left: -32, right: 32,
+		top: -16, bottom: 16
 	};
 
 	this.sprites.stand = SpriteFactory.createSprite("img/sprites/niri/stand.svg", 1, stdHotspot);

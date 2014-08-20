@@ -10,12 +10,14 @@ ObjectFactory.Block = function(width, height) {
 	// Private functions and variables
 	//================================
 
+	var standardWidth = 32, standardHeight = 32;
+
 	// Set values for width and height
 	if (typeof(width) === "undefined") {
-		width = 16;
+		width = standardWidth;
 	}
 	if (typeof(height) === "undefined") {
-		height = 16;
+		height = standardHeight;
 	}
 
 	var hotspot = {x: width / 2, y: height / 2};
@@ -35,6 +37,10 @@ ObjectFactory.Block = function(width, height) {
 	//=================
 
 	this.currentSprite = SpriteFactory.createSprite("img/sprites/block.svg", 1, hotspot);
+
+	this.scale.x = width / standardWidth;
+	this.scale.y = height / standardHeight;
+
 	this.boundingBox = {
 		left: -width / 2, right: width / 2,
 		top: -height / 2, bottom: height/ 2

@@ -14,7 +14,7 @@ var Levels = {
 
 		backgrounds: [
 			{filePath: "img/backgrounds/sun.svg", x: 300, y: 32, tiledX: false, tiledY: false},
-			{filePath: "img/backgrounds/mountains.svg", x: 0, y: 256, tiledX: true, tiledY: false},
+			{filePath: "img/backgrounds/mountains.svg", x: 0, y: 360, tiledX: true, tiledY: false},
 			{filePath: "img/backgrounds/clouds.svg", x: 0, y: 0, tiledX: true, tiledY: false}
 		]
 	}
@@ -25,5 +25,5 @@ var Levels = {
 men än så länge följer inte grafiken med då man sätter width på objekt
 */
 for (var i = 0; i < 12; i++) {
-	Levels.level1.objects.push({name: "Block", x: 16 * i, y: 128, width: 16, height: 16});
+	Levels.level1.objects.push({name: "Block", x: 64 * i, y: 256, width: 64, height: 32});
 }

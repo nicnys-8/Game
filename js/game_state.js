@@ -91,7 +91,7 @@ function GameState() {
 		var objDesc, obj, bkgDes, bkg;
 		for (var i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
-			obj = new ObjectFactory[objDesc.name]();
+			obj = new ObjectFactory[objDesc.name](objDesc.width, objDesc.height);
 			obj.x = objDesc.x;
 			obj.y = objDesc.y;
 			this.addObject(obj);
@@ -104,7 +104,6 @@ function GameState() {
 			bkg.y = bkgDesc.y;
 			bkg.tiledX = bkgDesc.tiledX;
 			bkg.tiledY = bkgDesc.tiledY;
-			//bkg.scale = bkgDesc.scale;
 			this.addBackground(bkg);
 		}
 	};
