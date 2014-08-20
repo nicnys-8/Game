@@ -9,8 +9,7 @@ GameObject = function() {
 
 	this.behaviors = [];
 	this.ticks = [];
-}
-
+};
 
 //=================
 // Public functions

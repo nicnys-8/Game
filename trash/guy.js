@@ -11,9 +11,10 @@ ObjectFactory.Guy = function() {
 	//================================
 
 	var hotspot = {x: 8, y: 8};
-	var standSprite = SpriteFactory.createSprite("img/sprites/guy_walk.png", 2, hotspot);
+	var standSprite = SpriteFactory.createSprite("img/sprites/guy.png", 1, hotspot);
+	var walkSprite = SpriteFactory.createSprite("img/sprites/guy_walk.png", 2, hotspot);
 
-	standSprite.imageSpeed = 0.1;
+	walkSprite.imageSpeed = 0.1;
 	
 
 	//==============
@@ -36,6 +37,22 @@ ObjectFactory.Guy = function() {
 	this.boundingBox = {
 		left: -8, right: 8,
 		top: -8, bottom: 8
+	};
+
+	/**
+	Overwriting the tick object
+	*/
+	this.tick = function(gameState) {
+		var walkThreshold = 0.1;
+		if (Math.abs(this.hSpeed) > walkThreshold) {
+			this.currentSprite = walkSprite;
+		} else {
+			this.currentSprite = standSprite;
+		}
+
+		for (var i = 0; i < this.ticks.length; i++) {
+			this.ticks[i].call(this, gameState);
+		}
 	};
 }
 

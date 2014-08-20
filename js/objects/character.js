@@ -1,21 +1,13 @@
 /**
 A platform character object
 */
-ObjectFactory.Square = function() {
+ObjectFactory.Character = function() {
 
 	GameObject.call(this);
-	
 
 	//================================
 	// Private functions and variables
 	//================================
-
-	var hotspot = {x: 16, y: 16};
-	var standSprite = SpriteFactory.createSprite("img/sprites/pink-stand.svg", 1, hotspot);
-	var walkSprite = SpriteFactory.createSprite("img/sprites/pink-walk.svg", 2, hotspot);
-
-	standSprite.imageSpeed = 0;
-	walkSprite.imageSpeed = 0.1;
 
 
 	//==============
@@ -34,15 +26,26 @@ ObjectFactory.Square = function() {
 	// Public interface
 	//=================
 
-	this.currentSprite = standSprite;
-	this.boundingBox = {
-		left: -16, right: 16,
-		top: -16, bottom: 16
+	/**
+	Overwriting the tick object
+	*/
+	this.tick = function(gameState) {
+		var threshold = 0.1;
+		console.log("Tick");
+
+		if (Math.abs(this.hSpeed) > threshold) {
+			this.currentSprite = this.walkSprite;
+		} else {
+			this.currentSprite 0 this.standSprite;
+		}
+
+		for (var i = 0; i < this.ticks.length; i++) {
+			this.ticks[i].call(this, gameState);
+		}
 	};
-
-
+	
 }
 
-ObjectFactory.Square.prototype = new GameObject();
+ObjectFactory.Character.prototype = new GameObject();
 
 

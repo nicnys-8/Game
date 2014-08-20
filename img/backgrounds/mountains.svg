@@ -2,15 +2,18 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="64px" height="64px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
-<polyline fill="#D3D3D3" points="0,31.259 12.678,5 22.975,19.245 32.586,16.728 41.053,26.225 53.181,16.155 64,31.259 "/>
-<polygon fill="#FFFFFF" points="8.604,12.437 17.95,11.295 12.678,4 "/>
-<polyline fill="#FFFFFF" points="27.771,17.988 35.999,20.556 32.586,16.728 "/>
-<ellipse fill="#A3EAA2" cx="15.023" cy="34.84" rx="7.837" ry="6.637"/>
-<ellipse fill="#A3EAA2" cx="25.428" cy="31.236" rx="6.457" ry="6.35"/>
-<ellipse fill="#A3EAA2" cx="39.623" cy="35.24" rx="11.156" ry="6.236"/>
-<ellipse fill="#A3EAA2" cx="51.922" cy="32.723" rx="5.492" ry="6.122"/>
-<ellipse fill="#A3EAA2" cx="59.163" cy="32.526" rx="4.837" ry="7.322"/>
-<ellipse fill="#A3EAA2" cx="5.252" cy="31.637" rx="5.252" ry="3.89"/>
-<rect y="32" fill="#A3EAA2" width="64" height="32"/>
+	 width="256px" height="256px" viewBox="-96 -94 256 256" enable-background="new -96 -94 256 256" xml:space="preserve">
+<polyline fill="#D3D3D3" points="-96,22.304 -45.287,-89.733 -4.1,-28.954 34.344,-39.694 68.211,0.827 116.727,-42.14 160,22.304 
+	"/>
+<polygon fill="#FFFFFF" points="-61.584,-58.002 -24.199,-62.875 -45.287,-94 "/>
+<polyline fill="#FFFFFF" points="15.084,-34.319 47.996,-23.36 34.344,-39.694 "/>
+<ellipse fill="#A3EAA2" cx="-35.908" cy="37.583" rx="31.348" ry="28.317"/>
+<ellipse fill="#A3EAA2" cx="5.713" cy="22.206" rx="25.826" ry="27.094"/>
+<path fill="#A3EAA2" d="M62.492,12.683c24.645,0,44.625,11.913,44.625,26.609c0,14.691-19.98,26.608-44.625,26.608
+	S17.867,53.983,17.867,39.292C17.867,24.596,37.848,12.683,62.492,12.683z"/>
+<ellipse fill="#A3EAA2" cx="111.688" cy="28.553" rx="21.969" ry="26.122"/>
+<path fill="#A3EAA2" d="M140.652-3.529C151.336-3.529,160,10.458,160,27.708c0,17.258-8.664,31.242-19.348,31.242
+	s-19.348-13.983-19.348-31.242C121.305,10.458,129.969-3.529,140.652-3.529z"/>
+<ellipse fill="#A3EAA2" cx="-74.992" cy="23.919" rx="21.008" ry="16.598"/>
+<rect x="-96" y="25.467" fill="#A3EAA2" width="256" height="136.533"/>
 </svg>

@@ -102,7 +102,9 @@ function GameState() {
 			bkg = new Background(bkgDesc.filePath);
 			bkg.x = bkgDesc.x;
 			bkg.y = bkgDesc.y;
-			bkg.scale = bkgDesc.scale;
+			bkg.tiledX = bkgDesc.tiledX;
+			bkg.tiledY = bkgDesc.tiledY;
+			//bkg.scale = bkgDesc.scale;
 			this.addBackground(bkg);
 		}
 	};

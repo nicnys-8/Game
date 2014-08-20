@@ -20,6 +20,7 @@ function GameController(gameState, canvas) {
 		window.requestAnimationFrame(tick); // Repeats the function
 
 		var renderList = gameState.filter("Renderable");
+		var i;
 
 		///////////////////////
 		/*@ TODO: Det här ska bakas in i plattformsbeteendet tror jag,
@@ -48,7 +49,7 @@ function GameController(gameState, canvas) {
 
 
 		// Perform update functions for all in-game objects
-		for (var i = 0; i < gameState.objects.length; i++) {
+		for (i = 0; i < gameState.objects.length; i++) {
 			gameState.objects[i].tick(gameState);
 		}
 
@@ -56,12 +57,12 @@ function GameController(gameState, canvas) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// Render all backgrounds
-		for (var i = 0; i < gameState.backgrounds.length; i++) {
+		for (i = 0; i < gameState.backgrounds.length; i++) {
 			gameState.backgrounds[i].render(ctx);
 		}
 
 		// Render in-game objects		
-		for (var i = 0; i < renderList.length; i++) {
+		for (i = 0; i < renderList.length; i++) {
 			renderList[i].render(ctx);
 		}
 

@@ -36,12 +36,11 @@ Behavior.Moving = Behavior.Moving || function() {
 	}
 	
 	/**
-	Returns true if the object is standing firmly on the other one
-	(which means it won't fall off if the other one moves)
+	Returns true if the object is standing on the other one
 	*/
 	function carriedBy(obj) {
-		return (!(this.x >= obj.x + obj.boundingBox.right ||
-			this.x <= obj.x + obj.boundingBox.left) &&
+		return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+			this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left) &&
 		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
 	}
 	
@@ -126,7 +125,7 @@ Behavior.Moving = Behavior.Moving || function() {
 			if (this.overlapsObject(obj)) {
 				// Try pushing the obstacle
 				pushDistance = this.overlapsBy(obj, coordinate);
-				if ( obj.hasBehavior("Moving") && (coordinate !== "y" || deltaY < 0) ) {
+				if (obj.hasBehavior("Moving") && (coordinate !== "y" || deltaY < 0)) {
 					obj.tryMove(pushDistance, coordinate, gameState);
 				} else {
 					// If the obstacle can't be pushed, stop moving
@@ -137,6 +136,11 @@ Behavior.Moving = Behavior.Moving || function() {
 				while (this.overlapsObject(obj)) {
 					this[coordinate] -= direction;
 				}
+
+				/* (Another piece of ugliness...
+				vSpeed must be set to zero if the object hits a ceiling or something...)
+				*/
+				if (coordinate === "y" && this[coordinate] === prev) this.vSpeed = 0;
 			}
 		}
 		
@@ -162,7 +166,7 @@ Behavior.Moving = Behavior.Moving || function() {
 		return {
 			// Variables
 			hAcceleration: 0,
-			vAcceleration: 0.4,
+			vAcceleration: 0.3,
 			hSpeed: 0,
 			vSpeed: 0,
 			maxHSpeed: 2,

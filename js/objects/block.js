@@ -34,7 +34,7 @@ ObjectFactory.Block = function(width, height) {
 	// Public interface
 	//=================
 
-	this.currentSprite = SpriteFactory.createSprite("img/sprites/block.png", 1, hotspot);
+	this.currentSprite = SpriteFactory.createSprite("img/sprites/block.svg", 1, hotspot);
 	this.boundingBox = {
 		left: -width / 2, right: width / 2,
 		top: -height / 2, bottom: height/ 2
