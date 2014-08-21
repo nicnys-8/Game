@@ -130,7 +130,7 @@ function GameController(gameState, canvas, camera, keyboard) {
 	/**
 	Switches the controlled character to the next one in the list
 	*/
-	this.controlNext = function(uid) {
+	this.controlNext = function() {
 		var index = controllable.indexOf(controlled);
 		index = (index + 1) % controllable.length;
 		this.setControlled(controllable[index]);
@@ -139,7 +139,7 @@ function GameController(gameState, canvas, camera, keyboard) {
 	/**
 	Switches the controlled character to the previous one in the list
 	*/
-	this.controlPrevious = function(uid) {
+	this.controlPrevious = function() {
 		var index = controllable.indexOf(controlled);
 		index = (controllable.length + (index - 1) % controllable.length) % controllable.length;
 		this.setControlled(controllable[index]);
