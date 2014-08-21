@@ -10,6 +10,8 @@ function Camera() {
 	this.x = 0;
 	this.y = 0;
 
+	this.scale = {x: 1, y: 1};
+
 	this.offsetX = 0;
 	this.offsetY = -64;
 
@@ -22,8 +24,8 @@ function Camera() {
 
 	this.tick = function() {
 		if (this.target) {
-			this.x = this.target.x;
-			this.y = this.target.y;
+			this.x = this.target.x - this.offsetX;
+			this.y = this.target.y - this.offsetY;
 		}
 	};
 

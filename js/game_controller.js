@@ -48,6 +48,10 @@ function GameController(gameState, canvas, camera) {
 		}
 		///////////////////////
 
+		//===========
+		// Game logic
+		//===========
+
 		this.camera.tick();
 
 		// Perform update functions for all in-game objects
@@ -55,17 +59,21 @@ function GameController(gameState, canvas, camera) {
 			gameState.objects[i].tick(gameState);
 		}
 
+		//==========
+		// Rendering
+		//==========
+
 		// Clear the canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		ctx.save();
 
-		console.log(this.camera.offsetY);
-
 		ctx.translate(
-			-this.camera.x + (canvas.width / 2) - this.camera.offsetX,
-			-this.camera.y + (canvas.height / 2) - this.camera.offsetY
+			-this.camera.x + (canvas.width / 2),
+			-this.camera.y + (canvas.height / 2)
 			);
+
+		ctx.scale(this.camera.scale.x, this.camera.scale.y);
 
 		// Render all backgrounds
 		for (i = 0; i < gameState.backgrounds.length; i++) {
