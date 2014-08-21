@@ -10,7 +10,7 @@ ObjectFactory.Giri = function() {
 	// Private functions and variables
 	//================================
 
-	var hotspot = {x: 32, y: 32};
+	var hotspot = {x: 16, y: 32};
 
 
 	//=================
@@ -18,7 +18,7 @@ ObjectFactory.Giri = function() {
 	//=================
 
 	this.boundingBox = {
-		left: -32, right: 32,
+		left: -16, right: 16,
 		top: -32, bottom: 32
 	};
 
@@ -26,7 +26,7 @@ ObjectFactory.Giri = function() {
 	this.sprites.walk = SpriteFactory.createSprite("img/sprites/giri/walk.svg", 2, hotspot);
 	this.sprites.walk.imageSpeed = 0.1;
 	this.currentSprite = this.sprites.stand;
-
+	
 }
 
 ObjectFactory.Giri.prototype = new ObjectFactory.Character();
