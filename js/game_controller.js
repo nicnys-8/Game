@@ -80,8 +80,8 @@ function GameController(gameState, canvas, camera) {
 		ctx.save();
 
 		ctx.translate(
-			-this.camera.x + (canvas.width / 2),
-			-this.camera.y + (canvas.height / 2)
+			Math.round(-this.camera.x + (canvas.width / 2)),
+			Math.round(-this.camera.y + (canvas.height / 2))
 			);
 
 		ctx.scale(this.camera.scale.x, this.camera.scale.y);
