@@ -28,20 +28,11 @@ Behavior.Moving = Behavior.Moving || function() {
 		var carried = [];
 		for (var i = 0; i < objects.length; i++) {
 			obj = objects[i];
-			if (obj.hasBehavior("Moving") && obj.carriedBy(this)) {
+			if (obj.hasBehavior("Moving") && obj.onTopOf(this)) {
 				carried.push(obj);
 			}
 		}
 		return carried;
-	}
-	
-	/**
-	Returns true if the object is standing on the other one
-	*/
-	function carriedBy(obj) {
-		return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
-			this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left) &&
-		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
 	}
 	
 	/**
@@ -177,7 +168,6 @@ Behavior.Moving = Behavior.Moving || function() {
 			move: move,
 			tryMove: tryMove,
 			carriedObjects: carriedObjects,
-			carriedBy: carriedBy,
 			computeWeight: computeWeight
 		};
 	};

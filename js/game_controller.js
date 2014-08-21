@@ -38,8 +38,9 @@ function GameController(gameState, canvas, camera) {
 		}
 
 		if (controller.pressed("up")) {
-			//@TODO: Gör en onGround-koll här... Plus uppfinn en onGroundfunktion!
-			controlled.jump();
+			if (controlled.onGround(gameState)) {
+				controlled.jump();
+			}
 		}
 
 		/*

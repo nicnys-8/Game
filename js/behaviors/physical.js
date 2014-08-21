@@ -98,6 +98,25 @@ Behavior.Physical = Behavior.Physical || function() {
 		}
 	}
 
+	/**
+	Returns true if the object is standing on the other one
+	*/
+	function onTopOf(obj) {
+		return (!(this.x + this.boundingBox.left >= obj.x + obj.boundingBox.right ||
+			this.x + this.boundingBox.right <= obj.x + obj.boundingBox.left) &&
+		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
+	}
+
+	function onGround(gameState) {
+		var solids = gameState.filter("Solid");
+		var i;
+		for (i = 0; i < solids.length; i++) {
+			if (this.onTopOf(solids[i])) {
+				return true;
+			}
+		}
+	}
+
 
 	//=================
 	// Public interface
@@ -122,6 +141,8 @@ Behavior.Physical = Behavior.Physical || function() {
 			overlapsBy: overlapsBy,
 			horizontalOverlap: horizontalOverlap,
 			verticalOverlap: verticalOverlap,
+			onTopOf: onTopOf,
+			onGround: onGround
 		};
 	};
 
