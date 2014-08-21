@@ -14,7 +14,9 @@ function createController() {
 		37: "left",
 		38: "up",
 		39: "right",
-		40: "down"
+		40: "down",
+		88: "x",
+		90: "z"
 	};
 
 	// Object for storing key events that occured during the last tick

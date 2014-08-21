@@ -5,10 +5,6 @@ ObjectFactory.Character = function() {
 
 	GameObject.call(this);
 
-	//================================
-	// Private functions and variables
-	//================================
-
 
 	//==============
 	// Add behaviors
@@ -20,6 +16,7 @@ ObjectFactory.Character = function() {
 	this.addBehavior(Behavior.Moving);
 	this.addBehavior(Behavior.Platform);
 	this.addBehavior(Behavior.FaceDirection);
+	this.addBehavior(Behavior.Controllable);
 
 
 	//=================

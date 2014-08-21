@@ -9,6 +9,7 @@ GameObject = function() {
 
 	this.behaviors = [];
 	this.ticks = [];
+	this.uid; // This is set in GameState, when the level is parsed
 };
 
 //=================

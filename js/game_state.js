@@ -78,10 +78,23 @@ function GameState() {
 				obj.y + obj.boundingBox.top >= bottom ||
 				obj.y + obj.boundingBox.bottom <= top)) {
 				result.push(obj);
+			}
+		}
+		return result;
+	};
+
+	/**
+	Returns the object with the specified UID
+	*/
+	this.getObjectByUID = function(uid) {
+		var obj, i;
+		for (i = 0; i < this.objects.length; i++) {
+			obj = this.objects[i];
+			if (obj.uid === uid) {
+				return obj;
+			}
 		}
 	}
-	return result;
-};
 
 	/**
 	Creates all objects from a level description
@@ -94,6 +107,7 @@ function GameState() {
 			obj = new ObjectFactory[objDesc.name](objDesc.width, objDesc.height);
 			obj.x = objDesc.x;
 			obj.y = objDesc.y;
+			obj.uid = objDesc.uid;
 			this.addObject(obj);
 		}
 

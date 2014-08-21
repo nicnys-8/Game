@@ -10,15 +10,29 @@ function GameController(gameState, canvas, camera) {
 	// Private functions and variables
 	//================================
 
-	var ctx = canvas.getContext("2d");
+	var controllable;
+	var controlled = null;
+
+	//=================
+	// Public Interface
+	//=================
+
+	this.camera = camera;
 
 	/**
 	Runs the main game loop
 	@param ctx A 2D rendering context (view of the MVC pattern)
 	//@TODO: Red ut varför hejn inte kan deklareras som this.tick 
 	*/
-	function tick() {
-		window.requestAnimationFrame(tick); // Repeats the function
+	this.tick = function() {
+		var ctx = canvas.getContext("2d");
+		var self = this;
+
+		window.requestAnimationFrame(
+			function(){
+				self.tick();
+			}
+		); // Repeats the function
 
 		var renderList = gameState.filter("Renderable");
 		var i;
@@ -41,6 +55,14 @@ function GameController(gameState, canvas, camera) {
 			if (controlled.onGround(gameState)) {
 				controlled.jump();
 			}
+		}
+
+		if (controller.pressed("x")) {
+			this.controlNext();
+		}
+
+		if (controller.pressed("z")) {
+			this.controlPrevious();
 		}
 
 		/*
@@ -91,16 +113,43 @@ function GameController(gameState, canvas, camera) {
 		for (i = 0; i < renderList.length; i++) {
 			renderList[i].render(ctx);
 		}
-
 		ctx.restore();
-
 	}
 
+	this.startGame = function() {
+		controllable = gameState.filter("Controllable"); // A list of controllable characters
+		this.setControlled(controllable[0]);
+		this.tick(); // Start the tick loop
+	};
 
-	//=================
-	// Public Interface
-	//=================
+	/**
+	Sets which character is currently controlled by the player
+	@param uid The character's unique identifier (@TODO: Require it to be a string or a number?)
+	*/
+	this.setControlled = function(object) {
+		if (controlled) {
+			controlled.hAcceleration = 0;
+			controlled.hSpeed = 0;
+		}
+		controlled = object;
+		this.camera.target = controlled;
+	};
 
-	this.camera = camera;
-	this.tick = tick;
+	/**
+	Switches the controllable character to the next one in the list
+	*/
+	this.controlNext = function(uid) {
+		var index = controllable.indexOf(controlled);
+		index = (index + 1) % controllable.length;
+		this.setControlled(controllable[index]);
+	};
+
+	/**
+	Switches the controllable character to the previous one in the list
+	*/
+	this.controlPrevious = function(uid) {
+		var index = controllable.indexOf(controlled);
+		index = (controllable.length + (index - 1) % controllable.length) % controllable.length;
+		this.setControlled(controllable[index]);
+	};
 }
