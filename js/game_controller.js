@@ -3,8 +3,9 @@ Returns a game controller object (controller of the MVC pattern)
 @param gameState Object describing the entire gamestate (model of the MVC pattern)
 @param canvas A HTML5 canvas (view of the MVC pattern)
 @param camera A camera object used to render the game
+@param keyboard An object for reacting to keyboard input
 */
-function GameController(gameState, canvas, camera) {
+function GameController(gameState, canvas, camera, keyboard) {
 
 	//================================
 	// Private functions and variables
@@ -17,7 +18,9 @@ function GameController(gameState, canvas, camera) {
 	// Public Interface
 	//=================
 
+	this.gameState = gameState;
 	this.camera = camera;
+	this.keyboard = keyboard;
 
 	/**
 	Runs the main game loop
@@ -28,65 +31,51 @@ function GameController(gameState, canvas, camera) {
 		var ctx = canvas.getContext("2d");
 		var self = this;
 
+		// Repeat the function before each frame is rendered:
 		window.requestAnimationFrame(
-			function(){
+			function() {
 				self.tick();
 			}
-		); // Repeats the function
+			);
 
-		var renderList = gameState.filter("Renderable");
+		var renderList = this.gameState.filter("Renderable");
 		var i;
 
-		///////////////////////
-		/*@ TODO: Det här ska bakas in i plattformsbeteendet tror jag,
-		här ska det då definitivt inte ligga!!
-		*/
-
-		// Game controls
-		if (controller.down("left")) {
-			controlled.hAcceleration = -0.5;
-		} else if (controller.down("right")) {
-			controlled.hAcceleration = 0.5;
+		//================
+		// Move all this...
+		//=================
+		if (this.keyboard.down("left")) {
+			controlled.hAcceleration = -0.5; // Cursed number!
+		} else if (this.keyboard.down("right")) {
+			controlled.hAcceleration = 0.5; // Magic!!
 		} else {
-			controlled.hAcceleration = -controlled.hSpeed / 5;
+			controlled.hAcceleration = -controlled.hSpeed / 5; // GAAH?!
 		}
 
-		if (controller.pressed("up")) {
+		if (this.keyboard.pressed("up")) {
 			if (controlled.onGround(gameState)) {
 				controlled.jump();
 			}
 		}
 
-		if (controller.pressed("x")) {
+		if (this.keyboard.pressed("x")) {
 			this.controlNext();
 		}
 
-		if (controller.pressed("z")) {
+		if (this.keyboard.pressed("z")) {
 			this.controlPrevious();
 		}
-
-		/*
-		(Den här koden gör så att man kan hoppa olika högt...
-		Men hopp som hopp, anser jag nästan! Därför sket jag i den.)
-		if (controller.released("up")) {
-			if (controlled.vSpeed < 0) {
-				controlled.vSpeed /= 2;
-			}
-		}
-		*/
-
-		///////////////////////
+		//===================
+		// ... somewhere else
+		//===================
 
 		//===========
 		// Game logic
 		//===========
 
 		this.camera.tick();
-
-		// Perform update functions for all in-game objects
-		for (i = 0; i < gameState.objects.length; i++) {
-			gameState.objects[i].tick(gameState);
-		}
+		this.keyboard.tick();
+		this.gameState.tick();
 
 		//==========
 		// Rendering
@@ -96,8 +85,8 @@ function GameController(gameState, canvas, camera) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// Render all backgrounds
-		for (i = 0; i < gameState.backgrounds.length; i++) {
-			gameState.backgrounds[i].render(ctx);
+		for (i = 0; i < this.gameState.backgrounds.length; i++) {
+			this.gameState.backgrounds[i].render(ctx);
 		}
 
 		ctx.save();
@@ -106,8 +95,8 @@ function GameController(gameState, canvas, camera) {
 			Math.round(-this.camera.x + (canvas.width / 2)),
 			Math.round(-this.camera.y + (canvas.height / 2))
 			);
-
 		ctx.scale(this.camera.scale.x, this.camera.scale.y);
+		ctx.rotate(this.camera.rotation);
 
 		// Render in-game objects		
 		for (i = 0; i < renderList.length; i++) {
@@ -117,16 +106,19 @@ function GameController(gameState, canvas, camera) {
 	}
 
 	this.startGame = function() {
-		controllable = gameState.filter("Controllable"); // A list of controllable characters
+		// Start controlling a random guy... 
+		controllable = this.gameState.filter("Controllable");
 		this.setControlled(controllable[0]);
-		this.tick(); // Start the tick loop
+
+		this.tick(); // Start the main game loop
 	};
 
 	/**
 	Sets which character is currently controlled by the player
-	@param uid The character's unique identifier (@TODO: Require it to be a string or a number?)
+	@param object A 'GameObject' instance with 'Controllable' behavior
 	*/
 	this.setControlled = function(object) {
+		// Stop the currently controlled character from moving
 		if (controlled) {
 			controlled.hAcceleration = 0;
 			controlled.hSpeed = 0;
@@ -136,7 +128,7 @@ function GameController(gameState, canvas, camera) {
 	};
 
 	/**
-	Switches the controllable character to the next one in the list
+	Switches the controlled character to the next one in the list
 	*/
 	this.controlNext = function(uid) {
 		var index = controllable.indexOf(controlled);
@@ -145,7 +137,7 @@ function GameController(gameState, canvas, camera) {
 	};
 
 	/**
-	Switches the controllable character to the previous one in the list
+	Switches the controlled character to the previous one in the list
 	*/
 	this.controlPrevious = function(uid) {
 		var index = controllable.indexOf(controlled);

@@ -26,7 +26,6 @@ canvas {
 
 	<script src="js/game_controller.js"></script>
 	<script src="js/game_state.js"></script>
-	<script src="js/controller.js"></script>
 	<script src="js/sprite_factory.js"></script>
 	<script src="js/sprite.js"></script>
 	<script src="js/background.js"></script>
@@ -45,6 +44,7 @@ canvas {
 	<!-- Objects -->
 	<script src="js/objects/object_factory.js"></script>
 	<script src="js/objects/game_object.js"></script>
+	<script src="js/keyboard.js"></script>
 	<script src="js/camera.js"></script>
 	<script src="js/objects/block.js"></script>
 	<script src="js/objects/jump_button.js"></script>
@@ -60,13 +60,11 @@ canvas {
 	var canvas = document.getElementById("view");
 	var state = new GameState();
 	var camera = new Camera();
-	var gameController = new GameController(state, canvas, camera);
+	var keyboard = new Keyboard();
+	var gameController = new GameController(state, canvas, camera, keyboard);
 	var controlledCharacterUID = 0;
 
 	state.parseLevel(Levels.level1);
-
-	controller = createController();
-	state.addObject(controller);
 
 
 	//=====================

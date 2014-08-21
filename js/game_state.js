@@ -121,4 +121,13 @@ function GameState() {
 			this.addBackground(bkg);
 		}
 	};
+
+	/**
+	Perform update functions for all in-game objects
+	*/
+	this.tick = function() {
+		for (i = 0; i < this.objects.length; i++) {
+			this.objects[i].tick(this);
+		}
+	};
 }

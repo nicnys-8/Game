@@ -2,8 +2,9 @@
 A controller object that can be used to control
 events in the game through key presses
 */
-function createController() {
-	var controller = new GameObject();
+ObjectFactory.Keyboard = function() {
+
+	GameObject.call(this);
 
 	//================================
 	// Private functions and variables
@@ -64,7 +65,7 @@ function createController() {
 	Returns true if the key is not pressed
 	@param key Name of the key to check, e.g. "up"
 	*/
-	controller.up = function(key) {
+	this.up = function(key) {
 		return (!keyStates.hasOwnProperty(key) ||
 			keyStates[key] === "up" ||
 			keyStates[key] === "released");
@@ -74,7 +75,7 @@ function createController() {
 	Returns true if the key is down
 	@param key Name of the key to check, e.g. "up"
 	*/
-	controller.down = function(key) {
+	this.down = function(key) {
 		return (keyStates[key] === "down" ||
 			keyStates[key] === "pressed");
 	};
@@ -83,7 +84,7 @@ function createController() {
 	Returns true if the key was pressed during the current tick
 	@param key Name of the key to check, e.g. "up"
 	*/
-	controller.pressed = function(key) {
+	this.pressed = function(key) {
 		return (keyStates[key] === "pressed");
 	};
 
@@ -91,7 +92,7 @@ function createController() {
 	Returns true if the key was released during the current tick
 	@param key Name of the key to check, e.g. "up"
 	*/
-	controller.released = function(key) {
+	this.released = function(key) {
 		return (keyStates[key] === "released");
 	};
 
@@ -99,7 +100,7 @@ function createController() {
 	Function to call on every game loop iteration,
 	updates keyStates based on the keyEvents that have occured since the last tick
 	*/
-	controller.tick = function() {
+	this.tick = function() {
 		for (var key in keyStates) {
 			if (keyStates[key] === "released") {
 				keyStates[key] = "up";
@@ -116,7 +117,7 @@ function createController() {
 		// Clear events
 		keyEvents = {}; //@TODO: Det här kan nog göras på ett bättre sätt
 	};
-
-	return controller;
 }
+
+ObjectFactory.Keyboard.prototype = new GameObject();
 
