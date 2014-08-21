@@ -38,14 +38,20 @@ function GameController(gameState, canvas, camera) {
 		}
 
 		if (controller.pressed("up")) {
+			//@TODO: Gör en onGround-koll här... Plus uppfinn en onGroundfunktion!
 			controlled.jump();
 		}
 
+		/*
+		(Den här koden gör så att man kan hoppa olika högt...
+		Men hopp som hopp, anser jag nästan! Därför sket jag i den.)
 		if (controller.released("up")) {
 			if (controlled.vSpeed < 0) {
 				controlled.vSpeed /= 2;
 			}
 		}
+		*/
+
 		///////////////////////
 
 		//===========
@@ -66,6 +72,11 @@ function GameController(gameState, canvas, camera) {
 		// Clear the canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+		// Render all backgrounds
+		for (i = 0; i < gameState.backgrounds.length; i++) {
+			gameState.backgrounds[i].render(ctx);
+		}
+
 		ctx.save();
 
 		ctx.translate(
@@ -74,11 +85,6 @@ function GameController(gameState, canvas, camera) {
 			);
 
 		ctx.scale(this.camera.scale.x, this.camera.scale.y);
-
-		// Render all backgrounds
-		for (i = 0; i < gameState.backgrounds.length; i++) {
-			gameState.backgrounds[i].render(ctx);
-		}
 
 		// Render in-game objects		
 		for (i = 0; i < renderList.length; i++) {

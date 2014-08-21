@@ -22,9 +22,9 @@ Behavior.FaceDirection = Behavior.FaceDirection || function() {
 	
 	behavior.tick = function(gameState) {
 		if (this.hSpeed > 0) {
-			this.scale.x = 1;
+			this.scale.x = Math.abs(this.scale.x);
 		} else if (this.hSpeed < 0) {
-			this.scale.x = -1;
+			this.scale.x = -Math.abs(this.scale.x);
 		}
 	};
 

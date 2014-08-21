@@ -3,6 +3,13 @@ Constructor of a camera object.
 */
 function Camera() {
 
+	//==================
+	// Private variables
+	//==================
+
+	var sensitivity = 0.2;
+
+
 	//=================
 	// Public variables
 	//=================
@@ -23,10 +30,11 @@ function Camera() {
 	//=================
 
 	this.tick = function() {
-		if (this.target) {
-			this.x = this.target.x - this.offsetX;
-			this.y = this.target.y - this.offsetY;
-		}
+		var xDistance = this.target.x - this.x;
+		var yDistance = this.target.y - this.y;
+
+		this.x += xDistance * sensitivity;
+		this.y += yDistance * sensitivity;
 	};
 
 }

@@ -84,10 +84,11 @@ ObjectFactory.JumpButton = function() {
 	@param obj The object to check
 	*/
 	this.pushedBy = function(obj) {
-		return (!(
-			this.x + this.boundingBox.right < obj.x + obj.boundingBox.left ||
-			this.x + this.boundingBox.left > obj.x + obj.boundingBox.right) &&
-		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top
+		return (
+			!(
+				this.x + this.boundingBox.right < obj.x + obj.boundingBox.left ||
+				this.x + this.boundingBox.left > obj.x + obj.boundingBox.right) &&
+			this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top
 		);
 	}	
 
