@@ -14,6 +14,8 @@ Keyboard = function() {
 		38: "up",
 		39: "right",
 		40: "down",
+		67: "c",
+		86: "v",
 		88: "x",
 		90: "z"
 	};
