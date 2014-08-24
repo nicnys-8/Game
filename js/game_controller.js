@@ -58,13 +58,26 @@ function GameController(gameState, canvas, camera, keyboard) {
 			}
 		}
 
-		if (this.keyboard.pressed("x")) {
-			this.controlNext();
+		if (this.keyboard.pressed("z")) {
+			this.setControlled(this.gameState.getObjectByUID(0));
+			//this.controlPrevious();
 		}
 
-		if (this.keyboard.pressed("z")) {
-			this.controlPrevious();
+		if (this.keyboard.pressed("x")) {
+			this.setControlled(this.gameState.getObjectByUID(1));
+			//this.controlNext();
 		}
+
+		if (this.keyboard.pressed("c")) {
+			this.setControlled(this.gameState.getObjectByUID(2));
+			//this.controlPrevious();
+		}
+
+		if (this.keyboard.pressed("v")) {
+			this.setControlled(this.gameState.getObjectByUID(3));
+			//this.controlPrevious();
+		}
+
 		//===================
 		// ... somewhere else
 		//===================
