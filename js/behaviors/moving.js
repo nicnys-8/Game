@@ -8,7 +8,7 @@ Behavior.Moving = Behavior.Moving || function() {
 	//================================
 	
 	function computeWeight(gameState) {
-		var moving = gameState.filter("Moving");
+		var moving = gameState.filter( "Moving" );
 		var carried = this.carriedObjects(moving);
 		var weight = this.weight;
 		for (var i = 0; i < carried.length; i++) {
@@ -51,11 +51,85 @@ Behavior.Moving = Behavior.Moving || function() {
 		*/
 		var threshold = 0.1; //@TODO: Flytta ut det här nånstans vettigt
 		if (Math.abs(deltaY) > threshold) {
-			this.tryMove(deltaY, "y", gameState);
+			if ( this.canMove(deltaY, "y", gameState) ) {
+				this.tryMove(deltaY, "y", gameState);
+			}
 		}
 		if (Math.abs(deltaX) > threshold) {
-			this.tryMove(deltaX, "x", gameState);
+			if ( this.canMove(deltaX, "x", gameState) ) {
+				this.tryMove(deltaX, "x", gameState);
+			}
 		}
+	}
+
+	function canMove( delta, coordinate, gameState )
+	{
+		var deltaX;
+		var deltaY;
+		var speedVar;
+		
+		// Set up coordinate dependent variables and variable names
+		switch (coordinate) {
+			case "x":
+				deltaX = delta;
+				deltaY = 0;
+				speedVar = "hSpeed";
+				break;
+			case "y":
+				deltaX = 0;
+				deltaY = delta;
+				speedVar = "vSpeed";
+				break;
+			default:
+				throw new Error("Not a valid coordinate.");
+				break;
+		}
+
+		// Find all objects within the area that will be traversed
+		var objects = gameState.objectsInZone(
+			Math.min(this.x + this.boundingBox.left, this.x + this.boundingBox.left + deltaX),
+			Math.max(this.x + this.boundingBox.right, this.x + this.boundingBox.right + deltaX),
+			Math.min(this.y + this.boundingBox.top - 1, this.y + this.boundingBox.top - 1 + deltaY), // Plus (minus) one to account for carried objects!
+			Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
+		);
+
+		var direction = delta ? delta < 0 ? -1 : 1 : 0; // Calculate the direction of delta
+		var staticObjects = gameState.filter("Moving", "exclude", objects);
+		var prev = this[coordinate];
+
+		// Test moving the object
+		this[coordinate] = Math.round(this[coordinate] + delta);
+		for (var i = 0; i < staticObjects.length; i++) {
+			
+			var currentObject = staticObjects[i];
+			if ( this.overlapsObject(currentObject) ) {
+				var overlap = this.overlapsBy(currentObject, coordinate);
+				if ( Math.abs(overlap) >= delta ) {
+					// Can't move the object.
+					// Restore state and return.
+					this[coordinate] = prev;
+					return false;
+				}
+			}
+		}
+		this[coordinate] = prev;
+		// Object could be moved.
+
+		// Recursively check all carried objects
+		// Only needed if we are travelling in y direction...
+		if (coordinate === "y")
+		{
+			var carried = this.carriedObjects(objects);
+			for (var i = 0; i < carried.length; i++) {
+				
+				var obj = carried[i];
+				if ( !obj.canMove( delta, coordinate, gameState ) ) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 	
 	/**
@@ -166,6 +240,7 @@ Behavior.Moving = Behavior.Moving || function() {
 			
 			// Functions
 			move: move,
+			canMove: canMove,
 			tryMove: tryMove,
 			carriedObjects: carriedObjects,
 			computeWeight: computeWeight

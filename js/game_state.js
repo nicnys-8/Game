@@ -27,41 +27,61 @@ function GameState() {
 	};
 
 	/**
-	Returns a list of all objects with any of the specified behaviors
-	@param objList Optional object list to filter from
-	@param arguments Any number of behavior names,
-	e.g gameState.filter("Renderable", "Moving", "Solid");
-	*/
-	// @TODO: Granska om hejn blev dumt. Nu kan man ellra filtrar genom att göra exempelvis: filter(filter("Moving"), "Solid")
-	this.filter = function(objList /* +Arbitrary number of arguments */) {
+	 * Filters a list of GameObjects. Can extract all GameObjects matching:
+	 * 		-  any behavior in the filter set
+	 * 		-  no behavior in the filter set
+	 * 	depending on whether type parameter is set to "include" or "exlude"
+	 * 	respectively.
+	 *
+	 * Can be called as:
+	 * 		- filter( "Moving" );
+	 * 			Returns all moving GameObjects in this.objects.
+	 * 		- filter( ["Moving", "Solid"] );
+	 * 			Returns all 'solid and moving' GameObjects in this.objects.
+	 * 		- filter( "Controllable", "exclude");
+	 * 			Returns all non-controllable GameObjects in this.objects.
+	 * 		- filter( ["Moving", "Solid"], "include", filter("Controllable", "exclude")) );
+	 * 			Returns all non-controllable GameObjects that are moving and solid in this.objects.
+	 * 			
+	 * @param  {[string]} 		filter 		Behaviors that act as filters
+	 * @param  {string} 		type 		Either "include" or "exclude". Default is "include".
+	 * @param  {[GameObject]} 	objects 	A list of objects which to filter. Default is this.objects.
+	 * @return {[GameObject]}				Filtered list of GameObjects
+	 */
+	this.filter = function (filter, type, objects) {
 		//@TODO: Cache lookups to increase efficiency!
+		filter  = typeof filter  !== 'string'    ? filter  : [filter];
+		type    = typeof type    !== 'undefined' ? type    : "include";
+		objects = typeof objects !== 'undefined' ? objects : this.objects;
+		var filteredObjects = [];
 
-		var objects = [];
-		var obj, behavior, iStart;
-		
-		if (typeof(objList) !== "string") {
-			objList = this.objects;
-			iStart = 1;
-		} else {
-			iStart = 0;
-		}
-		
-		// For each object
-		for (var i = iStart; i < this.objects.length; i++) {
-			obj = this.objects[i];
-			
-			// For each of the object's behaviors
-			for (var j = 0; j < arguments.length; j++) {
-				behavior = arguments[j];
+		// Loop through all objects
+		for (var i = 0; i < objects.length; i++) {
+			var currentObject = objects[i];
+
+			// Check all behaviors to filter
+			for (var j = 0; j < filter.length; j++) {
 				
-				// Check if the behavior matches one of the function's arguments
-				if (obj.behaviors.indexOf(behavior) !== -1) {
-					objects.push(obj);
+				var filterIndex = currentObject.behaviors.indexOf( filter[j] );
+				if (type === "include") {
+					// Including filter
+					if ( filterIndex !== -1 ) {
+						filteredObjects.push(currentObject);
+						break;
+					};
+				} else {
+					// Excluding filter
+					if (  filterIndex !== -1 && j !== filter.length ) {
+						continue;
+					}
+					filteredObjects.push(currentObject);
 				}
+
 			}
 		}
-		return objects;
-	};
+
+		return filteredObjects;
+	}
 
 	/**
 	Returns all objects that intersect the specified area
