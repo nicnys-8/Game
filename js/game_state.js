@@ -8,19 +8,54 @@ function GameState() {
 	//================================
 
 	// Cache for storing filter queries
-	var cache = {};
+	var cache = {
+        exlude:{},
+        include:{}
+    };
+    
+    this.cacheHits = 0;
+    this.cacheMisses = 0;
+    
+    function clearCache() {
+        cache.exlude = {};
+        cache.include = {};
+    }
 
-
+    
 	//=================
 	// Public Interface
 	//=================
 
 	this.objects = [];
+    this.objectsByUID = {};
+    
 	this.backgrounds = [];
 
 	this.addObject = function(obj) {
 		this.objects.push(obj);
+        
+        if (obj.uid !== null && (typeof obj.uid !== "undefined")) { // obj.uid is false when uid == 0...
+            
+            if (this.objectsByUID[obj.uid]) {
+                console.warn("Uh oh, maybe UID " + obj.uid + " is not as unique as you thought!");
+            }
+            
+            this.objectsByUID[obj.uid] = obj;
+        }
+        
+        clearCache();
 	};
+    
+    this.removeObject = function(obj) {
+        var index = this.objects.indexOf(obj);
+        if (index) {
+            this.objects.splice(index, 1);
+            if (obj.uid) {
+                delete this.objectsByUID[obj.uid];
+            }
+            clearCache();
+        }
+    };
 
 	this.addBackground = function(bkg) {
 		this.backgrounds.push(bkg);
@@ -50,37 +85,76 @@ function GameState() {
 	 */
 	this.filter = function (filter, type, objects) {
 		//@TODO: Cache lookups to increase efficiency!
-		filter  = typeof filter  !== 'string'    ? filter  : [filter];
-		type    = typeof type    !== 'undefined' ? type    : "include";
-		objects = typeof objects !== 'undefined' ? objects : this.objects;
-		var filteredObjects = [];
+		// filter  = (typeof filter  !== 'string')    ? filter  : [filter];
+		type    = (typeof type    !== 'undefined') ? type    : "include";
+		// objects = (typeof objects !== 'undefined') ? objects : this.objects;
 
-		// Loop through all objects
-		for (var i = 0; i < objects.length; i++) {
-			var currentObject = objects[i];
-
-			// Check all behaviors to filter
-			for (var j = 0; j < filter.length; j++) {
-				
-				var filterIndex = currentObject.behaviors.indexOf( filter[j] );
-				if (type === "include") {
-					// Including filter
-					if ( filterIndex !== -1 ) {
-						filteredObjects.push(currentObject);
-						break;
-					};
-				} else {
-					// Excluding filter
-					if (  filterIndex !== -1 && j !== filter.length ) {
-						continue;
-					}
-					filteredObjects.push(currentObject);
-				}
-
-			}
-		}
-
-		return filteredObjects;
+        var query,
+            cachedQuery,
+            storeQuery = false,
+            i, j, flen,
+            filteredObjects = [],
+            currentObject;
+        
+        if (typeof filter === "string") { // Only 99.7% safe to use typeof with strings!! :)
+            query = filter;
+            filter = [filter];
+        } else {
+            query = filter.join("/");
+        }
+        
+        // Crappy caching (only when searching all objects (for now (maybe))) :D
+        // Ett varningens ord, ja lyssna nu: Om behaviors läggs till under spelets gång FÖRLORAR DU - Klotho, Lachesis eller Atropos
+        if (typeof objects === "undefined") {
+            cachedQuery = cache[type][query];
+            if (cachedQuery) {
+                this.cacheHits++;
+                return cachedQuery;
+            } else {
+                // this.cacheMisses++;
+                objects = this.objects;
+                storeQuery = true;
+            }
+        }
+        this.cacheMisses++;
+        
+        flen = filter.length;
+        
+        switch (type) {
+            case "exclude":
+                for (i = 0; i < objects.length; i++) {
+                    currentObject = objects[i];
+                    for (j = 0; j < flen; j++) {
+                        if (currentObject.hasBehavior(filter[j])) {
+                            break;
+                        }
+                    }
+                    // Exclude object if it has ANY of the behaviors in 'filter'
+                    if (j === flen) {
+                        filteredObjects.push(currentObject);
+                    }
+                }
+                break;
+            case "include":
+            default:
+                for (i = 0; i < objects.length; i++) {
+                    currentObject = objects[i];
+                    for (j = 0; j < flen; j++) {
+                        // Include object if it has ANY of the behaviors in 'filter'
+                        if (currentObject.hasBehavior(filter[j])) {
+                            filteredObjects.push(currentObject);
+                            break;
+                        }
+                    }
+                }
+                break;
+        }
+        
+        if (storeQuery) {
+            cache[type][query] = filteredObjects;
+        }
+        
+        return filteredObjects;
 	}
 
 	/**
@@ -107,6 +181,8 @@ function GameState() {
 	Returns the object with the specified UID
 	*/
 	this.getObjectByUID = function(uid) {
+        return this.objectsByUID[uid];
+        /*
 		var obj, i;
 		for (i = 0; i < this.objects.length; i++) {
 			obj = this.objects[i];
@@ -114,6 +190,7 @@ function GameState() {
 				return obj;
 			}
 		}
+         */
 	}
 
 	/**
@@ -121,8 +198,8 @@ function GameState() {
 	@TODO: Parsaren ska fungera annorlunda i framtiden...!
 	*/
 	this.parseLevel = function(description) {
-		var objDesc, obj, bkgDes, bkg;
-		for (var i = 0; i < description.objects.length; i++) {
+		var objDesc, obj, bkgDes, bkg, i;
+		for (i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
 			obj = new ObjectFactory[objDesc.name](objDesc.width, objDesc.height);
 			obj.x = objDesc.x;
@@ -131,7 +208,7 @@ function GameState() {
 			this.addObject(obj);
 		}
 
-		for (var i = 0; i < description.backgrounds.length; i++) {
+		for (i = 0; i < description.backgrounds.length; i++) {
 			bkgDesc = description.backgrounds[i];
 			bkg = new Background(bkgDesc.filePath);
 			bkg.x = bkgDesc.x;
@@ -146,7 +223,7 @@ function GameState() {
 	Perform update functions for all in-game objects
 	*/
 	this.tick = function() {
-		for (i = 0; i < this.objects.length; i++) {
+		for (var i = 0; i < this.objects.length; i++) {
 			this.objects[i].tick(this);
 		}
 	};
