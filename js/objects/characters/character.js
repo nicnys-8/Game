@@ -9,7 +9,13 @@ ObjectFactory.Character = function() {
 	//==============
 	// Add behaviors
 	//==============
-
+    
+    // Maybe something like this instead of overwriting the
+    // tick function and manually calling the other ticks?
+    this.addBehavior(function(gameState) {
+                        var threshold = 0.1;
+                        this.currentSprite = (Math.abs(this.hSpeed) > threshold) ? this.sprites.walk : this.sprites.stand;
+                     });
 	this.addBehavior(Behavior.Renderable);
 	this.addBehavior(Behavior.Physical);
 	this.addBehavior(Behavior.Solid);
@@ -28,6 +34,7 @@ ObjectFactory.Character = function() {
 	/**
 	Overwriting the tick object
 	*/
+    /*
 	this.tick = function(gameState) {
 
 		var threshold = 0.1;
@@ -38,7 +45,7 @@ ObjectFactory.Character = function() {
 			this.ticks[i].call(this, gameState);
 		}
 	};
-
+     */
 };
 
 ObjectFactory.Character.prototype = new GameObject();
