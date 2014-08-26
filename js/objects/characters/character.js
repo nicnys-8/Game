@@ -15,6 +15,8 @@ ObjectFactory.Character = function() {
     this.addBehavior(function(gameState) {
                         var threshold = 0.1;
                         this.currentSprite = (Math.abs(this.hSpeed) > threshold) ? this.sprites.walk : this.sprites.stand;
+
+
                      });
 	this.addBehavior(Behavior.Renderable);
 	this.addBehavior(Behavior.Physical);

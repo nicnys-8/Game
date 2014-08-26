@@ -6,9 +6,12 @@ Behavior.Platform = Behavior.Platform || function() {
 	//================================
 	// Private functions and variables
 	//================================
+
+	var jumpSound = AudioFactory.createSound("audio/jump.wav");
 	
 	function jump() {
 		this.vSpeed = -5;
+		jumpSound.play();
 	}
 
 	//=================
@@ -21,9 +24,6 @@ Behavior.Platform = Behavior.Platform || function() {
 
 	behavior.getProperties = function() {
 		return {
-			// Variables
-
-			// Functions
 			jump: jump
 		};
 	};

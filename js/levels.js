@@ -9,7 +9,7 @@ var Levels = {
 		{name: "Giri", x: 64, y: 112, uid: 1},
 		{name: "Niri", x: 128, y: 100, uid: 2},
 		{name: "Majje", x: 158, y: 100, uid: 3},
-		{name: "JumpButton", x: 160, y: 32}
+		{name: "JumpButton", x: 160, y: 28}
 		],
 
 		backgrounds: [
@@ -17,7 +17,9 @@ var Levels = {
 			{filePath: "img/backgrounds/mountains.svg", x: 0, y: 360, tiledX: true, tiledY: false},
 			{filePath: "img/backgrounds/clouds.svg", x: 0, y: 0, tiledX: true, tiledY: false},
 			{filePath: "img/backgrounds/controls.svg", x: 16, y: 16, tiledX: false, tiledY: false} // (HAXX)
-		]
+		],
+
+		music: "audio/fnurk.mp3"
 	}
 };
 

@@ -55,7 +55,7 @@ var SpriteFactory = function() {
 	factory.createSprite = function(imgPath, numFrames, hotspot) {
 		var canvas = this.loadImage(imgPath);
 		return new Sprite(canvas, numFrames, hotspot);
-	}
+	};
 
 	return factory;
 }();

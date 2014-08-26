@@ -27,9 +27,9 @@ function GameState() {
 	//=================
 
 	this.objects = [];
-    this.objectsByUID = {};
-    
 	this.backgrounds = [];
+    this.objectsByUID = {};
+    this.music = null;
 
 	this.addObject = function(obj) {
 		this.objects.push(obj);
@@ -199,6 +199,7 @@ function GameState() {
 	*/
 	this.parseLevel = function(description) {
 		var objDesc, obj, bkgDes, bkg, i;
+
 		for (i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
 			obj = new ObjectFactory[objDesc.name](objDesc.width, objDesc.height);
@@ -217,6 +218,8 @@ function GameState() {
 			bkg.tiledY = bkgDesc.tiledY;
 			this.addBackground(bkg);
 		}
+
+		this.music = AudioFactory.createSound(description.music);
 	};
 
 	/**

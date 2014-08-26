@@ -9,6 +9,8 @@ Behavior.Physical = Behavior.Physical || function() {
 	
 	// @TODO: Rename functions to specifiy whether they work with objects or other things. e.g. overlapsObjectOffset ??? (note: this is a question)
 	
+	var wasOnGround = true;
+
 	/**
 	Check whether this object overlaps another.
 	@param obj The object to check for overlap with
@@ -117,6 +119,14 @@ Behavior.Physical = Behavior.Physical || function() {
 		}
 	}
 
+	/**
+	Returns true if the object was on ground at the last tick
+	(jåå, det är lite grisigt, men behövs nog...)
+	*/
+	function wasOnGround() {
+		return wasOnGround;
+	}
+
 
 	//=================
 	// Public interface
@@ -142,7 +152,8 @@ Behavior.Physical = Behavior.Physical || function() {
 			horizontalOverlap: horizontalOverlap,
 			verticalOverlap: verticalOverlap,
 			onTopOf: onTopOf,
-			onGround: onGround
+			onGround: onGround,
+			wasOnGround: wasOnGround
 		};
 	};
 
