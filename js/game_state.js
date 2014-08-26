@@ -220,6 +220,8 @@ function GameState() {
 		}
 
 		this.music = AudioFactory.createSound(description.music);
+		this.music.play();
+		console.log(this.music);
 	};
 
 	/**

@@ -8,6 +8,7 @@ Behavior.Platform = Behavior.Platform || function() {
 	//================================
 
 	var jumpSound = AudioFactory.createSound("audio/jump.wav");
+	var landSound = AudioFactory.createSound("audio/land.wav");
 	
 	function jump() {
 		this.vSpeed = -5;
@@ -26,6 +27,12 @@ Behavior.Platform = Behavior.Platform || function() {
 		return {
 			jump: jump
 		};
+	};
+
+	behavior.tick = function(gameState) {
+		if (this.onGround && !this.wasOnGround) {
+			landSound.play();
+		}
 	};
 		
 	return behavior;

@@ -53,7 +53,7 @@ function GameController(gameState, canvas, camera, keyboard) {
 		}
 
 		if (this.keyboard.pressed("up")) {
-			if (controlled.onGround(gameState)) {
+			if (controlled.onGround) {
 				controlled.jump();
 			}
 		}
@@ -124,7 +124,6 @@ function GameController(gameState, canvas, camera, keyboard) {
 		this.setControlled(controllable[0]);
 		// Play music
 		this.gameState.music.play();
-		
 		// Start the main game loop
 		this.tick();
 	};

@@ -28,20 +28,20 @@ var AudioFactory = function() {
 		var sound = {};
 
 		if (cache.hasOwnProperty(filePath)) {
-			audioTag = cache[filePath];
+			sound.audioTag = cache[filePath];
 		} else {
-			audioTag = document.createElement("audio");
-			audioTag.setAttribute("preload", "auto");
-			audioTag.load();
-			cache[filePath] = audioTag;
+			sound.audioTag = document.createElement("audio");
+			sound.audioTag.setAttribute("preload", "auto");
+			sound.audioTag.load();
+			cache[filePath] = sound.audioTag;
 		}
 
 		/* (For some reason, a sound can only be played once 
 			until the set again. Thus, this:)
 		*/
 		sound.play = function() {
-			audioTag.src = filePath;
-			audioTag.play();
+			sound.audioTag.src = filePath;
+			sound.audioTag.play();
 		};
 		return sound;
 	};

@@ -9,7 +9,6 @@ Behavior.Physical = Behavior.Physical || function() {
 	
 	// @TODO: Rename functions to specifiy whether they work with objects or other things. e.g. overlapsObjectOffset ??? (note: this is a question)
 	
-	var wasOnGround = true;
 
 	/**
 	Check whether this object overlaps another.
@@ -109,24 +108,6 @@ Behavior.Physical = Behavior.Physical || function() {
 		this.y + this.boundingBox.bottom === obj.y + obj.boundingBox.top);
 	}
 
-	function onGround(gameState) {
-		var solids = gameState.filter("Solid");
-		var i;
-		for (i = 0; i < solids.length; i++) {
-			if (this.onTopOf(solids[i])) {
-				return true;
-			}
-		}
-	}
-
-	/**
-	Returns true if the object was on ground at the last tick
-	(jåå, det är lite grisigt, men behövs nog...)
-	*/
-	function wasOnGround() {
-		return wasOnGround;
-	}
-
 
 	//=================
 	// Public interface
@@ -143,6 +124,8 @@ Behavior.Physical = Behavior.Physical || function() {
 			y: 0,
 			weight: 1,
 			boundingBox: null, // e.g. {left: -8, right: 8, top: -8, bottom: 8}
+			onGround: true,
+			wasOnGround: true,
 			
 			// Functions
 			overlapsObject: overlapsObject,
@@ -151,10 +134,22 @@ Behavior.Physical = Behavior.Physical || function() {
 			overlapsBy: overlapsBy,
 			horizontalOverlap: horizontalOverlap,
 			verticalOverlap: verticalOverlap,
-			onTopOf: onTopOf,
-			onGround: onGround,
-			wasOnGround: wasOnGround
+			onTopOf: onTopOf
 		};
+	};
+
+	behavior.tick = function(gameState) {
+		var solids = gameState.filter("Solid");
+		var i;
+
+		this.wasOnGround = this.onGround;
+		this.onGround = false;
+
+		for (i = 0; i < solids.length; i++) {
+			if (this.onTopOf(solids[i])) {
+				this.onGround = true;
+			}
+		}
 	};
 
 	return behavior;
