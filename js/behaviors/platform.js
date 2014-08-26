@@ -15,6 +15,7 @@ Behavior.Platform = Behavior.Platform || function() {
 		jumpSound.play();
 	}
 
+
 	//=================
 	// Public interface
 	//=================

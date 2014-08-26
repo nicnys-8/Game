@@ -31,16 +31,15 @@ var AudioFactory = function() {
 			sound.audioTag = cache[filePath];
 		} else {
 			sound.audioTag = document.createElement("audio");
-			sound.audioTag.setAttribute("preload", "auto");
 			sound.audioTag.load();
 			cache[filePath] = sound.audioTag;
 		}
 
-		/* (For some reason, a sound can only be played once 
-			until the set again. Thus, this:)
-		*/
 		sound.play = function() {
-			sound.audioTag.src = filePath;
+			// Weird fix to a chrome problem:
+			if (window.chrome) {
+				sound.audioTag.src = filePath;
+			}
 			sound.audioTag.play();
 		};
 		return sound;
