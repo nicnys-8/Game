@@ -13,9 +13,10 @@ var Levels = {
 		],
 
 		backgrounds: [
-			{filePath: "img/backgrounds/sun.svg", x: 300, y: 32, tiledX: false, tiledY: false},
+			{filePath: "img/backgrounds/sun.svg", x: 400, y: 100, tiledX: false, tiledY: false},
+			{filePath: "img/backgrounds/rainbow.svg", x: -350, y: 160, tiledX: false, tiledY: false},
 			{filePath: "img/backgrounds/mountains.svg", x: 0, y: 360, tiledX: true, tiledY: false},
-			{filePath: "img/backgrounds/clouds.svg", x: 0, y: 0, tiledX: true, tiledY: false},
+			{filePath: "img/backgrounds/clouds.svg", x: 0, y: -50, tiledX: true, tiledY: false},
 			{filePath: "img/backgrounds/controls.svg", x: 16, y: 16, tiledX: false, tiledY: false} // (HAXX)
 		],
 
