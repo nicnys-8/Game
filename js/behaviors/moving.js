@@ -7,9 +7,19 @@ Behavior.Moving = Behavior.Moving || function() {
 	// Private functions and variables
 	//================================
 	
+	function objectsToMove(gameState, deltaX, deltaY) {
+		var objects = gameState.objectsInZone(
+			Math.min(this.x + this.boundingBox.left  , this.x + this.boundingBox.left   + deltaX),
+			Math.max(this.x + this.boundingBox.right , this.x + this.boundingBox.right  + deltaX),
+			Math.min(this.y + this.boundingBox.top   , this.y + this.boundingBox.top    + deltaY),
+			Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
+		);
+
+		return objects;
+	}
+
 	function computeWeight(gameState) {
-		var moving = gameState.filter( "Moving" );
-		var carried = this.carriedObjects(moving);
+		var carried = this.carriedObjects(gameState);
 		var weight = this.weight;
 		for (var i = 0; i < carried.length; i++) {
 			weight += carried[i].computeWeight(gameState);
@@ -18,13 +28,19 @@ Behavior.Moving = Behavior.Moving || function() {
 	}
 	
 	/**
-	Given an array of objects, this function returns the subset
-	of all objects carried by the target object
-	(This function is not recursive, so it only returns the
-	objects standing directly on the target)
-	@param objets The array to look through
-	*/
-	function carriedObjects(objects) {
+	 * Returns the moving objects directly on top of this object, i.e objects carried by this.
+	 *	(This function is not recursive, so it only returns the
+	 *	objects standing directly on the target)
+	 *	
+	 * @return {[GameObjects]} Carried objects.
+	 */
+	function carriedObjects(gameState) {
+		var objects = gameState.objectsInZone(
+			this.x + this.boundingBox.left,
+			this.x + this.boundingBox.right,
+			this.y + this.boundingBox.top - 1,
+			this.y + this.boundingBox.bottom
+		);
 		var carried = [];
 		for (var i = 0; i < objects.length; i++) {
 			obj = objects[i];
@@ -86,12 +102,7 @@ Behavior.Moving = Behavior.Moving || function() {
 		}
 
 		// Find all objects within the area that will be traversed
-		var objects = gameState.objectsInZone(
-			Math.min(this.x + this.boundingBox.left, this.x + this.boundingBox.left + deltaX),
-			Math.max(this.x + this.boundingBox.right, this.x + this.boundingBox.right + deltaX),
-			Math.min(this.y + this.boundingBox.top - 1, this.y + this.boundingBox.top - 1 + deltaY), // Plus (minus) one to account for carried objects!
-			Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
-		);
+		var objects = this.objectsToMove(gameState, deltaX, deltaY);
 
 		var direction = delta ? delta < 0 ? -1 : 1 : 0; // Calculate the direction of delta
 		var staticObjects = gameState.filter("Moving", "exclude", objects);
@@ -119,7 +130,7 @@ Behavior.Moving = Behavior.Moving || function() {
 		// Only needed if we are travelling in y direction...
 		if (coordinate === "y")
 		{
-			var carried = this.carriedObjects(objects);
+			var carried = this.carriedObjects(gameState);
 			for (var i = 0; i < carried.length; i++) {
 				
 				var obj = carried[i];
@@ -161,14 +172,9 @@ Behavior.Moving = Behavior.Moving || function() {
 		}
 		
 		// Find all objects within the area that will be traversed
-		var objects = gameState.objectsInZone(
-			Math.min(this.x + this.boundingBox.left, this.x + this.boundingBox.left + deltaX),
-			Math.max(this.x + this.boundingBox.right, this.x + this.boundingBox.right + deltaX),
-			Math.min(this.y + this.boundingBox.top - 1, this.y + this.boundingBox.top - 1 + deltaY), // Plus (minus) one to account for carried objects!
-			Math.max(this.y + this.boundingBox.bottom, this.y + this.boundingBox.bottom + deltaY)
-		);
+		var objects = this.objectsToMove(gameState, deltaX, deltaY);
 		
-		var carried = this.carriedObjects(objects);
+		var carried = this.carriedObjects(gameState);
 		var direction = delta ? delta < 0 ? -1 : 1 : 0; // Calculate the direction of delta
 		var prev = this[coordinate];
 		var totalWeight = this.computeWeight(gameState);
@@ -214,6 +220,7 @@ Behavior.Moving = Behavior.Moving || function() {
 		if (coordinate !== "y" || deltaY > 0) {
 			for (var i = 0; i < carried.length; i++) {
 				obj = carried[i];
+				obj.hasBeenCarriedThisTick = true;
 				obj.tryMove(pushDistance, coordinate, gameState);
 			}
 		}
@@ -243,7 +250,8 @@ Behavior.Moving = Behavior.Moving || function() {
 			canMove: canMove,
 			tryMove: tryMove,
 			carriedObjects: carriedObjects,
-			computeWeight: computeWeight
+			computeWeight: computeWeight,
+			objectsToMove: objectsToMove
 		};
 	};
 	
