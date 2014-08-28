@@ -11,7 +11,7 @@ var ObjectFactory = ObjectFactory ||  {
     // konstruktÖrerna så att de tar alla parametrar i ett objekt.
     // Alternativt {name:"Nånting", params:{...}}
     createObject : function(description) {
-        var constr = this[description.name],
+        var constr = this.classes[description.name] || this[description.name],
             object = null;
         if (constr) {
             object = new constr(description);
@@ -19,5 +19,101 @@ var ObjectFactory = ObjectFactory ||  {
             console.warn("Trying to create unknown object " + description.name);
         }
         return object;
+    },
+    
+    classes : {},
+    baseClass : null,
+    
+    defineBaseClass : function(name, constructor) {
+        // TODO: Add defaults and stuff here as well
+        if (this.baseClass) {
+            throw "Trying to overwrite base class " + this.baseClass + " with class " + name + ". Aborting!";
+        }
+        this.baseClass = name;
+        this.classes[name] = constructor;
+    },
+    
+    /**
+     JAJA, jag kommenterar det här sen!! :P
+     */
+    defineClass : function(name, definition) {
+        
+        function NOOP() {
+        }
+        
+        function mergeArgs(primary, secondary) {
+            primary = primary || {};
+            for (var i in secondary) {
+                if (typeof secondary[i] === "object") {
+                    primary[i] = mergeArgs(primary[i], secondary[i]);
+                } else if (!primary.hasOwnProperty(i)) {
+                    primary[i] = secondary[i];
+                }
+            }
+            return primary;
+        }
+        
+        if (!this.baseClass) {
+            throw "The base class is undefined, please do that first!!!!!:D";
+        }
+        if (this.classes[name]) {
+            throw "Trying to redefine class " + name + ". Aborting!";
+        }
+        
+        var defaults = definition.defaults || {},
+            behaviors = definition.behaviors || [],
+            initFn = definition.init || NOOP,
+            tick = definition.tick,
+            superClass = definition.superClass || this.baseClass,
+            superConstr = this.classes[superClass],
+            prototype = definition.prototype, // Add more stuff to the prototype (confusing with superClass and prototype?? Maybe let the 'superClass' argument be any object instead of just a string?)
+            constr, i;
+        
+        if (!superConstr) {
+            throw "Gah! Superclass " + superClass + " not found!";
+        }
+        
+        constr = function(args, defaultsFromSubclass) {
+            
+            defaults = mergeArgs(defaultsFromSubclass, defaults);
+            args = mergeArgs(args, defaults);
+            
+            superConstr.call(this, args, defaults);
+            
+            for (var i = 0; i < behaviors.length; i++) {
+                this.addBehavior(Behavior[behaviors[i]]);
+            }
+            
+            if (tick) {
+                this.addBehavior(tick);
+            }
+            
+            initFn.call(this, args, defaults);
+        }
+        
+        constr.prototype = new superConstr(); // new superConstr(defaults);?
+        if (prototype) {
+            for (i in prototype) {
+                constr.prototype[i] = prototype[i];
+            }
+        }
+        
+        this.classes[name] = constr;
     }
 };
+
+/*
+ObjectFactory.defineClass("Character", {
+                          superClass:"GameObject",
+                          behaviors:["Flying", "Dying"],
+                          defaults:{x:2, y:12},
+                          tick:function(gamestate) {
+                          
+                          },
+                          init:function(args) {
+                          
+                          }
+                          });
+*/
+
+
