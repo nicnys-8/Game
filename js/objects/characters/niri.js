@@ -27,7 +27,7 @@ ObjectFactory.Niri = function(args) {
 	// Private functions and variables
 	//================================
 
-	var stdHotspot = {x: 32, y: 16};
+	var hotspot = {x: 32, y: 16};
 
 
 	//=================
@@ -39,8 +39,9 @@ ObjectFactory.Niri = function(args) {
 		top: -16, bottom: 16
 	};
 
-	this.sprites.stand = SpriteFactory.createSprite("img/sprites/niri/stand.svg", 1, stdHotspot);
-	this.sprites.walk = SpriteFactory.createSprite("img/sprites/niri/walk.svg", 2, stdHotspot);
+	this.sprites.stand = SpriteFactory.createSprite("img/sprites/niri/stand.svg", 1, hotspot);
+	this.sprites.walk = SpriteFactory.createSprite("img/sprites/niri/walk.svg", 2, hotspot);
+	this.sprites.jump = SpriteFactory.createSprite("img/sprites/niri/jump.svg", 1, hotspot);
 	this.sprites.walk.imageSpeed = 0.1;
 	this.currentSprite = this.sprites.stand;
 

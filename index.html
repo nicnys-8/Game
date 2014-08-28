@@ -27,6 +27,7 @@ canvas {
 	<script src="js/game_controller.js"></script>
 	<script src="js/game_state.js"></script>
 	<script src="js/sprite_factory.js"></script>
+	<script src="js/audio_factory.js"></script>
 	<script src="js/sprite.js"></script>
 	<script src="js/background.js"></script>
 	<script src="js/levels.js"></script>
@@ -66,34 +67,16 @@ canvas {
 
 	state.parseLevel(Levels.level1);
 
+	var audio = AudioFactory.createSound("audio/fnurk.mp3");
+
 
 	//=====================
 	// Handle mouse presses
 	//=====================
 
 	document.body.onmousedown = function(event) {
-
 		var x = camera.x + event.offsetX - canvas.width / 2;
 		var y = camera.y + event.offsetY - canvas.height / 2;
-
-		/*
-		var obj;
-		var moving = state.filter("Moving");
-
-		// If a moving object is clicked, start controlling it
-		
-		for (var i = 0; i < moving.length; i++) {
-			obj = moving[i];
-			if (obj.overlapsPoint(x, y)) {
-				controlled.hAcceleration = 0;
-				controlled.hSpeed = 0;
-				controlled = obj;
-				camera.target = controlled;
-				console.log(controlled.uid);
-				return;
-			}
-		}
-		*/
 
 		// If no moving object was clicked, a block is created
 		var block = ObjectFactory.createObject({

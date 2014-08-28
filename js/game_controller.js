@@ -53,7 +53,7 @@ function GameController(gameState, canvas, camera, keyboard) {
 		}
 
 		if (this.keyboard.pressed("up")) {
-			if (controlled.onGround(gameState)) {
+			if (controlled.onGround) {
 				controlled.jump();
 			}
 		}
@@ -122,8 +122,10 @@ function GameController(gameState, canvas, camera, keyboard) {
 		// Start controlling a random guy... 
 		controllable = this.gameState.filter("Controllable");
 		this.setControlled(controllable[0]);
-
-		this.tick(); // Start the main game loop
+		// Play music
+		this.gameState.music.play();
+		// Start the main game loop
+		this.tick();
 	};
 
 	/**
