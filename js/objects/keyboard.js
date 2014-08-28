@@ -2,9 +2,9 @@
 A controller object that can be used to control
 events in the game through key presses
 */
-ObjectFactory.Keyboard = function() {
+ObjectFactory.Keyboard = function(params) {
 
-	GameObject.call(this);
+	GameObject.call(this, params);
 
 	//================================
 	// Private functions and variables

@@ -201,11 +201,15 @@ function GameState() {
 		var objDesc, obj, bkgDes, bkg, i;
 		for (i = 0; i < description.objects.length; i++) {
 			objDesc = description.objects[i];
+            obj = ObjectFactory.createObject(objDesc);
+            this.addObject(obj);
+            /*
 			obj = new ObjectFactory[objDesc.name](objDesc.width, objDesc.height);
 			obj.x = objDesc.x;
 			obj.y = objDesc.y;
 			obj.uid = objDesc.uid;
 			this.addObject(obj);
+             */
 		}
 
 		for (i = 0; i < description.backgrounds.length; i++) {

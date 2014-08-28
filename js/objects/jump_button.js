@@ -1,9 +1,9 @@
 /**
 Returns a solid block object
 */
-ObjectFactory.JumpButton = function() {
+ObjectFactory.JumpButton = function(params) {
 
-	GameObject.call(this);
+	GameObject.call(this, params);
 	
 
 	//================================

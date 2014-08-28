@@ -1,9 +1,10 @@
+
 /**
 A platform character object
 */
-ObjectFactory.Character = function() {
+ObjectFactory.Character = function(args) {
 
-	GameObject.call(this);
+	GameObject.call(this, args);
 
 	//================================
 	// Private functions and variables

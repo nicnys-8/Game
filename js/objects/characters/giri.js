@@ -1,9 +1,26 @@
+
+ObjectFactory.defineClass("Giri", {
+                          superClass:"Character",
+                          init:function(args) {
+                            var hotspot = {x: 16, y: 32};
+                          
+                            this.boundingBox = {
+                                left: -16, right: 16,
+                                top: -32, bottom: 32
+                            };
+
+                            this.sprites.stand = SpriteFactory.createSprite("img/sprites/giri/stand.svg", 1, hotspot);
+                            this.sprites.walk = SpriteFactory.createSprite("img/sprites/giri/walk.svg", 2, hotspot);
+                            this.sprites.walk.imageSpeed = 0.1;
+                            this.currentSprite = this.sprites.stand;
+                          }});
+
 /**
 A platform character object
 */
-ObjectFactory.Giri = function() {
+ObjectFactory.Giri = function(args) {
 
-	ObjectFactory.Character.call(this);
+	ObjectFactory.Character.call(this, args);
 
 
 	//================================

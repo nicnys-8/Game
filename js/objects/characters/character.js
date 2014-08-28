@@ -1,10 +1,22 @@
+
+ObjectFactory.defineClass("Character", {
+                          superClass:"GameObject",
+                          behaviors:["Renderable", "Physical", "Solid", "Moving", "Platform", "FaceDirection", "Controllable"],
+                          tick:function(gameState) {
+                            var threshold = 0.1;
+                            this.currentSprite = (Math.abs(this.hSpeed) > threshold) ? this.sprites.walk : this.sprites.stand;
+                          },
+                          init:function(args) {
+                            this.sprites = {stand: null, walk: null};
+                          }});
+
 /**
 A platform character object
 */
-ObjectFactory.Character = function() {
+ObjectFactory.Character = function(args) {
 
-	GameObject.call(this);
-
+	GameObject.call(this, args);
+    
 
 	//==============
 	// Add behaviors

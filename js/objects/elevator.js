@@ -1,9 +1,9 @@
 /**
 A solid block object
  */
-ObjectFactory.Elevator = function() {
+ObjectFactory.Elevator = function(params) {
 
-	GameObject.call(this);
+	GameObject.call(this, params);
 
 	
 	//================================
