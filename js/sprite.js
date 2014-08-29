@@ -45,8 +45,8 @@ function Sprite(canvas, numFrames, hotspot) {
 		var height = canvas.height;
 		var clippingX = Math.round(this.currentFrame) * width;
 		var clippingY = 0;
-		var canvasX = -this.hotspot.x;
-		var canvasY = -this.hotspot.y;
+		var canvasX = -this.hotspot.x / Math.abs(scale.x);
+		var canvasY = -this.hotspot.y / Math.abs(scale.y);
 
 		ctx.save();
 		ctx.translate(x, y);
@@ -61,6 +61,7 @@ function Sprite(canvas, numFrames, hotspot) {
 			canvasX, canvasY,
 			width, height
 			);
+		ctx.fillStyle = "red";
 		ctx.restore();
 	};
 }

@@ -105,7 +105,7 @@ Behavior.Moving = Behavior.Moving || function() {
 		var objects = this.objectsToMove(gameState, deltaX, deltaY);
 
 		var direction = delta ? delta < 0 ? -1 : 1 : 0; // Calculate the direction of delta
-		var staticObjects = gameState.filter("Moving", "exclude", objects);
+		var staticObjects = gameState.filter("Moving", "exclude", objects); //@TODO: Only solids though, right?
 		var prev = this[coordinate];
 
 		// Test moving the object
