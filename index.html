@@ -9,6 +9,7 @@
 
 body {
 	background-color: black;
+	overflow: hidden;
 }
 
 canvas {
@@ -16,6 +17,7 @@ canvas {
 	background-color: #C5F8FF;
 	left: 50%;
 	margin-left: -400px;
+	overflow: hidden;
 }
 
 </style>
@@ -78,11 +80,10 @@ canvas {
 		var x = camera.x + event.offsetX - canvas.width / 2;
 		var y = camera.y + event.offsetY - canvas.height / 2;
 
-		// If no moving object was clicked, a block is created
 		var block = ObjectFactory.createObject({
                                                name: "Block",
                                                x: 32 * Math.round(x / 32),
-                                               y: 32 * Math.round(y / 32)
+                                               y: 32 * Math.round(y / 32),
                                                });
 		state.addObject(block);
 	};
