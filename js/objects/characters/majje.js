@@ -11,6 +11,7 @@ ObjectFactory.defineClass("Majje", {
                           
                             this.sprites.stand = SpriteFactory.createSprite("img/sprites/majje/stand.svg", 1, hotspot);
                             this.sprites.walk = SpriteFactory.createSprite("img/sprites/majje/walk.svg", 2, hotspot);
+                            this.sprites.jump = SpriteFactory.createSprite("img/sprites/majje/jump.svg", 1, hotspot);
                             this.sprites.walk.imageSpeed = 0.1;
                             this.currentSprite = this.sprites.stand;
                           }});

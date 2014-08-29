@@ -11,6 +11,7 @@ ObjectFactory.defineClass("Giri", {
 
                             this.sprites.stand = SpriteFactory.createSprite("img/sprites/giri/stand.svg", 1, hotspot);
                             this.sprites.walk = SpriteFactory.createSprite("img/sprites/giri/walk.svg", 2, hotspot);
+                            this.sprites.jump = SpriteFactory.createSprite("img/sprites/giri/jump.svg", 1, hotspot);
                             this.sprites.walk.imageSpeed = 0.1;
                             this.currentSprite = this.sprites.stand;
                           }});

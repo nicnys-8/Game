@@ -5,9 +5,10 @@ ObjectFactory.defineClass("Character", {
                           tick:function(gameState) {
                             var threshold = 0.1;
                             this.currentSprite = (Math.abs(this.hSpeed) > threshold) ? this.sprites.walk : this.sprites.stand;
+                            if (!this.onGround) this.currentSprite = this.sprites.jump;
                           },
                           init:function(args) {
-                            this.sprites = {stand: null, walk: null};
+                            this.sprites = {stand: null, walk: null, jump: null};
                           }});
 
 /**
