@@ -40,7 +40,9 @@ Keyboard = function() {
 	function onKeyDown(event) {
 		var code = event.keyCode;
 		var key = keyMappings[code];
-		keyEvents[key] = "pressed"; // @TODO: Det var nåt jag tänkte var tokigt här...
+		if (keyStates[key] === "up") {
+			keyEvents[key] = "pressed";
+		}
 	}
 
 	/**
@@ -50,7 +52,9 @@ Keyboard = function() {
 	function onKeyUp(event) {
 		var code = event.keyCode;
 		var key = keyMappings[code];
-		keyEvents[key] = "released";
+		if (keyStates[key] === "down") {
+			keyEvents[key] = "released";
+		}
 	}
 
 	window.addEventListener("keydown", onKeyDown, false);
