@@ -1,6 +1,6 @@
 
 
-// Just den här biten kanske inte blev så klockrent..?
+// Just den här biten kanske inte blev så klockren..?
 ObjectFactory.defineBaseClass("GameObject", GameObject);
 
 /*

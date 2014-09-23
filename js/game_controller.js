@@ -123,7 +123,7 @@ function GameController(gameState, canvas, camera, keyboard) {
 		controllable = this.gameState.filter("Controllable");
 		this.setControlled(controllable[0]);
 		// Play music
-		this.gameState.music.play();
+		if (this.gameState.music) this.gameState.music.play(); // hrmhrmhrm
 		// Start the main game loop
 		this.tick();
 	};
