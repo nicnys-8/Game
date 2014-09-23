@@ -2,37 +2,48 @@
 A background image object
 */
 var skam = 0;
-function Background(imgPath) {
+function Background(args) {
 
 	//==================
 	// Private variables
 	//==================
-
-	var canvas = document.createElement("canvas"); //@TODO: Cash canvases
+    
+    var imgPath = (args + "" === args) ? args : args.filePath;
+	var canvas = document.createElement("canvas"); //@TODO: Cash canvases CASH!?! :D
 	var img = new Image();
 
-	img.src = imgPath;
-	img.onload = function() {
+    img.onload = function() {
 		canvas.width = img.width;
 		canvas.height = img.height;
 		canvas.getContext("2d").drawImage(img, 0, 0);
 	};
-	
+	img.src = imgPath;
 
 	//===========
 	// Public API
 	//===========
 
-	this.x = 0;
-	this.y = 0;
-	this.tiledX = false;
-	this.tiledY = false;
+	this.x = +args.x || 0;
+	this.y = +args.y || 0;
+	this.tiledX = !!args.tiledX;
+	this.tiledY = !!args.tiledY;
 	
 	this.scale = {x: 1, y: 1};
 	this.rotation = 0;
 	this.parallax = 1;
 	this.alpha = 1;
 
+    this.exportJSON = function() {
+        return {
+            filePath : imgPath,
+            x : this.x,
+            y : this.y,
+            tiledX : this.tiledX,
+            tiledY : this.tiledY
+            // ...
+        }
+    };
+    
 	/**
 	Renders the background on screen
 	@param ctx 2D rendering context

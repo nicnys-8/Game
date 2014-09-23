@@ -89,6 +89,15 @@ var ObjectFactory = ObjectFactory ||  {
             }
             
             initFn.call(this, args, defaults);
+            
+            this.exportJSON = function() {
+                // The should be enough to recreate the object... Sometimes :)
+                var json = {"name":name}, i;
+                for (i in args) {
+                    json[i] = this[i] || args[i];
+                }
+                return json;
+            }
         }
         
         constr.prototype = new superConstr(); // new superConstr(defaults);?

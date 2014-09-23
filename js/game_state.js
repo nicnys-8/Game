@@ -198,36 +198,72 @@ function GameState() {
 	@TODO: Parsaren ska fungera annorlunda i framtiden...!
 	*/
 	this.parseLevel = function(description) {
-		var objDesc, obj, bkgDes, bkg, i;
+		var objDesc, obj, bkgDes, bkg, i, len;
 
-		for (i = 0; i < description.objects.length; i++) {
+        // Clear the level first!
+        this.objects = [];
+        this.backgrounds = [];
+        this.objectsByUID = {};
+        this.music = null;
+        clearCache();
+        
+        len = description.objects && description.objects.length || 0;
+		for (i = 0; i < len; i++) {
 			objDesc = description.objects[i];
             obj = ObjectFactory.createObject(objDesc);
             this.addObject(obj);
-            /*
-			obj = new ObjectFactory[objDesc.name](objDesc.width, objDesc.height);
-			obj.x = objDesc.x;
-			obj.y = objDesc.y;
-			obj.uid = objDesc.uid;
-			this.addObject(obj);
-             */
 		}
 
-		for (i = 0; i < description.backgrounds.length; i++) {
+        len = description.backgrounds && description.backgrounds.length || 0;
+		for (i = 0; i < len; i++) {
 			bkgDesc = description.backgrounds[i];
-			bkg = new Background(bkgDesc.filePath);
-			bkg.x = bkgDesc.x;
-			bkg.y = bkgDesc.y;
-			bkg.tiledX = bkgDesc.tiledX;
-			bkg.tiledY = bkgDesc.tiledY;
+			bkg = new Background(bkgDesc);
 			this.addBackground(bkg);
 		}
 
-		this.music = AudioFactory.createSound(description.music);
-		this.music.play();
-		console.log(this.music);
+        if (description.music) {
+            this.music = AudioFactory.createSound(description.music);
+            // this.music.play();
+        }
+		console.log("Music", this.music);
 	};
 
+    this.exportJSON = function() {
+        var type, src, dst, i, j, len,
+            // Properties to export
+            exports = [ "objects", "backgrounds", "music" ],
+            // Result
+            json = {};
+        
+        for (i in exports) {
+            type = exports[i];
+            src = this[type];
+            dst = [];
+            
+            // Is there anything to export?
+            if (!src || src.length == 0) {
+                console.log("No " + type + " to export!");
+                continue;
+            }
+            
+            // Export stuff!
+            for (j = 0, len = src.length; j < len; j++) {
+                if (src[j].exportJSON) {
+                    dst.push(src[j].exportJSON());
+                } else {
+                    console.log("No export function for " + type + ": " + j);
+                }
+            }
+            
+            // Was anything exported?
+            if (dst.length > 0) {
+                json[type] = dst;
+            }
+        }
+
+        return json;
+    };
+    
 	/**
 	Perform update functions for all in-game objects
 	*/
